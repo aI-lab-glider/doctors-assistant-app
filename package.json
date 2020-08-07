@@ -6,8 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "prepush": "npm run lint",
-    "postinstall": "rm -rf .git/hooks/pre-push && node node_modules/husky/bin/install.js && rm -rf .git/hooks/pre-commit"
+    "pretest": "./node_modules/.bin/eslint --ignore-path .gitignore . --fix"
   },
   "dependencies": {
     "expo": "~38.0.8",
@@ -29,6 +28,11 @@
     "eslint-plugin-react": "^7.20.5",
     "husky": "^4.2.5",
     "prettier": "^2.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run pretest"
+    }
   },
   "private": true
 }
