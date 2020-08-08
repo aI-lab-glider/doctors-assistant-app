@@ -7,11 +7,10 @@ const reducer = (state, action) => {
       const patientIndex = state.patients.findIndex((patient) => {
         return patient.id === setPatient.id;
       });
-
       if (patientIndex !== -1) {
         patients[patientIndex] = setPatient;
       } else {
-        patients.append(setPatient);
+        patients.push(setPatient);
       }
 
       return {
