@@ -11,6 +11,7 @@ module.exports = {
     ],
     "no-use-before-define": ["error", { variables: false }],
     "prettier/prettier": ["error", prettierConfig],
+    "prefer-template": 2,
   },
   plugins: ["prettier"],
 };

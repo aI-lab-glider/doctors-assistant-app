@@ -3,9 +3,10 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function App() {
+  console.log(`Initialize app in ${process.env.NODE_ENV}`);
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Test</Text>
     </View>
   );
 }
