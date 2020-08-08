@@ -6,7 +6,7 @@ import { Colors } from "../constants/styles";
 
 const PatientCardScreen = ({ navigation }) => {
   const onButtonPressed = () => {
-    navigation.navigate("AddPatient");
+    navigation.navigate("PatientsList");
   };
 
   return (
@@ -18,7 +18,7 @@ const PatientCardScreen = ({ navigation }) => {
         style={styles.button}
         title="test"
       >
-        <Text>Move to add patient screen</Text>
+        <Text>Move to patient list</Text>
       </Button>
     </View>
   );
