@@ -11,7 +11,7 @@ const PatientsListScreen = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <PatientsList />
+      <PatientsList navigation={navigation} />
       <Button
         onPress={() => onButtonPressed()}
         rounded

@@ -4,13 +4,16 @@ import { Button } from "native-base";
 import PropTypes from "prop-types";
 import { Colors } from "../constants/styles";
 
-const PatientCardScreen = ({ navigation }) => {
+const PatientCardScreen = ({ route, navigation }) => {
+  const { patient } = route.params;
+
   const onButtonPressed = () => {
     navigation.navigate("PatientsList");
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>{patient.name}</Text>
       <Button
         onPress={() => onButtonPressed()}
         rounded
@@ -28,9 +31,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.SECONDARY,
-    justifyContent: "center",
   },
   button: {
+    alignSelf: "center",
+  },
+  title: {
+    fontSize: 32,
     alignSelf: "center",
   },
 });
@@ -38,6 +44,20 @@ const styles = StyleSheet.create({
 PatientCardScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      patient: PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        surname: PropTypes.string,
+        sex: PropTypes.string,
+        phone: PropTypes.string,
+        weight: PropTypes.number,
+        height: PropTypes.number,
+        bmi: PropTypes.number,
+      }).isRequired,
+    }),
   }).isRequired,
 };
 

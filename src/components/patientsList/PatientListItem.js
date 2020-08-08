@@ -1,18 +1,18 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
-const PatientsListItem = ({ item: patient }) => {
+const PatientsListItem = ({ onPress, item: patient }) => {
   return (
-    <View style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={onPress}>
       <Text style={styles.title}>{patient.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: "#f9c2ff",
+    backgroundColor: "#f9ffff",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -33,6 +33,7 @@ PatientsListItem.propTypes = {
     height: PropTypes.number,
     bmi: PropTypes.number,
   }).isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default PatientsListItem;
