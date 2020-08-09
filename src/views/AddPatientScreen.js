@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View, Text, TextInput } from "react-native";
 import { Button } from "native-base";
 import PropTypes from "prop-types";
@@ -18,9 +18,9 @@ const AddPatientScreen = ({ navigation }) => {
     bmi: 4,
   };
 
-  const { setPatient } = React.useContext(PatientsContext);
+  const { setPatient } = useContext(PatientsContext);
 
-  const [newName, onNameChange] = React.useState(patient.name);
+  const [newName, onNameChange] = useState(patient.name);
 
   const onButtonPressed = () => {
     patient.name = newName;

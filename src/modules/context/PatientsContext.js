@@ -1,6 +1,6 @@
-import React, { createContext } from "react";
+import React, { createContext, useReducer } from "react";
 import PropTypes from "prop-types";
-import reducer from "./PatientsContextReduxer";
+import reducer from "./PatientsContextReducer";
 import patientsData from "../../constants/data/patientsData";
 
 export const PatientsContext = createContext({
@@ -10,7 +10,7 @@ export const PatientsContext = createContext({
 const initialState = { patients: patientsData };
 
 function PatientsContextProvider({ children }) {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const value = {
     ...state,
     setPatient: (patient) => {

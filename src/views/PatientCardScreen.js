@@ -21,7 +21,7 @@ const PatientCardScreen = ({ route, navigation }) => {
         style={styles.button}
         title="test"
       >
-        <Text>Move to patient list</Text>
+        <Text>Move to patients list</Text>
       </Button>
     </View>
   );
