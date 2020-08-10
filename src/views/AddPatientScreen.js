@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -36,7 +36,7 @@ const AddPatientScreen = ({ navigation }) => {
     bmi: 4,
   };
 
-  const { setPatient } = React.useContext(PatientsContext);
+  const { setPatient } = useContext(PatientsContext);
 
   const onButtonPressed = (values) => {
     patient.name = values.name;
