@@ -1,37 +1,37 @@
 import React from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, StyleSheet, Picker } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Fontisto } from "@expo/vector-icons";
 import FormErrorMessage from "./FormErrorMessage";
 import { Colors } from "../../constants/styles";
 
-const FormField = ({ name, leftIcon, keyboardType }) => {
-  const {
-    setFieldTouched,
-    setFieldValue,
-    values,
-    errors,
-    touched,
-  } = useFormikContext();
+const FormPicker = ({
+  name,
+  selectedValue,
+  onValueChange,
+  mode,
+  leftIcon,
+  children,
+}) => {
+  const { errors, touched } = useFormikContext();
 
   return (
     <>
       <View style={[styles.container]}>
-        <MaterialCommunityIcons
+        <Fontisto
           name={leftIcon}
           size={20}
           color={Colors.BLACK}
           style={styles.icon}
         />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor={Colors.GRAY_MEDIUM}
-          value={String(values[name])}
-          onChangeText={(text) => setFieldValue(name, text)}
-          onBlur={() => setFieldTouched(name)}
-          keyboardType={keyboardType}
-        />
+        <Picker
+          selectedValue={selectedValue}
+          onValueChange={onValueChange}
+          mode={mode}
+        >
+          {children}
+        </Picker>
       </View>
       <FormErrorMessage error={errors[name]} visible={touched[name]} />
     </>
@@ -61,10 +61,18 @@ const styles = StyleSheet.create({
   },
 });
 
-FormField.propTypes = {
+FormPicker.propTypes = {
   name: PropTypes.string.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+  onValueChange: PropTypes.func.isRequired,
+  mode: PropTypes.string.isRequired,
   leftIcon: PropTypes.string.isRequired,
-  keyboardType: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: "",
+      value: "",
+    })
+  ).isRequired,
 };
 
-export default FormField;
+export default FormPicker;

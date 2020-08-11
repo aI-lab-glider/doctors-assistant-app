@@ -4,6 +4,8 @@ import {
   View,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView,
+  Picker,
 } from "react-native";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
@@ -11,6 +13,7 @@ import { Formik } from "formik";
 import { Colors } from "../constants/styles";
 import { PatientsContext } from "../modules/context/PatientsContext";
 import FormField from "../components/forms/FormField";
+import FormPicker from "../components/forms/FormPicker";
 import FormButton from "../components/forms/FormButton";
 
 const validationSchema = Yup.object().shape({
@@ -43,109 +46,123 @@ const AddPatientScreen = ({ navigation }) => {
     patient.surname = values.surname;
     patient.sex = values.sex;
     patient.phone = values.phone;
-    patient.weight = values.weight;
-    patient.height = values.height;
-    patient.bmi = values.bmi;
+    patient.weight = parseInt(values.weight, 10);
+    patient.height = parseInt(values.height, 10);
+    patient.bmi = parseInt(values.bmi, 10);
     setPatient(patient);
     navigation.navigate("PatientsList");
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Formik
-          initialValues={{
-            name: patient.name,
-            surname: patient.surname,
-            sex: patient.sex,
-            phone: patient.phone,
-            weight: patient.weight,
-            height: patient.height,
-            bmi: patient.bmi,
-          }}
-          validationSchema={validationSchema}
-          onSubmit={(values) => onButtonPressed(values)}
-        >
-          {({
-            handleChange,
-            values,
-            handleSubmit,
-            isValid,
-            handleBlur,
-            isSubmitting,
-          }) => (
-            <>
-              <FormField
-                name="name"
-                autoFocus
-                value={values.name}
-                onChangeText={handleChange("name")}
-                placeholder="Enter name"
-                onBlur={handleBlur("name")}
-                keyboardType="default"
-              />
-              <FormField
-                name="surname"
-                value={values.surname}
-                onChangeText={handleChange("surname")}
-                placeholder="Enter surname"
-                onBlur={handleBlur("surname")}
-                keyboardType="default"
-              />
-              <FormField
-                name="sex"
-                value={values.sex}
-                onChangeText={handleChange("sex")}
-                placeholder="Enter sex"
-                onBlur={handleBlur("sex")}
-                keyboardType="default"
-              />
-              <FormField
-                name="phone"
-                value={values.phone}
-                onChangeText={handleChange("phone")}
-                placeholder="Enter phone"
-                onBlur={handleBlur("phone")}
-                keyboardType="phone-pad"
-              />
-              <FormField
-                name="weight"
-                value={String(values.weight)}
-                onChangeText={handleChange("weight")}
-                placeholder="Enter weight"
-                onBlur={handleBlur("weight")}
-                keyboardType="numeric"
-              />
-              <FormField
-                name="height"
-                value={String(values.height)}
-                onChangeText={handleChange("height")}
-                placeholder="Enter height"
-                onBlur={handleBlur("height")}
-                keyboardType="numeric"
-              />
-              <FormField
-                name="bmi"
-                value={String(values.bmi)}
-                onChangeText={handleChange("bmi")}
-                placeholder="Enter bmi"
-                onBlur={handleBlur("bmi")}
-                keyboardType="numeric"
-              />
-              <View style={styles.buttonContainer}>
-                <FormButton
-                  buttonType="outline"
-                  onPress={handleSubmit}
-                  title="Add Tabaluga or change his name"
-                  buttonColor="#039BE5"
-                  disabled={!isValid || isSubmitting}
-                  loading={isSubmitting}
+      <ScrollView>
+        <View style={styles.container}>
+          <Formik
+            initialValues={{
+              name: patient.name,
+              surname: patient.surname,
+              sex: patient.sex,
+              phone: patient.phone,
+              weight: patient.weight.toString(),
+              height: patient.height.toString(),
+              bmi: patient.bmi.toString(),
+            }}
+            validationSchema={validationSchema}
+            onSubmit={(values) => onButtonPressed(values)}
+          >
+            {({
+              handleChange,
+              values,
+              handleSubmit,
+              isValid,
+              handleBlur,
+              isSubmitting,
+            }) => (
+              <>
+                <FormField
+                  name="name"
+                  leftIcon="account"
+                  autoFocus
+                  value={values.name}
+                  onChangeText={handleChange("name")}
+                  placeholder="Enter name"
+                  onBlur={handleBlur("name")}
+                  keyboardType="default"
                 />
-              </View>
-            </>
-          )}
-        </Formik>
-      </View>
+                <FormField
+                  name="surname"
+                  leftIcon="account"
+                  value={values.surname}
+                  onChangeText={handleChange("surname")}
+                  placeholder="Enter surname"
+                  onBlur={handleBlur("surname")}
+                  keyboardType="default"
+                />
+                <FormPicker
+                  name="sex"
+                  selectedValue={values.sex}
+                  onValueChange={handleChange("sex")}
+                  mode="dropdown"
+                  leftIcon="intersex"
+                  possibleValues={[
+                    { label: "male", value: "male", key: "0" },
+                    { label: "female", value: "female", key: "1" },
+                  ]}
+                >
+                  <Picker.Item label="male" value="male" />
+                  <Picker.Item label="female" value="female" />
+                </FormPicker>
+                <FormField
+                  name="phone"
+                  leftIcon="phone"
+                  value={values.phone}
+                  onChangeText={handleChange("phone")}
+                  placeholder="Enter phone"
+                  onBlur={handleBlur("phone")}
+                  keyboardType="phone-pad"
+                />
+                <FormField
+                  name="weight"
+                  leftIcon="weight-kilogram"
+                  value={values.weight}
+                  onChangeText={handleChange("weight")}
+                  placeholder="Enter weight"
+                  onBlur={handleBlur("weight")}
+                  keyboardType="numeric"
+                />
+                <FormField
+                  name="height"
+                  leftIcon="human-male-height-variant"
+                  value={values.height}
+                  onChangeText={handleChange("height")}
+                  placeholder="Enter height"
+                  onBlur={handleBlur("height")}
+                  keyboardType="numeric"
+                />
+                <FormField
+                  name="bmi"
+                  leftIcon="account"
+                  value={values.bmi}
+                  onChangeText={handleChange("bmi")}
+                  placeholder="Enter bmi"
+                  onBlur={handleBlur("bmi")}
+                  keyboardType="numeric"
+                />
+                <View style={styles.buttonContainer}>
+                  <FormButton
+                    buttonType="outline"
+                    onPress={handleSubmit}
+                    title="Add Tabaluga or change his name"
+                    buttonColor="#039BE5"
+                    disabled={!isValid || isSubmitting}
+                    loading={isSubmitting}
+                  />
+                </View>
+              </>
+            )}
+          </Formik>
+        </View>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 };
