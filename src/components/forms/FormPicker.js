@@ -29,6 +29,7 @@ const FormPicker = ({
           selectedValue={selectedValue}
           onValueChange={onValueChange}
           mode={mode}
+          style={styles.picker}
         >
           {children}
         </Picker>
@@ -47,10 +48,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   icon: {
+    marginTop: 5,
     marginRight: 10,
   },
-  input: {
-    width: "100%",
+  picker: {
+    width: "95%",
+    height: 30,
     fontSize: 18,
     color: Colors.BLACK,
   },

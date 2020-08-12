@@ -19,10 +19,16 @@ import FormButton from "../components/forms/FormButton";
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
   surname: Yup.string().required().label("Surname"),
-  sex: Yup.string().required().label("Sex"),
-  phone: Yup.string().required().label("Phone"),
-  weight: Yup.number().required().label("Weight"),
-  height: Yup.number().required("Please enter height in cm").label("Height"),
+  sex: Yup.string().oneOf(["male", "female"]).required().label("Sex"),
+  phone: Yup.string()
+    .matches(/^[0-9+]{8,13}$/, "Phone number is not valid")
+    .required()
+    .label("Phone"),
+  weight: Yup.number().integer().required().label("Weight"),
+  height: Yup.number()
+    .integer()
+    .required("Please enter height in cm")
+    .label("Height"),
   bmi: Yup.number().required().label("Bmi"),
 });
 
@@ -104,13 +110,9 @@ const AddPatientScreen = ({ navigation }) => {
                   onValueChange={handleChange("sex")}
                   mode="dropdown"
                   leftIcon="intersex"
-                  possibleValues={[
-                    { label: "male", value: "male", key: "0" },
-                    { label: "female", value: "female", key: "1" },
-                  ]}
                 >
-                  <Picker.Item label="male" value="male" />
-                  <Picker.Item label="female" value="female" />
+                  <Picker.Item label="mężczyzna" value="male" />
+                  <Picker.Item label="kobieta" value="female" />
                 </FormPicker>
                 <FormField
                   name="phone"
