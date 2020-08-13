@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
-import { Colors } from "../constants/styles";
+import { Colors, Typography } from "../constants/styles";
 
 const AppButton = ({ title, onPress }) => {
   return (
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Colors.WHITE,
     fontSize: 18,
-    fontWeight: "600",
+    fontWeight: Typography.FONT_WEIGHT_REGULAR,
     textTransform: "uppercase",
   },
 });

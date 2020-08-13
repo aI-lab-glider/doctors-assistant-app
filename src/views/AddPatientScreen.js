@@ -14,7 +14,7 @@ import { Colors } from "../constants/styles";
 import { PatientsContext } from "../modules/context/PatientsContext";
 import FormField from "../components/forms/FormField";
 import FormPicker from "../components/forms/FormPicker";
-import FormButton from "../components/forms/FormButton";
+import AppButton from "../components/AppButton";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
@@ -151,7 +151,7 @@ const AddPatientScreen = ({ navigation }) => {
                   keyboardType="numeric"
                 />
                 <View style={styles.buttonContainer}>
-                  <FormButton
+                  <AppButton
                     buttonType="outline"
                     onPress={handleSubmit}
                     title="Add Tabaluga or change his name"

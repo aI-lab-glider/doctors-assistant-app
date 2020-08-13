@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
-import { Colors } from "../../constants/styles";
+import { Colors, Typography } from "../../constants/styles";
 
 const FormErrorMessage = ({ error, visible }) => {
   if (!error || !visible) {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     color: Colors.BLACK,
     fontSize: 16,
     marginBottom: 5,
-    fontWeight: "600",
+    fontWeight: Typography.FONT_WEIGHT_REGULAR,
   },
 });
 
