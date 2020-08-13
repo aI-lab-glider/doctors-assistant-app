@@ -1,6 +1,7 @@
 import { scaleFont } from "./mixins";
 
 // FONT FAMILY
+export const font = Platform.OS === "ios" ? "HelveticaNeue" : "Roboto"; // temp
 export const FONT_FAMILY_REGULAR = "OpenSans-Regular";
 export const FONT_FAMILY_BOLD = "OpenSans-Bold";
 
