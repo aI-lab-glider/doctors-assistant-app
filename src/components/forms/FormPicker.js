@@ -4,7 +4,7 @@ import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import { Fontisto } from "@expo/vector-icons";
 import FormErrorMessage from "./FormErrorMessage";
-import { Colors } from "../../constants/styles";
+import { Colors, Typography } from "../../constants/styles";
 
 const FormPicker = ({
   name,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   picker: {
     width: "95%",
     height: 30,
-    fontSize: 18,
+    fontSize: Typography.FONT_SIZE_18,
     color: Colors.BLACK,
   },
   rightIconStyles: {

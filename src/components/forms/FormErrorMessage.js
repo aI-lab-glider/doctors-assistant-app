@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   errorText: {
     marginLeft: 15,
     color: Colors.BLACK,
-    fontSize: 16,
+    fontSize: Typography.FONT_SIZE_16,
     marginBottom: 5,
     fontWeight: Typography.FONT_WEIGHT_REGULAR,
   },

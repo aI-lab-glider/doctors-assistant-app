@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Button } from "native-base";
 import PropTypes from "prop-types";
-import { Colors } from "../constants/styles";
+import { Colors, Typography } from "../constants/styles";
 
 const PatientCardScreen = ({ route, navigation }) => {
   const { patient } = route.params;
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   title: {
-    fontSize: 32,
+    fontSize: Typography.FONT_SIZE_32,
     alignSelf: "center",
   },
 });

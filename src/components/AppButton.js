@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: Colors.WHITE,
-    fontSize: 18,
+    fontSize: Typography.FONT_SIZE_18,
     fontWeight: Typography.FONT_WEIGHT_REGULAR,
     textTransform: "uppercase",
   },

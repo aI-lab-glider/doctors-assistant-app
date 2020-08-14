@@ -4,7 +4,7 @@ import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import FormErrorMessage from "./FormErrorMessage";
-import { Colors } from "../../constants/styles";
+import { Colors, Typography } from "../../constants/styles";
 
 const FormField = ({ name, leftIcon, keyboardType }) => {
   const {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    fontSize: 18,
+    fontSize: Typography.FONT_SIZE_18,
     color: Colors.BLACK,
   },
   rightIconStyles: {
