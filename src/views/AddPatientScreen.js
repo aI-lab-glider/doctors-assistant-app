@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {
   StyleSheet,
   View,
-  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
   Keyboard,
   ScrollView,
   Picker,
@@ -60,7 +60,7 @@ const AddPatientScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <KeyboardAvoidingView onPress={Keyboard.dismiss}>
       <ScrollView>
         <View style={styles.container}>
           <Formik
@@ -155,7 +155,6 @@ const AddPatientScreen = ({ navigation }) => {
                     buttonType="outline"
                     onPress={handleSubmit}
                     title="Add Tabaluga or change his name"
-                    buttonColor="#039BE5"
                     disabled={!isValid || isSubmitting}
                     loading={isSubmitting}
                   />
@@ -165,7 +164,7 @@ const AddPatientScreen = ({ navigation }) => {
           </Formik>
         </View>
       </ScrollView>
-    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -176,6 +175,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "center",
+    color: Colors.PRIMARY,
   },
   nameInput: {
     alignSelf: "center",

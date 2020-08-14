@@ -17,7 +17,7 @@ const FormField = ({ name, leftIcon, keyboardType }) => {
 
   return (
     <>
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         <MaterialCommunityIcons
           name={leftIcon}
           size={20}

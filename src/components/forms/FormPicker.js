@@ -18,7 +18,7 @@ const FormPicker = ({
 
   return (
     <>
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         <Fontisto
           name={leftIcon}
           size={20}

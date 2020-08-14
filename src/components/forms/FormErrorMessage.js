@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import { Colors, Typography } from "../../constants/styles";
 
 const FormErrorMessage = ({ error, visible }) => {
-  if (!error || !visible) {
-    return null;
-  }
+  const isVisibleAndHasError = error && visible;
 
-  return <Text style={styles.errorText}>{error}</Text>;
+  return isVisibleAndHasError ? (
+    <Text style={styles.errorText}>{error}</Text>
+  ) : null;
 };
 
 const styles = StyleSheet.create({

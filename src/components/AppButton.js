@@ -6,10 +6,7 @@ import { Colors, Typography } from "../constants/styles";
 
 const AppButton = ({ title, onPress }) => {
   return (
-    <TouchableOpacity
-      style={[styles.button, { backgroundColor: Colors.PRIMARY }]}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={styles.button} onPress={onPress}>
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );
@@ -17,6 +14,7 @@ const AppButton = ({ title, onPress }) => {
 
 const styles = StyleSheet.create({
   button: {
+    backgroundColor: Colors.PRIMARY,
     marginVertical: 10,
     borderRadius: 25,
     justifyContent: "center",
