@@ -1,9 +1,36 @@
-import React, { useContext, useState } from "react";
-import { StyleSheet, View, Text, TextInput } from "react-native";
-import { Button } from "native-base";
+import React, { useContext } from "react";
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Keyboard,
+  ScrollView,
+  Picker,
+} from "react-native";
 import PropTypes from "prop-types";
+import * as Yup from "yup";
+import { Formik } from "formik";
 import { Colors } from "../constants/styles";
 import { PatientsContext } from "../modules/context/PatientsContext";
+import FormField from "../components/forms/FormField";
+import FormPicker from "../components/forms/FormPicker";
+import AppButton from "../components/AppButton";
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required().label("Name"),
+  surname: Yup.string().required().label("Surname"),
+  sex: Yup.string().oneOf(["male", "female"]).required().label("Sex"),
+  phone: Yup.string()
+    .matches(/^[0-9+]{8,13}$/, "Phone number is not valid")
+    .required()
+    .label("Phone"),
+  weight: Yup.number().integer().required().label("Weight"),
+  height: Yup.number()
+    .integer()
+    .required("Please enter height in cm")
+    .label("Height"),
+  bmi: Yup.number().required().label("Bmi"),
+});
 
 const AddPatientScreen = ({ navigation }) => {
   // ID = key (PatientContextReducer) => first press - add Tabaluga, second press - edit his name
@@ -20,30 +47,124 @@ const AddPatientScreen = ({ navigation }) => {
 
   const { setPatient } = useContext(PatientsContext);
 
-  const [newName, onNameChange] = useState(patient.name);
-
-  const onButtonPressed = () => {
-    patient.name = newName;
+  const onButtonPressed = (values) => {
+    patient.name = values.name;
+    patient.surname = values.surname;
+    patient.sex = values.sex;
+    patient.phone = values.phone;
+    patient.weight = parseInt(values.weight, 10);
+    patient.height = parseInt(values.height, 10);
+    patient.bmi = parseInt(values.bmi, 10);
     setPatient(patient);
     navigation.navigate("PatientsList");
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.nameInput}
-        onChangeText={(text) => onNameChange(text)}
-        value={newName}
-      />
-      <Button
-        onPress={() => onButtonPressed()}
-        rounded
-        success
-        style={styles.button}
-      >
-        <Text>Add Tabaluga or change his name</Text>
-      </Button>
-    </View>
+    <KeyboardAvoidingView onPress={Keyboard.dismiss}>
+      <ScrollView>
+        <View style={styles.container}>
+          <Formik
+            initialValues={{
+              name: patient.name,
+              surname: patient.surname,
+              sex: patient.sex,
+              phone: patient.phone,
+              weight: patient.weight.toString(),
+              height: patient.height.toString(),
+              bmi: patient.bmi.toString(),
+            }}
+            validationSchema={validationSchema}
+            onSubmit={(values) => onButtonPressed(values)}
+          >
+            {({
+              handleChange,
+              values,
+              handleSubmit,
+              isValid,
+              handleBlur,
+              isSubmitting,
+            }) => (
+              <>
+                <FormField
+                  name="name"
+                  leftIcon="account"
+                  autoFocus
+                  value={values.name}
+                  onChangeText={handleChange("name")}
+                  placeholder="Enter name"
+                  onBlur={handleBlur("name")}
+                  keyboardType="default"
+                />
+                <FormField
+                  name="surname"
+                  leftIcon="account"
+                  value={values.surname}
+                  onChangeText={handleChange("surname")}
+                  placeholder="Enter surname"
+                  onBlur={handleBlur("surname")}
+                  keyboardType="default"
+                />
+                <FormPicker
+                  name="sex"
+                  selectedValue={values.sex}
+                  onValueChange={handleChange("sex")}
+                  mode="dropdown"
+                  leftIcon="intersex"
+                >
+                  <Picker.Item label="mężczyzna" value="male" />
+                  <Picker.Item label="kobieta" value="female" />
+                </FormPicker>
+                <FormField
+                  name="phone"
+                  leftIcon="phone"
+                  value={values.phone}
+                  onChangeText={handleChange("phone")}
+                  placeholder="Enter phone"
+                  onBlur={handleBlur("phone")}
+                  keyboardType="phone-pad"
+                />
+                <FormField
+                  name="weight"
+                  leftIcon="weight-kilogram"
+                  value={values.weight}
+                  onChangeText={handleChange("weight")}
+                  placeholder="Enter weight"
+                  onBlur={handleBlur("weight")}
+                  keyboardType="numeric"
+                />
+                <FormField
+                  name="height"
+                  leftIcon="human-male-height-variant"
+                  value={values.height}
+                  onChangeText={handleChange("height")}
+                  placeholder="Enter height"
+                  onBlur={handleBlur("height")}
+                  keyboardType="numeric"
+                />
+                <FormField
+                  name="bmi"
+                  leftIcon="account"
+                  value={values.bmi}
+                  onChangeText={handleChange("bmi")}
+                  placeholder="Enter bmi"
+                  onBlur={handleBlur("bmi")}
+                  keyboardType="numeric"
+                />
+                <View style={styles.buttonContainer}>
+                  <AppButton
+                    buttonType="outline"
+                    onPress={handleSubmit}
+                    title="Add Tabaluga or change his name"
+                    disabled={!isValid || isSubmitting}
+                    loading={isSubmitting}
+                  />
+                </View>
+              </>
+            )}
+          </Formik>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -54,6 +175,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "center",
+    color: Colors.PRIMARY,
   },
   nameInput: {
     alignSelf: "center",
@@ -62,6 +184,9 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     margin: 10,
+  },
+  buttonContainer: {
+    margin: 25,
   },
 });
 

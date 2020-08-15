@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-import { Colors } from "../../constants/styles";
+import { Colors, Typography } from "../../constants/styles";
 
 const PatientsListItem = ({ onPress, item: patient }) => {
   return (
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   title: {
-    fontSize: 32,
+    fontSize: Typography.FONT_SIZE_32,
   },
 });
 
