@@ -9,15 +9,24 @@ import {
   headerTitleStyle,
 } from "../../constants/styles/authTheme";
 
-const HomeStack = createStackNavigator(
-  {
-    Home: HomeScreen,
-    UpdateProfile: UpdateProfileScreen,
-  },
-  {
-    initialRouteName: "Home",
-    defaultNavigationOptions: () => ({ headerStyle, headerTitleStyle }),
-  }
-);
+const HomeStack = createStackNavigator();
 
-export default HomeStack;
+// TODO theme options
+const HomeStackScreen = () => {
+  <HomeStack.Navigator>
+    <HomeStack.Screen name="Home" component={HomeScreen} />
+    <HomeStack.Screen name="UpdateProfile" component={UpdateProfileScreen} />
+  </HomeStack.Navigator>;
+};
+// const HomeStack = createStackNavigator(
+//   {
+//     Home: HomeScreen,
+//     UpdateProfile: UpdateProfileScreen,
+//   },
+//   {
+//     initialRouteName: "Home",
+//     defaultNavigationOptions: () => ({ headerStyle, headerTitleStyle }),
+//   }
+// );
+
+export default HomeStackScreen;
