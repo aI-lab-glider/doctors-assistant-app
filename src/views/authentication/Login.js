@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
+import PropTypes from "prop-types";
 
 import Form from "react-native-basic-form";
 import * as api from "../../modules/services/Auth";
@@ -33,10 +34,10 @@ export default function Login(props) {
 
       // check if username is null
       const username = response.user.username !== null;
-      if (username) navigate("App");
+      if (username) navigate("Home");
       else navigation.replace("Username");
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      setError(err.message);
       setLoading(false);
     }
   }
@@ -47,7 +48,12 @@ export default function Login(props) {
       <Header title="Login" />
       <View style={{ flex: 1 }}>
         <ErrorText error={error} />
-        <Form {...formProps}>
+        <Form
+          title={formProps.title}
+          fields={formProps.fields}
+          onSubmit={formProps.onSubmit}
+          loading={formProps.loading}
+        >
           <CTA
             ctaText="Forgot Password?"
             onPress={() => navigation.navigate("ForgotPassword")}
@@ -66,7 +72,14 @@ export default function Login(props) {
   );
 }
 
-Login.navigationOptions = ({}) => {
+Login.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+Login.navigationOptions = () => {
   return {
     title: ``,
   };

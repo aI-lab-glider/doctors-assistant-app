@@ -1,16 +1,13 @@
 import React, { useEffect } from "react";
 import { ActivityIndicator, View, Text } from "react-native";
 import { StackActions } from "@react-navigation/native";
+import PropTypes from "prop-types";
 
 import { useAuth } from "../../modules/context/Auth";
 
-export default function AuthLoading(props) {
-  const { navigate } = props.navigation;
+export default function AuthLoading({ navigation }) {
+  const { navigate } = navigation;
   const { getAuthState } = useAuth();
-
-  useEffect(() => {
-    initialize();
-  }, []);
 
   async function initialize() {
     try {
@@ -20,7 +17,7 @@ export default function AuthLoading(props) {
         // check if username exist
         const username = !!user.username;
 
-        if (username) navigate("App");
+        if (username) navigate("Home");
         else
           navigate("Auth", {}, StackActions.replace({ routeName: "Username" }));
       } else navigate("Auth");
@@ -28,6 +25,16 @@ export default function AuthLoading(props) {
       navigate("Auth");
     }
   }
+
+  useEffect(() => {
+    initialize();
+  }, []);
+
+  AuthLoading.propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  };
 
   return (
     <View

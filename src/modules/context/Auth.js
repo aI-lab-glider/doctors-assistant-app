@@ -1,6 +1,7 @@
 import React, { useMemo, useReducer, useContext } from "react";
 import { AsyncStorage } from "react-native"; // depracated ?
 import axios from "axios";
+import PropTypes from "prop-types";
 
 // IMPORT REDUCER, INITIAL STATE AND ACTION TYPES
 import reducer, { initialState, LOGGED_IN, LOGGED_OUT } from "./AuthReducer";
@@ -38,11 +39,11 @@ function AuthProvider(props) {
     try {
       // STORE DATA
       const { token, user } = data;
-      const data_ = [
+      const recievedData = [
         [USER_KEY, JSON.stringify(user)],
         [TOKEN_KEY, token],
       ];
-      await AsyncStorage.multiSet(data_);
+      await AsyncStorage.multiSet(recievedData);
 
       // AXIOS AUTHORIZATION HEADER
       axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
@@ -84,9 +85,17 @@ function AuthProvider(props) {
     return { state, getAuthState, handleLogin, handleLogout, updateUser };
   }, [state]);
 
-  return (
-    <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
-  );
+  AuthProvider.propTypes = {
+    children: PropTypes.node,
+  };
+
+  AuthProvider.defaultProps = {
+    children: {},
+  };
+
+  const { children } = props;
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 const useAuth = () => useContext(AuthContext);

@@ -2,6 +2,20 @@ import axios from "axios";
 
 import * as c from "../../constants/endpoints/auth";
 
+export function handler(err) {
+  let error = err;
+
+  if (
+    err.response &&
+    Object.prototype.hasOwnProperty.call(err.response.data, "message")
+  )
+    error = err.response.data;
+  else if (!Object.prototype.hasOwnProperty.call(err, "message"))
+    error = err.toJSON();
+
+  return new Error(error.message);
+}
+
 export async function register(data) {
   try {
     const res = await axios.post(c.REGISTER, data);
@@ -30,37 +44,4 @@ export async function forgotPassword(data) {
   } catch (e) {
     throw handler(e);
   }
-}
-
-export async function updateProfile(userId, data) {
-  try {
-    const options = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
-    };
-
-    const form_data = new FormData();
-    for (const key in data) form_data.append(key, data[key]);
-
-    const res = await axios.put(
-      `${c.UPDATE_PROFILE}/${userId}`,
-      form_data,
-      options
-    );
-    return res.data;
-  } catch (e) {
-    throw handler(e);
-  }
-}
-
-export function handler(err) {
-  let error = err;
-
-  if (err.response && err.response.data.hasOwnProperty("message"))
-    error = err.response.data;
-  else if (!err.hasOwnProperty("message")) error = err.toJSON();
-
-  return new Error(error.message);
 }

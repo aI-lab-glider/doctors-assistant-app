@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Alert, View } from "react-native";
+import PropTypes from "prop-types";
 
 import Form from "react-native-basic-form";
 import * as api from "../../modules/services/Auth";
@@ -28,8 +29,8 @@ export default function ForgotPassword(props) {
         [{ text: "OK", onPress: () => navigation.goBack() }],
         { cancelable: false }
       );
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      setError(err.message);
       setLoading(false);
     }
   }
@@ -40,13 +41,23 @@ export default function ForgotPassword(props) {
       <Header title="Recover Password" />
       <View style={{ flex: 1 }}>
         <ErrorText error={error} />
-        <Form {...formProps} />
+        <Form
+          title={formProps.title}
+          fields={formProps.fields}
+          onSubmit={formProps.onSubmit}
+          loading={formProps.loading}
+        />
       </View>
     </View>
   );
 }
+ForgotPassword.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
-ForgotPassword.navigationOptions = ({}) => {
+ForgotPassword.navigationOptions = () => {
   return {
     title: ``,
   };

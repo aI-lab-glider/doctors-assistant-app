@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Alert, View } from "react-native";
+import PropTypes from "prop-types";
 
 import Form from "react-native-basic-form";
 import * as api from "../../modules/services/Auth";
@@ -33,8 +34,8 @@ export default function Register(props) {
         [{ text: "OK", onPress: () => navigation.replace("Login") }],
         { cancelable: false }
       );
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      setError(err.message);
       setLoading(false);
     }
   }
@@ -45,7 +46,12 @@ export default function Register(props) {
       <Header title="Register" />
       <View style={{ flex: 1 }}>
         <ErrorText error={error} />
-        <Form {...formProps}>
+        <Form
+          title={formProps.title}
+          fields={formProps.fields}
+          onSubmit={formProps.onSubmit}
+          loading={formProps.loading}
+        >
           <CTA
             title="Already have an account?"
             ctaText="Login"
@@ -58,7 +64,13 @@ export default function Register(props) {
   );
 }
 
-Register.navigationOptions = ({}) => {
+Register.propTypes = {
+  navigation: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+Register.navigationOptions = () => {
   return {
     title: ``,
   };

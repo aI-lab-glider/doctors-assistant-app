@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { scaleFont } from "./mixins";
 
 // FONT FAMILY
@@ -10,6 +11,7 @@ export const FONT_WEIGHT_REGULAR = "400";
 export const FONT_WEIGHT_BOLD = "700";
 
 // FONT SIZE
+export const FONT_SIZE_25 = scaleFont(25);
 export const FONT_SIZE_16 = scaleFont(16);
 export const FONT_SIZE_14 = scaleFont(14);
 export const FONT_SIZE_12 = scaleFont(12);
@@ -28,4 +30,9 @@ export const FONT_REGULAR = {
 export const FONT_BOLD = {
   fontFamily: FONT_FAMILY_BOLD,
   fontWeight: FONT_WEIGHT_BOLD,
+};
+
+export const FONT_AUTH = {
+  fontFamily: "Roboto",
+  fontWeight: "500",
 };

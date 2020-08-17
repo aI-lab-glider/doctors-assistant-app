@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
+import { Typography, Colors } from "../../constants/styles";
 
 // HEADER COMPONENT
 export const Header = (props) => {
@@ -26,6 +28,15 @@ ErrorText.defaultProps = {
   error: "",
 };
 
+ErrorText.propTypes = {
+  error: PropTypes.string,
+};
+
+Header.propTypes = {
+  title: PropTypes.string,
+  style: PropTypes.objectOf(PropTypes.number),
+};
+
 const styles = StyleSheet.create({
   header: {
     height: 50,
@@ -33,10 +44,10 @@ const styles = StyleSheet.create({
   },
 
   headerText: {
-    fontSize: 25,
-    color: "#362068",
-    fontWeight: "400",
-    fontFamily: "Roboto",
+    fontSize: Typography.FONT_SIZE_25,
+    color: Colors.AUTH_VIOLET_Dark,
+    fontWeight: Typography.FONT_AUTH.fontWeight,
+    fontFamily: Typography.FONT_AUTH.fontFamily,
   },
 
   errorText: {

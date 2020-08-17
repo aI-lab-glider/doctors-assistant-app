@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
+import { Typography, Colors } from "../../constants/styles";
 
 export default function CTA({
   title,
@@ -28,6 +30,14 @@ export default function CTA({
   );
 }
 
+CTA.propTypes = {
+  title: PropTypes.string,
+  ctaText: PropTypes.string,
+  onPress: PropTypes.func,
+  style: PropTypes.objectOf(PropTypes.number),
+  titleStyle: PropTypes.objectOf(PropTypes.number),
+  ctaStyle: PropTypes.objectOf(PropTypes.number),
+};
 CTA.defaultProps = {
   title: null,
   ctaText: null,
@@ -45,15 +55,15 @@ const styles = StyleSheet.create({
   },
 
   footerText: {
-    fontSize: 16,
-    fontFamily: "Roboto",
-    color: "#636466",
+    fontSize: Typography.FONT_SIZE_16,
+    fontFamily: Typography.FONT_AUTH.fontFamily,
+    color: Colors.AUTH_GRAY,
   },
 
   footerCTA: {
-    fontSize: 16,
-    color: "#733AC2",
-    fontWeight: "500",
-    fontFamily: "Roboto",
+    fontSize: Typography.FONT_SIZE_16,
+    color: Colors.AUTH_VIOLET,
+    fontWeight: Typography.FONT_AUTH.fontWeight,
+    fontFamily: Typography.FONT_AUTH.fontFamily,
   },
 });

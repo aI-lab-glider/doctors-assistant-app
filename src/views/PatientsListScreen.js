@@ -4,13 +4,17 @@ import { Button } from "native-base";
 import PropTypes from "prop-types";
 import { Colors } from "../constants/styles";
 import PatientsList from "../components/patientsList";
+import { useAuth } from "../modules/context/Auth";
 
 const PatientsListScreen = ({ navigation }) => {
   const onButtonPressed = () => {
     navigation.navigate("AddPatient");
   };
+  const { state } = useAuth();
+  const { user } = state;
   return (
     <View style={styles.container}>
+      <Text>{`Welcome ${user.firstName} ${user.lastName} `}</Text>
       <PatientsList navigation={navigation} />
       <Button
         onPress={() => onButtonPressed()}
