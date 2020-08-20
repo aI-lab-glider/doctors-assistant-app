@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import PatientsListScreen from "../../views/PatientsListScreen";
 import PatientCardScreen from "../../views/PatientCardScreen";
 import AddPatientScreen from "../../views/AddPatientScreen";
+import { Colors, Typography } from "../../constants/styles";
+import IcoMoonIcon from "../../components/IcoMoonIcon";
 
 const Stack = createStackNavigator();
 
@@ -24,7 +26,47 @@ const MainNavigator = () => {
         <Stack.Screen
           name="AddPatient"
           component={AddPatientScreen}
-          options={{ title: "Add patient" }}
+          options={{
+            title: "Jan Kowalski",
+            headerStyle: {
+              backgroundColor: Colors.PURPLE,
+              height: 105,
+              borderBottomLeftRadius: 50,
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTintColor: Colors.WHITE,
+            headerTitleStyle: {
+              fontSize: Typography.FONT_SIZE_17,
+              alignSelf: "flex-end",
+              color: Colors.PURPLE_VERY_LIGHT,
+              fontFamily: Typography.FONT_FAMILY_BOLD,
+              paddingBottom: 7,
+            },
+            headerBackImage: () => (
+              <IcoMoonIcon
+                name="back"
+                size={12}
+                color={Colors.PURPLE_VERY_LIGHT}
+                style={{
+                  marginLeft: 11,
+                  alignSelf: "flex-start",
+                  fontWeight: Typography.FONT_WEIGHT_BOLD,
+                }}
+              />
+            ),
+            headerRight: () => (
+              <IcoMoonIcon
+                name="person_doctor"
+                size={26}
+                color={Colors.PURPLE_VERY_LIGHT}
+                style={{
+                  marginRight: 30,
+                  marginBottom: 7,
+                }}
+              />
+            ),
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -2,15 +2,14 @@ import React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
+import IcoMoonIcon from "../IcoMoonIcon";
 
-const FormField = ({ name, leftIcon, keyboardType }) => {
+const FormField = ({ name, leftIcon, keyboardType, placeholder }) => {
   const {
     setFieldTouched,
     setFieldValue,
-    values,
     errors,
     touched,
   } = useFormikContext();
@@ -18,16 +17,18 @@ const FormField = ({ name, leftIcon, keyboardType }) => {
   return (
     <>
       <View style={styles.container}>
-        <MaterialCommunityIcons
-          name={leftIcon}
-          size={20}
-          color={Colors.BLACK}
-          style={styles.icon}
-        />
+        {leftIcon && (
+          <IcoMoonIcon
+            name={leftIcon}
+            size={22}
+            color={Colors.PINK_MEDIUM}
+            style={styles.icon}
+          />
+        )}
         <TextInput
           style={styles.input}
-          placeholderTextColor={Colors.GRAY_MEDIUM}
-          value={String(values[name])}
+          placeholderTextColor={Colors.PURPLE_LIGHT}
+          placeholder={placeholder}
           onChangeText={(text) => setFieldValue(name, text)}
           onBlur={() => setFieldTouched(name)}
           keyboardType={keyboardType}
@@ -40,31 +41,38 @@ const FormField = ({ name, leftIcon, keyboardType }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.GRAY_LIGHT,
-    borderRadius: 25,
+    flex: 1,
     flexDirection: "row",
-    padding: 10,
-    marginVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+    padding: 7,
   },
   icon: {
-    marginRight: 10,
+    marginRight: 15,
+    marginTop: 5,
+    position: "absolute",
+    left: 50,
   },
   input: {
-    width: "100%",
-    fontSize: Typography.FONT_SIZE_18,
+    width: "55%",
+    fontSize: Typography.FONT_SIZE_14,
+    fontFamily: Typography.FONT_FAMILY_LIGHT,
     color: Colors.BLACK,
-  },
-  rightIconStyles: {
-    position: "absolute",
-    right: 30,
-    alignSelf: "center",
+    borderBottomColor: Colors.PURPLE_LIGHT,
+    borderBottomWidth: 2,
   },
 });
 
+FormField.defaultProps = {
+  leftIcon: null,
+};
+
 FormField.propTypes = {
   name: PropTypes.string.isRequired,
-  leftIcon: PropTypes.string.isRequired,
+  leftIcon: PropTypes.string,
   keyboardType: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
 };
 
 export default FormField;

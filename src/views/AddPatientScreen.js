@@ -3,23 +3,27 @@ import {
   StyleSheet,
   View,
   KeyboardAvoidingView,
-  Keyboard,
+  Text,
   ScrollView,
-  Picker,
 } from "react-native";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Colors } from "../constants/styles";
+import { Colors, Typography } from "../constants/styles";
 import { PatientsContext } from "../modules/context/PatientsContext";
 import FormField from "../components/forms/FormField";
-import FormPicker from "../components/forms/FormPicker";
 import AppButton from "../components/AppButton";
+import MenUnchecked from "../assets/icons/men_unchecked.svg";
+import WomenUnchecked from "../assets/icons/women_unchecked.svg";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
   surname: Yup.string().required().label("Surname"),
   sex: Yup.string().oneOf(["male", "female"]).required().label("Sex"),
+  pesel: Yup.string()
+    .matches(/^[0-9]{11}$/, "Pesel is not valid")
+    .required()
+    .label("Pesel"),
   phone: Yup.string()
     .matches(/^[0-9+]{8,13}$/, "Phone number is not valid")
     .required()
@@ -39,10 +43,12 @@ const AddPatientScreen = ({ navigation }) => {
     name: "Tabaluga",
     surname: "Smok",
     sex: "male",
+    pesel: "801201234",
     phone: "2342342342",
     weight: 44,
     height: 142,
     bmi: 4,
+    note: "",
   };
 
   const { setPatient } = useContext(PatientsContext);
@@ -51,6 +57,7 @@ const AddPatientScreen = ({ navigation }) => {
     patient.name = values.name;
     patient.surname = values.surname;
     patient.sex = values.sex;
+    patient.pesel = values.pesel;
     patient.phone = values.phone;
     patient.weight = parseInt(values.weight, 10);
     patient.height = parseInt(values.height, 10);
@@ -60,25 +67,30 @@ const AddPatientScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView onPress={Keyboard.dismiss}>
+    <KeyboardAvoidingView style={styles.backgroundContainer}>
       <ScrollView>
         <View style={styles.container}>
+          <Text style={styles.titleText}>Nowy pacjent</Text>
+          <Text style={styles.basicDataText}>Dane podstawowe</Text>
           <Formik
             initialValues={{
-              name: patient.name,
-              surname: patient.surname,
-              sex: patient.sex,
-              phone: patient.phone,
-              weight: patient.weight.toString(),
-              height: patient.height.toString(),
-              bmi: patient.bmi.toString(),
+              name: "",
+              surname: "",
+              sex: "male",
+              code: "",
+              pesel: "",
+              day_of_birth: "",
+              phone: "",
+              weight: "",
+              height: "",
+              bmi: "",
+              note: "",
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => onButtonPressed(values)}
           >
             {({
               handleChange,
-              values,
               handleSubmit,
               isValid,
               handleBlur,
@@ -87,69 +99,80 @@ const AddPatientScreen = ({ navigation }) => {
               <>
                 <FormField
                   name="name"
-                  leftIcon="account"
+                  leftIcon="name_surname"
                   autoFocus
-                  value={values.name}
                   onChangeText={handleChange("name")}
-                  placeholder="Enter name"
+                  placeholder="Imię"
                   onBlur={handleBlur("name")}
                   keyboardType="default"
                 />
                 <FormField
                   name="surname"
-                  leftIcon="account"
-                  value={values.surname}
                   onChangeText={handleChange("surname")}
-                  placeholder="Enter surname"
+                  placeholder="Nazwisko"
                   onBlur={handleBlur("surname")}
                   keyboardType="default"
                 />
-                <FormPicker
-                  name="sex"
-                  selectedValue={values.sex}
-                  onValueChange={handleChange("sex")}
-                  mode="dropdown"
-                  leftIcon="intersex"
-                >
-                  <Picker.Item label="mężczyzna" value="male" />
-                  <Picker.Item label="kobieta" value="female" />
-                </FormPicker>
+                <View style={styles.sexChoice}>
+                  <MenUnchecked style={styles.menIcon} />
+                  <WomenUnchecked style={styles.womenIcon} />
+                </View>
                 <FormField
-                  name="phone"
-                  leftIcon="phone"
-                  value={values.phone}
-                  onChangeText={handleChange("phone")}
-                  placeholder="Enter phone"
-                  onBlur={handleBlur("phone")}
-                  keyboardType="phone-pad"
+                  name="code"
+                  onChangeText={handleChange("code")}
+                  placeholder="Kod rozpoznania"
+                  onBlur={handleBlur("code")}
+                  keyboardType="default"
                 />
                 <FormField
-                  name="weight"
-                  leftIcon="weight-kilogram"
-                  value={values.weight}
-                  onChangeText={handleChange("weight")}
-                  placeholder="Enter weight"
-                  onBlur={handleBlur("weight")}
+                  name="pesel"
+                  onChangeText={handleChange("pesel")}
+                  placeholder="Pesel"
+                  onBlur={handleBlur("pesel")}
+                  keyboardType="numeric"
+                />
+                <FormField
+                  name="day_of_birth"
+                  onChangeText={handleChange("day_of_birth")}
+                  placeholder="Dzień miesiąc rok"
+                  onBlur={handleBlur("day_of_birth")}
                   keyboardType="numeric"
                 />
                 <FormField
                   name="height"
-                  leftIcon="human-male-height-variant"
-                  value={values.height}
+                  leftIcon="height"
                   onChangeText={handleChange("height")}
-                  placeholder="Enter height"
+                  placeholder="Wzrost"
                   onBlur={handleBlur("height")}
                   keyboardType="numeric"
                 />
                 <FormField
+                  name="weight"
+                  leftIcon="weight"
+                  onChangeText={handleChange("weight")}
+                  placeholder="Waga"
+                  onBlur={handleBlur("weight")}
+                  keyboardType="numeric"
+                />
+                <FormField
                   name="bmi"
-                  leftIcon="account"
-                  value={values.bmi}
+                  leftIcon="bmi"
                   onChangeText={handleChange("bmi")}
-                  placeholder="Enter bmi"
+                  placeholder="BMI"
                   onBlur={handleBlur("bmi")}
                   keyboardType="numeric"
                 />
+                <Text style={styles.noteText}>Notatka</Text>
+                <FormField
+                  name="note"
+                  multiline
+                  leftIcon="note"
+                  onChangeText={handleChange("note")}
+                  placeholder="Miejsce na notatkę"
+                  onBlur={handleBlur("note")}
+                  keyboardType="default"
+                />
+
                 <View style={styles.buttonContainer}>
                   <AppButton
                     buttonType="outline"
@@ -169,24 +192,53 @@ const AddPatientScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  backgroundContainer: {
+    flex: 1,
+    backgroundColor: Colors.PURPLE,
+  },
   container: {
     flex: 1,
-    backgroundColor: Colors.GRAY_MEDIUM,
-  },
-  button: {
-    alignSelf: "center",
-    color: Colors.PRIMARY,
-  },
-  nameInput: {
-    alignSelf: "center",
-    height: 50,
-    width: 200,
-    borderColor: "gray",
-    borderWidth: 1,
-    margin: 10,
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+    borderTopRightRadius: 50,
+    paddingTop: 22,
   },
   buttonContainer: {
     margin: 25,
+  },
+  titleText: {
+    marginLeft: 30,
+    marginBottom: 10,
+    color: Colors.PURPLE,
+    fontSize: Typography.FONT_SIZE_16,
+    fontFamily: Typography.FONT_FAMILY_BOLD,
+  },
+  basicDataText: {
+    color: Colors.PURPLE,
+    marginLeft: 30,
+    fontSize: Typography.FONT_SIZE_12,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+  },
+  noteText: {
+    color: Colors.PURPLE,
+    marginLeft: 30,
+    paddingTop: 25,
+    fontSize: Typography.FONT_SIZE_12,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+  },
+  sexChoice: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: 15,
+    paddingBottom: 4,
+  },
+  menIcon: {
+    alignSelf: "flex-end",
+    marginLeft: -60,
+  },
+  womenIcon: {
+    alignSelf: "flex-start",
+    marginLeft: 50,
   },
 });
 
