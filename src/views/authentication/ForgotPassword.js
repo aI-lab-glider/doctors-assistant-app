@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { Alert, View } from "react-native";
 import PropTypes from "prop-types";
-
+import React, { useState } from "react";
+import { Alert, StyleSheet, View } from "react-native";
 import Form from "react-native-basic-form";
-import * as api from "../../modules/services/Auth";
-
-import { Header, ErrorText } from "../../components/authentication/Shared";
+import { ErrorText, Header } from "../../components/authentication/Shared";
+import * as api from "../../api/Auth";
+import { Colors } from "../../constants/styles";
 
 export default function ForgotPassword(props) {
   const { navigation } = props;
@@ -37,9 +36,9 @@ export default function ForgotPassword(props) {
 
   const formProps = { title: "Submit", fields, onSubmit, loading };
   return (
-    <View style={{ flex: 1, paddingHorizontal: 16, backgroundColor: "#fff" }}>
+    <View style={styles.container}>
       <Header title="Recover Password" />
-      <View style={{ flex: 1 }}>
+      <View style={styles.inputs}>
         <ErrorText error={error} />
         <Form
           title={formProps.title}
@@ -51,6 +50,18 @@ export default function ForgotPassword(props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: Colors.WHITE,
+  },
+  inputs: {
+    flex: 1,
+  },
+});
+
 ForgotPassword.propTypes = {
   navigation: PropTypes.shape({
     goBack: PropTypes.func.isRequired,

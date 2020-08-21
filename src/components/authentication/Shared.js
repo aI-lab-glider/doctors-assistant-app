@@ -1,12 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { Typography, Colors } from "../../constants/styles";
 
 // HEADER COMPONENT
-export const Header = (props) => {
-  const { title, style } = props;
-
+export const Header = ({ title, style }) => {
   return (
     <View style={[styles.header, style]}>
       <Text style={styles.headerText}>{title}</Text>
@@ -15,7 +13,6 @@ export const Header = (props) => {
 };
 
 Header.defaultProps = {
-  title: "",
   style: {},
 };
 
@@ -33,8 +30,8 @@ ErrorText.propTypes = {
 };
 
 Header.propTypes = {
-  title: PropTypes.string,
-  style: PropTypes.objectOf(PropTypes.number),
+  title: PropTypes.string.isRequired,
+  style: ViewPropTypes.style,
 };
 
 const styles = StyleSheet.create({

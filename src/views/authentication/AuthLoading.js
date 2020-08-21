@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { ActivityIndicator, View, Text } from "react-native";
 import { StackActions } from "@react-navigation/native";
 import PropTypes from "prop-types";
-
+import React, { useEffect } from "react";
+import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
 import { useAuth } from "../../modules/context/Auth";
+import { Colors } from "../../constants/styles";
 
 export default function AuthLoading({ navigation }) {
   const { navigate } = navigation;
@@ -35,16 +35,16 @@ export default function AuthLoading({ navigation }) {
       navigate: PropTypes.func.isRequired,
     }).isRequired,
   };
-
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: Colors.WHITE,
+      alignItems: "center",
+      justifyContent: "center",
+      flex: 1,
+    },
+  });
   return (
-    <View
-      style={{
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-        flex: 1,
-      }}
-    >
+    <View style={styles.container}>
       <ActivityIndicator />
       <Text>Loading User Data</Text>
     </View>

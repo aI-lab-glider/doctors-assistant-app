@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import * as c from "../../constants/endpoints/auth";
+import * as endpoints from "../constants/endpoints/auth";
 
 export function handler(err) {
   let error = err;
@@ -18,9 +18,9 @@ export function handler(err) {
 
 export async function register(data) {
   try {
-    const res = await axios.post(c.REGISTER, data);
+    const response = await axios.post(endpoints.REGISTER, data);
 
-    return res.data;
+    return response.data;
   } catch (e) {
     throw handler(e);
   }
@@ -28,9 +28,9 @@ export async function register(data) {
 
 export async function login(data) {
   try {
-    const res = await axios.post(c.LOGIN, data);
+    const response = await axios.post(endpoints.LOGIN, data);
 
-    return res.data;
+    return response.data;
   } catch (e) {
     throw handler(e);
   }
@@ -38,9 +38,9 @@ export async function login(data) {
 
 export async function forgotPassword(data) {
   try {
-    const res = await axios.post(c.FORGOT_PASSWORD, data);
+    const response = await axios.post(endpoints.FORGOT_PASSWORD, data);
 
-    return res.data;
+    return response.data;
   } catch (e) {
     throw handler(e);
   }

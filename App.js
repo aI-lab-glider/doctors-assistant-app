@@ -4,6 +4,7 @@ import PatientsContextProvider from "./src/modules/context/PatientsContext";
 
 export default function App() {
   console.log(`Initialize app in ${process.env.NODE_ENV}`);
+  console.log(`${process.env.AUTH_API_URL}/user/upload`);
   return (
     <PatientsContextProvider>
       <MainNavigator />

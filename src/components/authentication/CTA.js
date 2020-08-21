@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ViewPropTypes,
+} from "react-native";
 import PropTypes from "prop-types";
 import { Typography, Colors } from "../../constants/styles";
 
@@ -34,9 +40,9 @@ CTA.propTypes = {
   title: PropTypes.string,
   ctaText: PropTypes.string,
   onPress: PropTypes.func,
-  style: PropTypes.objectOf(PropTypes.number),
-  titleStyle: PropTypes.objectOf(PropTypes.number),
-  ctaStyle: PropTypes.objectOf(PropTypes.number),
+  style: ViewPropTypes.style,
+  titleStyle: ViewPropTypes.style,
+  ctaStyle: ViewPropTypes.style,
 };
 CTA.defaultProps = {
   title: null,

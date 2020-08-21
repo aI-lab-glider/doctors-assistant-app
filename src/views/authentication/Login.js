@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
 import Form from "react-native-basic-form";
-import * as api from "../../modules/services/Auth";
+import * as api from "../../api/Auth";
 import { useAuth } from "../../modules/context/Auth";
 
 import CTA from "../../components/authentication/CTA";
 import { Header, ErrorText } from "../../components/authentication/Shared";
+import { Colors } from "../../constants/styles";
 
 export default function Login(props) {
   const { navigation } = props;
@@ -44,9 +45,9 @@ export default function Login(props) {
 
   const formProps = { title: "Login", fields, onSubmit, loading };
   return (
-    <View style={{ flex: 1, paddingHorizontal: 16, backgroundColor: "#fff" }}>
+    <View style={styles.container}>
       <Header title="Login" />
-      <View style={{ flex: 1 }}>
+      <View style={styles.inputs}>
         <ErrorText error={error} />
         <Form
           title={formProps.title}
@@ -57,20 +58,37 @@ export default function Login(props) {
           <CTA
             ctaText="Forgot Password?"
             onPress={() => navigation.navigate("ForgotPassword")}
-            style={{ marginTop: 20 }}
+            style={styles.forgotPassword}
           />
 
           <CTA
             title={"Don't have an account?"}
             ctaText="Register"
             onPress={() => navigation.replace("Register")}
-            style={{ marginTop: 50 }}
+            style={styles.register}
           />
         </Form>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: Colors.WHITE,
+  },
+  register: {
+    marginTop: 50,
+  },
+  forgotPassword: {
+    marginTop: 20,
+  },
+  inputs: {
+    flex: 1,
+  },
+});
 
 Login.propTypes = {
   navigation: PropTypes.shape({

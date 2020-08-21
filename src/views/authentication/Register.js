@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { Alert, View } from "react-native";
 import PropTypes from "prop-types";
-
+import React, { useState } from "react";
+import { Alert, View, StyleSheet } from "react-native";
 import Form from "react-native-basic-form";
-import * as api from "../../modules/services/Auth";
-
 import CTA from "../../components/authentication/CTA";
-import { Header, ErrorText } from "../../components/authentication/Shared";
+import { ErrorText, Header } from "../../components/authentication/Shared";
+import { Colors } from "../../constants/styles";
+import * as api from "../../api/Auth";
 
 export default function Register(props) {
   const { navigation } = props;
@@ -42,9 +41,9 @@ export default function Register(props) {
 
   const formProps = { title: "Register", fields, onSubmit, loading };
   return (
-    <View style={{ flex: 1, paddingHorizontal: 16, backgroundColor: "#fff" }}>
+    <View style={styles.container}>
       <Header title="Register" />
-      <View style={{ flex: 1 }}>
+      <View style={styles.inputs}>
         <ErrorText error={error} />
         <Form
           title={formProps.title}
@@ -56,13 +55,27 @@ export default function Register(props) {
             title="Already have an account?"
             ctaText="Login"
             onPress={() => navigation.replace("Login")}
-            style={{ marginTop: 50 }}
+            style={styles.login}
           />
         </Form>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: Colors.WHITE,
+  },
+  login: {
+    marginTop: 50,
+  },
+  inputs: {
+    flex: 1,
+  },
+});
 
 Register.propTypes = {
   navigation: PropTypes.shape({

@@ -1,14 +1,13 @@
 import React, { useMemo, useReducer, useContext } from "react";
-import { AsyncStorage } from "react-native"; // depracated ?
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { TOKEN_KEY, USER_KEY } from "../../constants/keys/Auth";
 
 // IMPORT REDUCER, INITIAL STATE AND ACTION TYPES
 import reducer, { initialState, LOGGED_IN, LOGGED_OUT } from "./AuthReducer";
 
 // CONFIG KEYS [Storage Keys]===================================
-export const TOKEN_KEY = "token";
-export const USER_KEY = "user";
 export const keys = [TOKEN_KEY, USER_KEY];
 
 // CONTEXT ===================================
@@ -21,8 +20,8 @@ function AuthProvider(props) {
   const getAuthState = async () => {
     try {
       // GET TOKEN && USER
-      const token = await AsyncStorage.getItem(TOKEN_KEY);
-      let user = await AsyncStorage.getItem(USER_KEY);
+      const token = await SecureStore.getItemAsync(TOKEN_KEY);
+      let user = await SecureStore.getItemAsync(USER_KEY);
       user = JSON.parse(user);
 
       if (token !== null && user !== null) await handleLogin({ token, user });
@@ -39,11 +38,10 @@ function AuthProvider(props) {
     try {
       // STORE DATA
       const { token, user } = data;
-      const recievedData = [
-        [USER_KEY, JSON.stringify(user)],
-        [TOKEN_KEY, token],
-      ];
-      await AsyncStorage.multiSet(recievedData);
+
+      // TODO use Promise.all for multiple Key sets
+      await SecureStore.setItemAsync(USER_KEY, JSON.stringify(user));
+      await SecureStore.setItemAsync(TOKEN_KEY, token);
 
       // AXIOS AUTHORIZATION HEADER
       axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
@@ -59,7 +57,10 @@ function AuthProvider(props) {
   const handleLogout = async () => {
     try {
       // REMOVE DATA
-      await AsyncStorage.multiRemove(keys);
+
+      // TODO? use Promise.all for multiple Key sets
+      await SecureStore.deleteItemAsync(TOKEN_KEY);
+      await SecureStore.deleteItemAsync(USER_KEY);
 
       // AXIOS AUTHORIZATION HEADER
       delete axios.defaults.headers.common.Authorization;
@@ -74,7 +75,7 @@ function AuthProvider(props) {
   // UPDATE USER LOCAL STORAGE DATA AND DISPATCH TO REDUCER
   const updateUser = async (user) => {
     try {
-      await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
+      await SecureStore.setItemAsync(USER_KEY, JSON.stringify(user));
       dispatch({ type: LOGGED_IN, user }); // DISPATCH TO REDUCER
     } catch (error) {
       throw new Error(error);
