@@ -5,7 +5,7 @@ import PatientsListScreen from "../../views/PatientsListScreen";
 import PatientCardScreen from "../../views/PatientCardScreen";
 import AddPatientScreen from "../../views/AddPatientScreen";
 import { Colors, Typography } from "../../constants/styles";
-import IcoMoonIcon from "../../components/IcoMoonIcon";
+import FontForgeIcon from "../../components/FontForgeIcon";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +27,7 @@ const MainNavigator = () => {
           name="AddPatient"
           component={AddPatientScreen}
           options={{
-            title: "Jan Kowalski",
+            title: "Dane osobowe",
             headerStyle: {
               backgroundColor: Colors.PURPLE,
               height: 105,
@@ -38,15 +38,15 @@ const MainNavigator = () => {
             headerTintColor: Colors.WHITE,
             headerTitleStyle: {
               fontSize: Typography.FONT_SIZE_17,
-              alignSelf: "flex-end",
+              alignSelf: "center",
               color: Colors.PURPLE_VERY_LIGHT,
               fontFamily: Typography.FONT_FAMILY_BOLD,
               paddingBottom: 7,
             },
             headerBackImage: () => (
-              <IcoMoonIcon
+              <FontForgeIcon
                 name="back"
-                size={12}
+                size={32}
                 color={Colors.PURPLE_VERY_LIGHT}
                 style={{
                   marginLeft: 11,
@@ -56,12 +56,12 @@ const MainNavigator = () => {
               />
             ),
             headerRight: () => (
-              <IcoMoonIcon
+              <FontForgeIcon
                 name="person_doctor"
-                size={26}
+                size={30}
                 color={Colors.PURPLE_VERY_LIGHT}
                 style={{
-                  marginRight: 30,
+                  marginRight: 20,
                   marginBottom: 7,
                 }}
               />

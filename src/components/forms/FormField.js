@@ -4,7 +4,7 @@ import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
-import IcoMoonIcon from "../IcoMoonIcon";
+import FontForgeIcon from "../FontForgeIcon";
 
 const FormField = ({ name, leftIcon, keyboardType, placeholder }) => {
   const {
@@ -18,9 +18,9 @@ const FormField = ({ name, leftIcon, keyboardType, placeholder }) => {
     <>
       <View style={styles.container}>
         {leftIcon && (
-          <IcoMoonIcon
+          <FontForgeIcon
             name={leftIcon}
-            size={22}
+            size={30}
             color={Colors.PINK_MEDIUM}
             style={styles.icon}
           />
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 15,
-    marginTop: 5,
     position: "absolute",
     left: 50,
   },

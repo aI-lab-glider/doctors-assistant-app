@@ -6,7 +6,7 @@ import PatientsContextProvider from "./src/modules/context/PatientsContext";
 import OpenSansLight from "./src/assets/fonts/OpenSans-Light.ttf";
 import OpenSansRegular from "./src/assets/fonts/OpenSans-Regular.ttf";
 import OpenSansBold from "./src/assets/fonts/OpenSans-Bold.ttf";
-import IcoMoon from "./src/assets/fonts/icomoon.ttf";
+import IconFont from "./src/assets/fonts/IconFont.ttf";
 
 export default function App() {
   console.log(`Initialize app in ${process.env.NODE_ENV}`);
@@ -15,7 +15,7 @@ export default function App() {
     "OpenSans-Light": OpenSansLight,
     "OpenSans-Regular": OpenSansRegular,
     "OpenSans-Bold": OpenSansBold,
-    IcoMoon,
+    IconFont,
   });
 
   if (!fontsLoaded) {

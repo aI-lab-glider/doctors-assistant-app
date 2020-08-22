@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Text,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import PropTypes from "prop-types";
 import * as Yup from "yup";
@@ -13,27 +14,29 @@ import { Colors, Typography } from "../constants/styles";
 import { PatientsContext } from "../modules/context/PatientsContext";
 import FormField from "../components/forms/FormField";
 import AppButton from "../components/AppButton";
-import MenUnchecked from "../assets/icons/men_unchecked.svg";
-import WomenUnchecked from "../assets/icons/women_unchecked.svg";
+import FontForgeIcon from "../components/FontForgeIcon";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
   surname: Yup.string().required().label("Surname"),
   sex: Yup.string().oneOf(["male", "female"]).required().label("Sex"),
+  code: Yup.string().label("Code"),
   pesel: Yup.string()
     .matches(/^[0-9]{11}$/, "Pesel is not valid")
     .required()
     .label("Pesel"),
-  phone: Yup.string()
-    .matches(/^[0-9+]{8,13}$/, "Phone number is not valid")
-    .required()
-    .label("Phone"),
+  day_of_birth: Yup.string().label("Day_of_birth"),
+  // phone: Yup.string()
+  //   .matches(/^[0-9+]{8,13}$/, "Phone number is not valid")
+  //   .required()
+  //   .label("Phone"),
   weight: Yup.number().integer().required().label("Weight"),
   height: Yup.number()
     .integer()
     .required("Please enter height in cm")
     .label("Height"),
   bmi: Yup.number().required().label("Bmi"),
+  note: Yup.string().label("Note"),
 });
 
 const AddPatientScreen = ({ navigation }) => {
@@ -43,8 +46,10 @@ const AddPatientScreen = ({ navigation }) => {
     name: "Tabaluga",
     surname: "Smok",
     sex: "male",
+    code: "F32.00",
     pesel: "801201234",
-    phone: "2342342342",
+    day_of_birth: "01-12-80",
+    // phone: "2342342342",
     weight: 44,
     height: 142,
     bmi: 4,
@@ -57,11 +62,14 @@ const AddPatientScreen = ({ navigation }) => {
     patient.name = values.name;
     patient.surname = values.surname;
     patient.sex = values.sex;
+    patient.code = values.code;
     patient.pesel = values.pesel;
-    patient.phone = values.phone;
+    patient.day_of_birth = values.day_of_birth;
+    // patient.phone = values.phone;
     patient.weight = parseInt(values.weight, 10);
     patient.height = parseInt(values.height, 10);
     patient.bmi = parseInt(values.bmi, 10);
+    patient.note = values.note;
     setPatient(patient);
     navigation.navigate("PatientsList");
   };
@@ -71,7 +79,6 @@ const AddPatientScreen = ({ navigation }) => {
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.titleText}>Nowy pacjent</Text>
-          <Text style={styles.basicDataText}>Dane podstawowe</Text>
           <Formik
             initialValues={{
               name: "",
@@ -80,7 +87,7 @@ const AddPatientScreen = ({ navigation }) => {
               code: "",
               pesel: "",
               day_of_birth: "",
-              phone: "",
+              // phone: "",
               weight: "",
               height: "",
               bmi: "",
@@ -114,8 +121,34 @@ const AddPatientScreen = ({ navigation }) => {
                   keyboardType="default"
                 />
                 <View style={styles.sexChoice}>
-                  <MenUnchecked style={styles.menIcon} />
-                  <WomenUnchecked style={styles.womenIcon} />
+                  <TouchableOpacity
+                    style={styles.menChoice}
+                    value="male"
+                    onPress={() => {
+                      handleChange("sex");
+                    }}
+                  >
+                    <FontForgeIcon
+                      name="men_choice"
+                      size={40}
+                      color={Colors.PURPLE_LIGHT}
+                      style={styles.menIcon}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.womenChoice}
+                    value="female"
+                    onPress={() => {
+                      handleChange("sex");
+                    }}
+                  >
+                    <FontForgeIcon
+                      name="women_choice"
+                      size={40}
+                      color={Colors.PURPLE_LIGHT}
+                      style={styles.womenIcon}
+                    />
+                  </TouchableOpacity>
                 </View>
                 <FormField
                   name="code"
@@ -207,7 +240,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     marginLeft: 30,
-    marginBottom: 10,
+    marginBottom: 20,
     color: Colors.PURPLE,
     fontSize: Typography.FONT_SIZE_16,
     fontFamily: Typography.FONT_FAMILY_BOLD,
@@ -229,12 +262,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
-    paddingTop: 15,
+    paddingTop: 12,
     paddingBottom: 4,
+    marginLeft: -60,
+  },
+  menChoice: {
+    alignSelf: "flex-end",
+  },
+  womenChoice: {
+    alignSelf: "flex-end",
   },
   menIcon: {
-    alignSelf: "flex-end",
-    marginLeft: -60,
+    alignSelf: "flex-start",
   },
   womenIcon: {
     alignSelf: "flex-start",
