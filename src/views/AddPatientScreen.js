@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -57,6 +57,8 @@ const AddPatientScreen = ({ navigation }) => {
   };
 
   const { setPatient } = useContext(PatientsContext);
+  const [isMenChosen, setMenChoice] = useState(true);
+  const [isWomenChosen, setWomenChoice] = useState(false);
 
   const onButtonPressed = (values) => {
     patient.name = values.name;
@@ -102,6 +104,7 @@ const AddPatientScreen = ({ navigation }) => {
               isValid,
               handleBlur,
               isSubmitting,
+              setFieldValue,
             }) => (
               <>
                 <FormField
@@ -123,29 +126,37 @@ const AddPatientScreen = ({ navigation }) => {
                 <View style={styles.sexChoice}>
                   <TouchableOpacity
                     style={styles.menChoice}
-                    value="male"
                     onPress={() => {
-                      handleChange("sex");
+                      if (!isMenChosen && isWomenChosen) {
+                        setWomenChoice(false);
+                        setMenChoice(true);
+                        setFieldValue("sex", "male");
+                      }
                     }}
                   >
                     <FontForgeIcon
                       name="men_choice"
                       size={40}
-                      color={Colors.PURPLE_LIGHT}
+                      color={isMenChosen ? Colors.PURPLE : Colors.PURPLE_LIGHT}
                       style={styles.menIcon}
                     />
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.womenChoice}
-                    value="female"
                     onPress={() => {
-                      handleChange("sex");
+                      if (!isWomenChosen && isMenChosen) {
+                        setWomenChoice(true);
+                        setMenChoice(false);
+                        setFieldValue("sex", "female");
+                      }
                     }}
                   >
                     <FontForgeIcon
                       name="women_choice"
                       size={40}
-                      color={Colors.PURPLE_LIGHT}
+                      color={
+                        isWomenChosen ? Colors.PURPLE : Colors.PURPLE_LIGHT
+                      }
                       style={styles.womenIcon}
                     />
                   </TouchableOpacity>

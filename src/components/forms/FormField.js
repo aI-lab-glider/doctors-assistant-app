@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 15,
     position: "absolute",
-    left: 50,
+    left: 40,
   },
   input: {
     width: "55%",
