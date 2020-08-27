@@ -5,60 +5,44 @@ import {
   KeyboardAvoidingView,
   Text,
   ScrollView,
-  TouchableOpacity,
 } from "react-native";
 import PropTypes from "prop-types";
-import * as Yup from "yup";
 import { Formik } from "formik";
+import dateFormat from "dateformat";
 import { Colors, Typography } from "../constants/styles";
 import { PatientsContext } from "../modules/context/PatientsContext";
 import FormField from "../components/forms/FormField";
+import SexFormField from "../components/forms/SexFormField";
+import PeselFormField from "../components/forms/PeselFormField";
+import WeightFormField from "../components/forms/WeightFormField";
+import BmiFormField from "../components/forms/BmiFormField";
+import CheckboxFormField from "../components/forms/CheckboxFormField";
 import AppButton from "../components/AppButton";
-import FontForgeIcon from "../components/FontForgeIcon";
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
-  surname: Yup.string().required().label("Surname"),
-  sex: Yup.string().oneOf(["male", "female"]).required().label("Sex"),
-  code: Yup.string().label("Code"),
-  pesel: Yup.string()
-    .matches(/^[0-9]{11}$/, "Pesel is not valid")
-    .required()
-    .label("Pesel"),
-  day_of_birth: Yup.string().label("Day_of_birth"),
-  // phone: Yup.string()
-  //   .matches(/^[0-9+]{8,13}$/, "Phone number is not valid")
-  //   .required()
-  //   .label("Phone"),
-  weight: Yup.number().integer().required().label("Weight"),
-  height: Yup.number()
-    .integer()
-    .required("Please enter height in cm")
-    .label("Height"),
-  bmi: Yup.number().required().label("Bmi"),
-  note: Yup.string().label("Note"),
-});
+// import FontForgeIcon from "../components/FontForgeIcon";
+import validationSchema from "../components/forms/validationSchema";
 
 const AddPatientScreen = ({ navigation }) => {
   // ID = key (PatientContextReducer) => first press - add Tabaluga, second press - edit his name
   const patient = {
     id: 7,
-    name: "Tabaluga",
-    surname: "Smok",
+    name: "",
+    surname: "",
     sex: "male",
-    code: "F32.00",
-    pesel: "801201234",
-    day_of_birth: "01-12-80",
-    // phone: "2342342342",
-    weight: 44,
-    height: 142,
-    bmi: 4,
+    code: "",
+    pesel: "",
+    date_of_birth: "",
+    weight: 0,
+    height: 0,
+    bmi: 0,
     note: "",
+    phone: "",
+    person_authorized: "",
+    phone_authorized: "",
+    guardianship: false,
   };
 
   const { setPatient } = useContext(PatientsContext);
-  const [isMenChosen, setMenChoice] = useState(true);
-  const [isWomenChosen, setWomenChoice] = useState(false);
+  const [isChecked, setChecked] = useState(false);
 
   const onButtonPressed = (values) => {
     patient.name = values.name;
@@ -66,14 +50,46 @@ const AddPatientScreen = ({ navigation }) => {
     patient.sex = values.sex;
     patient.code = values.code;
     patient.pesel = values.pesel;
-    patient.day_of_birth = values.day_of_birth;
-    // patient.phone = values.phone;
+    patient.date_of_birth = values.date_of_birth;
     patient.weight = parseInt(values.weight, 10);
     patient.height = parseInt(values.height, 10);
-    patient.bmi = parseInt(values.bmi, 10);
+    patient.bmi = parseFloat(Math.round(values.bmi * 100) / 100);
     patient.note = values.note;
+    patient.phone = values.phone;
+    patient.person_authorized = values.person_authorized;
+    patient.phone_authorized = values.phone_authorized;
+    patient.guardianship = values.guardianship;
     setPatient(patient);
     navigation.navigate("PatientsList");
+  };
+
+  const calculateDateOfBirthValue = (pesel) => {
+    const peselArray = Array.from(pesel).map(Number);
+    if (peselArray.length === 11) {
+      let year = 1900 + peselArray[0] * 10 + peselArray[1];
+      if (peselArray[2] >= 2 && peselArray[2] < 8)
+        year += Math.floor(peselArray[2] / 2) * 100;
+      if (peselArray[2] >= 8) year -= 100;
+
+      const month = (peselArray[2] % 2) * 10 + peselArray[3];
+      const day = peselArray[4] * 10 + peselArray[5];
+
+      const dateOfBirth = new Date(year, month - 1, day);
+      const dateOfBirthFormatted = dateFormat(dateOfBirth, "dd - mm - yyyy");
+      patient.date_of_birth = dateOfBirthFormatted;
+      return dateOfBirthFormatted;
+    }
+    return null;
+  };
+
+  const calculateBmiValue = (height, weight) => {
+    if (height && weight > 10) {
+      const heightInMeters = height / 100;
+      const bmi = weight / (heightInMeters * heightInMeters);
+      patient.bmi = parseFloat(bmi, 10).toFixed(2);
+      return parseFloat(bmi, 10).toFixed(2);
+    }
+    return 0;
   };
 
   return (
@@ -82,24 +98,14 @@ const AddPatientScreen = ({ navigation }) => {
         <View style={styles.container}>
           <Text style={styles.titleText}>Nowy pacjent</Text>
           <Formik
-            initialValues={{
-              name: "",
-              surname: "",
-              sex: "male",
-              code: "",
-              pesel: "",
-              day_of_birth: "",
-              // phone: "",
-              weight: "",
-              height: "",
-              bmi: "",
-              note: "",
-            }}
+            initialValues={patient}
+            enableReinitialize
             validationSchema={validationSchema}
             onSubmit={(values) => onButtonPressed(values)}
           >
             {({
               handleChange,
+              values,
               handleSubmit,
               isValid,
               handleBlur,
@@ -109,12 +115,12 @@ const AddPatientScreen = ({ navigation }) => {
               <>
                 <FormField
                   name="name"
-                  leftIcon="name_surname"
-                  autoFocus
+                  leftIcon="person"
                   onChangeText={handleChange("name")}
                   placeholder="Imię"
                   onBlur={handleBlur("name")}
                   keyboardType="default"
+                  autoFocus
                 />
                 <FormField
                   name="surname"
@@ -123,44 +129,7 @@ const AddPatientScreen = ({ navigation }) => {
                   onBlur={handleBlur("surname")}
                   keyboardType="default"
                 />
-                <View style={styles.sexChoice}>
-                  <TouchableOpacity
-                    style={styles.menChoice}
-                    onPress={() => {
-                      if (!isMenChosen && isWomenChosen) {
-                        setWomenChoice(false);
-                        setMenChoice(true);
-                        setFieldValue("sex", "male");
-                      }
-                    }}
-                  >
-                    <FontForgeIcon
-                      name="men_choice"
-                      size={40}
-                      color={isMenChosen ? Colors.PURPLE : Colors.PURPLE_LIGHT}
-                      style={styles.menIcon}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.womenChoice}
-                    onPress={() => {
-                      if (!isWomenChosen && isMenChosen) {
-                        setWomenChoice(true);
-                        setMenChoice(false);
-                        setFieldValue("sex", "female");
-                      }
-                    }}
-                  >
-                    <FontForgeIcon
-                      name="women_choice"
-                      size={40}
-                      color={
-                        isWomenChosen ? Colors.PURPLE : Colors.PURPLE_LIGHT
-                      }
-                      style={styles.womenIcon}
-                    />
-                  </TouchableOpacity>
-                </View>
+                <SexFormField name="sex" />
                 <FormField
                   name="code"
                   onChangeText={handleChange("code")}
@@ -168,19 +137,29 @@ const AddPatientScreen = ({ navigation }) => {
                   onBlur={handleBlur("code")}
                   keyboardType="default"
                 />
-                <FormField
+                <PeselFormField
                   name="pesel"
                   onChangeText={handleChange("pesel")}
                   placeholder="Pesel"
                   onBlur={handleBlur("pesel")}
                   keyboardType="numeric"
+                  calculateDependentValue={calculateDateOfBirthValue}
                 />
                 <FormField
-                  name="day_of_birth"
-                  onChangeText={handleChange("day_of_birth")}
-                  placeholder="Dzień miesiąc rok"
-                  onBlur={handleBlur("day_of_birth")}
+                  name="date_of_birth"
+                  placeholder={
+                    patient.date_of_birth === ""
+                      ? "Dzień miesiąc rok"
+                      : patient.date_of_birth
+                  }
+                  onBlur={handleBlur("date_of_birth")}
                   keyboardType="numeric"
+                  value={
+                    calculateDateOfBirthValue(values.pesel) === 0
+                      ? null
+                      : patient.date_of_birth
+                  }
+                  editable={false}
                 />
                 <FormField
                   name="height"
@@ -190,42 +169,83 @@ const AddPatientScreen = ({ navigation }) => {
                   onBlur={handleBlur("height")}
                   keyboardType="numeric"
                 />
-                <FormField
+                <WeightFormField
                   name="weight"
                   leftIcon="weight"
                   onChangeText={handleChange("weight")}
                   placeholder="Waga"
                   onBlur={handleBlur("weight")}
                   keyboardType="numeric"
+                  calculateDependentValue={calculateBmiValue}
                 />
-                <FormField
+                <BmiFormField
                   name="bmi"
                   leftIcon="bmi"
                   onChangeText={handleChange("bmi")}
-                  placeholder="BMI"
+                  placeholder={
+                    patient.bmi === 0 ? "BMI" : patient.bmi.toString()
+                  }
                   onBlur={handleBlur("bmi")}
                   keyboardType="numeric"
+                  value={
+                    calculateBmiValue(values.height, values.weight) === 0
+                      ? null
+                      : patient.bmi.toString()
+                  }
                 />
-                <Text style={styles.noteText}>Notatka</Text>
+                <Text style={styles.subtitleText}>Notatka</Text>
                 <FormField
                   name="note"
-                  multiline
-                  leftIcon="note"
+                  leftIcon="pen"
                   onChangeText={handleChange("note")}
                   placeholder="Miejsce na notatkę"
                   onBlur={handleBlur("note")}
                   keyboardType="default"
+                  multiline
+                  numberOfLines={2}
                 />
-
-                <View style={styles.buttonContainer}>
-                  <AppButton
-                    buttonType="outline"
-                    onPress={handleSubmit}
-                    title="Add Tabaluga or change his name"
-                    disabled={!isValid || isSubmitting}
-                    loading={isSubmitting}
-                  />
-                </View>
+                <Text style={styles.subtitleText}>Dane kontaktowe</Text>
+                <FormField
+                  name="phone"
+                  leftIcon="phone"
+                  onChangeText={handleChange("phone")}
+                  placeholder=""
+                  onBlur={handleBlur("phone")}
+                  keyboardType="numeric"
+                />
+                <Text style={styles.subtitleText}>Dane osoby upoważnionej</Text>
+                <FormField
+                  name="person_authorized"
+                  leftIcon="person"
+                  onChangeText={handleChange("person_authorized")}
+                  placeholder="Imię i Nazwisko"
+                  onBlur={handleBlur("person_authorized")}
+                  keyboardType="default"
+                />
+                <FormField
+                  name="phone_authorized"
+                  leftIcon="phone"
+                  onChangeText={handleChange("phone_authorized")}
+                  placeholder=""
+                  onBlur={handleBlur("phone_authorized")}
+                  keyboardType="numeric"
+                />
+                <CheckboxFormField
+                  name="guardianship"
+                  leftIcon={isChecked ? "checked" : "unchecked"}
+                  text="Ubezwłasnowolnienie"
+                  onPress={() => {
+                    setFieldValue("guardianship", !isChecked);
+                    setChecked(!isChecked);
+                  }}
+                />
+                <AppButton
+                  buttonType="solid"
+                  icon="next_btn"
+                  onPress={handleSubmit}
+                  disabled={!isValid || isSubmitting}
+                  loading={isSubmitting}
+                />
               </>
             )}
           </Formik>
@@ -256,39 +276,12 @@ const styles = StyleSheet.create({
     fontSize: Typography.FONT_SIZE_16,
     fontFamily: Typography.FONT_FAMILY_BOLD,
   },
-  basicDataText: {
-    color: Colors.PURPLE,
-    marginLeft: 30,
-    fontSize: Typography.FONT_SIZE_12,
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-  },
-  noteText: {
+  subtitleText: {
     color: Colors.PURPLE,
     marginLeft: 30,
     paddingTop: 25,
-    fontSize: Typography.FONT_SIZE_12,
+    fontSize: Typography.FONT_SIZE_13,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
-  },
-  sexChoice: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingTop: 12,
-    paddingBottom: 4,
-    marginLeft: -60,
-  },
-  menChoice: {
-    alignSelf: "flex-end",
-  },
-  womenChoice: {
-    alignSelf: "flex-end",
-  },
-  menIcon: {
-    alignSelf: "flex-start",
-  },
-  womenIcon: {
-    alignSelf: "flex-start",
-    marginLeft: 50,
   },
 });
 

@@ -43,21 +43,10 @@ const MainNavigator = () => {
               fontFamily: Typography.FONT_FAMILY_BOLD,
               paddingBottom: 7,
             },
-            headerBackImage: () => (
-              <FontForgeIcon
-                name="back"
-                size={32}
-                color={Colors.PURPLE_VERY_LIGHT}
-                style={{
-                  marginLeft: 11,
-                  alignSelf: "flex-start",
-                  fontWeight: Typography.FONT_WEIGHT_BOLD,
-                }}
-              />
-            ),
+            headerLeft: null,
             headerRight: () => (
               <FontForgeIcon
-                name="person_doctor"
+                name="doctor_profile"
                 size={30}
                 color={Colors.PURPLE_VERY_LIGHT}
                 style={{

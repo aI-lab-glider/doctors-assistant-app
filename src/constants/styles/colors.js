@@ -15,6 +15,8 @@ export const PINK = "#CA7B95";
 export const SUCCESS = "#3adb76";
 export const WARNING = "#ffae00";
 export const ALERT = "#cc4b37";
+export const BMI_OVERWEIGHT = "#dc143c";
+export const BMI_UNDERWEIGHT = "#2D93AD";
 
 // GRAYSCALE
 export const GRAY_VERY_LIGHT = "#f2f2f2";
