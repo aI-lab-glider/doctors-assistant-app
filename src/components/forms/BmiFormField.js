@@ -6,24 +6,31 @@ import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../FontForgeIcon";
 
-const FormField = ({
-  name,
-  leftIcon,
-  keyboardType,
-  placeholder,
-  calculateDependentValue,
-  ...otherProps
-}) => {
+const regularIconColor = Colors.PINK_MEDIUM;
+const regularInputColor = Colors.BLACK;
+const BmiFormField = ({ name, leftIcon, keyboardType, placeholder }) => {
   const {
     setFieldTouched,
     setFieldValue,
     errors,
     touched,
+    values,
   } = useFormikContext();
 
-  const leftMargin = () => {
+  const getColorStyle = (regularColor) => {
+    if (values.bmi > 0 && values.bmi < 18.5)
+      return {
+        color: Colors.BMI_UNDERWEIGHT,
+        fontWeight: Typography.FONT_WEIGHT_BOLD,
+      };
+    if (values.bmi >= 25) {
+      return {
+        color: Colors.BMI_OVERWEIGHT,
+        fontWeight: Typography.FONT_WEIGHT_BOLD,
+      };
+    }
     return {
-      marginLeft: leftIcon ? 0 : 52,
+      color: regularColor,
     };
   };
 
@@ -34,20 +41,17 @@ const FormField = ({
           <FontForgeIcon
             name={leftIcon}
             size={38}
-            color={Colors.PINK_MEDIUM}
+            color={getColorStyle(regularIconColor).color}
             style={styles.icon}
           />
         )}
         <TextInput
-          style={[styles.input, leftMargin()]}
+          style={[styles.input, getColorStyle(regularInputColor)]}
           placeholderTextColor={Colors.PURPLE_LIGHT}
           placeholder={placeholder}
           onChangeText={(text) => setFieldValue(name, text)}
           onBlur={() => setFieldTouched(name)}
           keyboardType={keyboardType}
-          calculateDependentValue={calculateDependentValue}
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...otherProps}
         />
       </View>
       <FormErrorMessage error={errors[name]} visible={touched[name]} />
@@ -76,17 +80,15 @@ const styles = StyleSheet.create({
   },
 });
 
-FormField.defaultProps = {
+BmiFormField.defaultProps = {
   leftIcon: null,
-  calculateDependentValue: null,
 };
 
-FormField.propTypes = {
+BmiFormField.propTypes = {
   name: PropTypes.string.isRequired,
   leftIcon: PropTypes.string,
   keyboardType: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  calculateDependentValue: PropTypes.func,
 };
 
-export default FormField;
+export default BmiFormField;
