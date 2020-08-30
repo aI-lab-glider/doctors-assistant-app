@@ -14,7 +14,7 @@ const FormErrorMessage = ({ error, visible }) => {
 const styles = StyleSheet.create({
   errorText: {
     marginLeft: 50,
-    color: Colors.BLACK,
+    color: Colors.ALERT,
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     marginBottom: 5,

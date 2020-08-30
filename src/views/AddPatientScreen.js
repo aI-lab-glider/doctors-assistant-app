@@ -17,8 +17,7 @@ import PeselFormField from "../components/forms/PeselFormField";
 import WeightFormField from "../components/forms/WeightFormField";
 import BmiFormField from "../components/forms/BmiFormField";
 import CheckboxFormField from "../components/forms/CheckboxFormField";
-import AppButton from "../components/AppButton";
-// import FontForgeIcon from "../components/FontForgeIcon";
+import AppButton from "../components/common/AppButton";
 import validationSchema from "../components/forms/validationSchema";
 
 const AddPatientScreen = ({ navigation }) => {
@@ -147,6 +146,7 @@ const AddPatientScreen = ({ navigation }) => {
                 />
                 <FormField
                   name="date_of_birth"
+                  onChangeText={handleChange("date_of_birth")}
                   placeholder={
                     patient.date_of_birth === ""
                       ? "Dzień miesiąc rok"
@@ -154,12 +154,8 @@ const AddPatientScreen = ({ navigation }) => {
                   }
                   onBlur={handleBlur("date_of_birth")}
                   keyboardType="numeric"
-                  value={
-                    calculateDateOfBirthValue(values.pesel) === 0
-                      ? null
-                      : patient.date_of_birth
-                  }
-                  editable={false}
+                  value={calculateDateOfBirthValue(values.pesel)}
+                  editable
                 />
                 <FormField
                   name="height"
@@ -182,14 +178,9 @@ const AddPatientScreen = ({ navigation }) => {
                   name="bmi"
                   leftIcon="bmi"
                   onChangeText={handleChange("bmi")}
-                  placeholder={
-                    patient.bmi === 0 ? "BMI" : patient.bmi.toString()
-                  }
-                  onBlur={handleBlur("bmi")}
-                  keyboardType="numeric"
                   value={
                     calculateBmiValue(values.height, values.weight) === 0
-                      ? null
+                      ? "BMI"
                       : patient.bmi.toString()
                   }
                 />

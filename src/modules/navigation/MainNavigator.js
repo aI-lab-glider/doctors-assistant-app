@@ -5,7 +5,7 @@ import PatientsListScreen from "../../views/PatientsListScreen";
 import PatientCardScreen from "../../views/PatientCardScreen";
 import AddPatientScreen from "../../views/AddPatientScreen";
 import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../../components/FontForgeIcon";
+import FontForgeIcon from "../../components/common/FontForgeIcon";
 
 const Stack = createStackNavigator();
 

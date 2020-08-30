@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import FontForgeIcon from "./FontForgeIcon";
 
-import { Colors } from "../constants/styles";
+import { Colors } from "../../constants/styles";
 
 const AppButton = ({ onPress, icon }) => {
   return (
