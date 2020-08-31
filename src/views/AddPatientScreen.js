@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -41,7 +41,6 @@ const AddPatientScreen = ({ navigation }) => {
   };
 
   const { setPatient } = useContext(PatientsContext);
-  const [isChecked, setChecked] = useState(false);
 
   const onButtonPressed = (values) => {
     patient.name = values.name;
@@ -109,7 +108,6 @@ const AddPatientScreen = ({ navigation }) => {
               isValid,
               handleBlur,
               isSubmitting,
-              setFieldValue,
             }) => (
               <>
                 <FormField
@@ -223,12 +221,7 @@ const AddPatientScreen = ({ navigation }) => {
                 />
                 <CheckboxFormField
                   name="guardianship"
-                  leftIcon={isChecked ? "checked" : "unchecked"}
                   text="Ubezwłasnowolnienie"
-                  onPress={() => {
-                    setFieldValue("guardianship", !isChecked);
-                    setChecked(!isChecked);
-                  }}
                 />
                 <AppButton
                   buttonType="solid"
