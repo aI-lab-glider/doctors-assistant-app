@@ -4,7 +4,7 @@ import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../FontForgeIcon";
+import FontForgeIcon from "../common/FontForgeIcon";
 
 const FormField = ({
   name,

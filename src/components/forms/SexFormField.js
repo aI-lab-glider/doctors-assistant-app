@@ -3,25 +3,30 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import { Colors } from "../../constants/styles";
-import FontForgeIcon from "../FontForgeIcon";
+import FontForgeIcon from "../common/FontForgeIcon";
 
 const SexFormField = ({ name }) => {
   const { setFieldValue } = useFormikContext();
   const [isMenChosen, setMenChoice] = useState(true);
   const [isWomenChosen, setWomenChoice] = useState(false);
 
+  const selectMen = () => {
+    if (!isMenChosen && isWomenChosen) {
+      setWomenChoice(false);
+      setMenChoice(true);
+      setFieldValue("sex", "male");
+    }
+  };
+  const selectWoman = () => {
+    if (!isWomenChosen && isMenChosen) {
+      setWomenChoice(true);
+      setMenChoice(false);
+      setFieldValue("sex", "female");
+    }
+  };
   return (
     <View name={name} style={styles.sexChoice}>
-      <TouchableOpacity
-        style={styles.menChoice}
-        onPress={() => {
-          if (!isMenChosen && isWomenChosen) {
-            setWomenChoice(false);
-            setMenChoice(true);
-            setFieldValue("sex", "male");
-          }
-        }}
-      >
+      <TouchableOpacity style={styles.menChoice} onPress={selectMen}>
         <FontForgeIcon
           name="men_choice"
           size={40}
@@ -29,16 +34,7 @@ const SexFormField = ({ name }) => {
           style={styles.menIcon}
         />
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.womenChoice}
-        onPress={() => {
-          if (!isWomenChosen && isMenChosen) {
-            setWomenChoice(true);
-            setMenChoice(false);
-            setFieldValue("sex", "female");
-          }
-        }}
-      >
+      <TouchableOpacity style={styles.womenChoice} onPress={selectWoman}>
         <FontForgeIcon
           name="women_choice"
           size={40}

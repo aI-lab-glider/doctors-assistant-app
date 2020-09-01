@@ -1,0 +1,2 @@
+export const BMI_UNDERWEIGHT_VALUE = 18.5;
+export const BMI_OVERWEIGHT_VALUE = 25;

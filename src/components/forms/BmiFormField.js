@@ -1,36 +1,46 @@
 import React from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../FontForgeIcon";
+import * as Constants from "../../constants/constants";
+import FontForgeIcon from "../common/FontForgeIcon";
 
 const regularIconColor = Colors.PINK_MEDIUM;
-const regularInputColor = Colors.BLACK;
-const BmiFormField = ({ name, leftIcon, keyboardType, placeholder }) => {
-  const {
-    setFieldTouched,
-    setFieldValue,
-    errors,
-    touched,
-    values,
-  } = useFormikContext();
+const placeholderTextColor = Colors.PURPLE_LIGHT;
+const regularTextColor = Colors.BLACK;
+const BmiFormField = ({ name, leftIcon, value }) => {
+  const { setFieldValue, errors, touched, values } = useFormikContext();
 
-  const getColorStyle = (regularColor) => {
-    if (values.bmi > 0 && values.bmi < 18.5)
+  const getIconColorStyle = () => {
+    if (values.bmi > 0 && values.bmi < Constants.BMI_UNDERWEIGHT_VALUE)
+      return Colors.BMI_UNDERWEIGHT;
+
+    if (values.bmi >= Constants.BMI_OVERWEIGHT_VALUE) {
+      return Colors.BMI_OVERWEIGHT;
+    }
+    return regularIconColor;
+  };
+
+  const getTextStyle = () => {
+    if (values.bmi === 0)
+      return {
+        color: placeholderTextColor,
+      };
+    if (values.bmi > 0 && values.bmi < Constants.BMI_UNDERWEIGHT_VALUE)
       return {
         color: Colors.BMI_UNDERWEIGHT,
         fontWeight: Typography.FONT_WEIGHT_BOLD,
       };
-    if (values.bmi >= 25) {
+    if (values.bmi >= Constants.BMI_OVERWEIGHT_VALUE) {
       return {
         color: Colors.BMI_OVERWEIGHT,
         fontWeight: Typography.FONT_WEIGHT_BOLD,
       };
     }
     return {
-      color: regularColor,
+      color: regularTextColor,
     };
   };
 
@@ -41,18 +51,16 @@ const BmiFormField = ({ name, leftIcon, keyboardType, placeholder }) => {
           <FontForgeIcon
             name={leftIcon}
             size={38}
-            color={getColorStyle(regularIconColor).color}
+            color={getIconColorStyle()}
             style={styles.icon}
           />
         )}
-        <TextInput
-          style={[styles.input, getColorStyle(regularInputColor)]}
-          placeholderTextColor={Colors.PURPLE_LIGHT}
-          placeholder={placeholder}
+        <Text
+          style={[styles.input, getTextStyle()]}
           onChangeText={(text) => setFieldValue(name, text)}
-          onBlur={() => setFieldTouched(name)}
-          keyboardType={keyboardType}
-        />
+        >
+          {value}
+        </Text>
       </View>
       <FormErrorMessage error={errors[name]} visible={touched[name]} />
     </>
@@ -74,9 +82,8 @@ const styles = StyleSheet.create({
     width: "55%",
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_LIGHT,
-    color: Colors.BLACK,
-    borderBottomColor: Colors.PURPLE_LIGHT,
-    borderBottomWidth: 2,
+    padding: 12,
+    left: -12,
   },
 });
 
@@ -87,8 +94,7 @@ BmiFormField.defaultProps = {
 BmiFormField.propTypes = {
   name: PropTypes.string.isRequired,
   leftIcon: PropTypes.string,
-  keyboardType: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default BmiFormField;
