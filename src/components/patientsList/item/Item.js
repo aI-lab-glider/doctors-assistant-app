@@ -1,12 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-import { Colors, Typography } from "../../constants/styles";
+import { Colors, Typography } from "../../../constants/styles";
+import Header from "./Header";
+import Param from "./Param";
 
-const PatientsListItem = ({ onPress, item: patient }) => {
+const Item = ({ onPress, item: patient }) => {
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
-      <Text style={styles.title}>{patient.name}</Text>
+      <Header patient={patient} />
+      <Param icon="diagnosis" name="Diagnoza" value="12" />
+      <Param icon="diagnosis" name="Diagnoza" value="12" />
+      <Param icon="diagnosis" name="Diagnoza" value="12" />
     </TouchableOpacity>
   );
 };
@@ -23,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-PatientsListItem.propTypes = {
+Item.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
@@ -37,4 +42,4 @@ PatientsListItem.propTypes = {
   onPress: PropTypes.func.isRequired,
 };
 
-export default PatientsListItem;
+export default Item;
