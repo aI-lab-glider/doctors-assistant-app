@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { Button } from "native-base";
 import PropTypes from "prop-types";
 import { Colors, Typography } from "../constants/styles";
+import Patient from "../constants/propTypes";
 
 const PatientCardScreen = ({ route, navigation }) => {
   const { patient } = route.params;
@@ -47,16 +48,7 @@ PatientCardScreen.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      patient: PropTypes.shape({
-        id: PropTypes.number,
-        name: PropTypes.string,
-        surname: PropTypes.string,
-        sex: PropTypes.string,
-        phone: PropTypes.string,
-        weight: PropTypes.number,
-        height: PropTypes.number,
-        bmi: PropTypes.number,
-      }).isRequired,
+      patient: Patient.isRequired,
     }),
   }).isRequired,
 };

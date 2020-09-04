@@ -1,19 +1,18 @@
 import React from "react";
 import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
-import PropTypes from "prop-types";
 import FontForgeIcon from "../../common/FontForgeIcon";
+import Patient from "../../../constants/propTypes";
 
 const Header = ({ style, patient }) => {
   return (
     <View style={[styles.container, style]}>
       <View style={styles.nameContainer}>
         <Text>{patient.name}</Text>
-
         <Text>{patient.surname}</Text>
       </View>
       <View style={style.codeContainer}>
         <FontForgeIcon name="patient_number" size={32} />
-        <Text>aaa</Text>
+        <Text>{patient.code}</Text>
       </View>
     </View>
   );
@@ -30,16 +29,7 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-  patient: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    surname: PropTypes.string,
-    sex: PropTypes.string,
-    phone: PropTypes.string,
-    weight: PropTypes.number,
-    height: PropTypes.number,
-    bmi: PropTypes.number,
-  }).isRequired,
+  patient: Patient.isRequired,
   style: ViewPropTypes.style,
 };
 

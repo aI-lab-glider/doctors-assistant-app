@@ -8,6 +8,10 @@ const patientsData = [
     weight: 77,
     height: 182,
     bmi: 4,
+    diagnosis: ["depresja", "nerwica"],
+    medicines: ["witamina c", "ibuprom"],
+    hospitalizations: 3,
+    code: "A52.46",
   },
   {
     id: 2,
@@ -18,6 +22,10 @@ const patientsData = [
     weight: 107,
     height: 176,
     bmi: 4,
+    diagnosis: ["depresja", "nerwica"],
+    medicines: ["witamina c", "ibuprom"],
+    hospitalizations: 3,
+    code: "A52.46",
   },
   {
     id: 3,
@@ -28,6 +36,10 @@ const patientsData = [
     weight: 122,
     height: 183,
     bmi: 2,
+    diagnosis: ["depresja", "nerwica"],
+    medicines: ["witamina c", "ibuprom"],
+    hospitalizations: 3,
+    code: "A52.46",
   },
   {
     id: 4,
@@ -38,6 +50,10 @@ const patientsData = [
     weight: 86,
     height: 177,
     bmi: 4,
+    diagnosis: ["depresja", "nerwica"],
+    medicines: ["witamina c", "ibuprom"],
+    hospitalizations: 3,
+    code: "A52.46",
   },
   {
     id: 5,
@@ -48,6 +64,10 @@ const patientsData = [
     weight: 77,
     height: 182,
     bmi: 4,
+    diagnosis: ["depresja", "nerwica"],
+    medicines: ["witamina c", "ibuprom"],
+    hospitalizations: 3,
+    code: "A52.46",
   },
 ];
 

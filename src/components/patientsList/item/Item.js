@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Colors, Typography } from "../../../constants/styles";
 import Header from "./Header";
 import Param from "./Param";
+import Patient from "../../../constants/propTypes";
 
 const Item = ({ onPress, item: patient }) => {
   return (
@@ -29,16 +30,7 @@ const styles = StyleSheet.create({
 });
 
 Item.propTypes = {
-  item: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    surname: PropTypes.string,
-    sex: PropTypes.string,
-    phone: PropTypes.string,
-    weight: PropTypes.number,
-    height: PropTypes.number,
-    bmi: PropTypes.number,
-  }).isRequired,
+  item: Patient.isRequired,
   onPress: PropTypes.func.isRequired,
 };
 
