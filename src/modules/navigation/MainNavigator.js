@@ -21,7 +21,49 @@ const MainNavigator = () => {
         <Stack.Screen
           name="PatientCard"
           component={PatientCardScreen}
-          options={{ title: "Patient card" }}
+          options={{
+            title: "Karta pacjenta",
+            headerStyle: {
+              backgroundColor: Colors.PURPLE,
+              height: 105,
+              borderBottomLeftRadius: 50,
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTintColor: Colors.WHITE,
+            headerTitleStyle: {
+              fontSize: Typography.FONT_SIZE_17,
+              alignSelf: "center",
+              color: Colors.PURPLE_VERY_LIGHT,
+              fontFamily: Typography.FONT_FAMILY_BOLD,
+              paddingBottom: 7,
+            },
+            headerBackImage: () => (
+              <FontForgeIcon
+                name="back"
+                size={32}
+                color={Colors.PURPLE_VERY_LIGHT}
+                style={{
+                  paddingTop: 8,
+                  marginLeft: 11,
+                  alignSelf: "flex-start",
+                  fontWeight: Typography.FONT_WEIGHT_BOLD,
+                  transform: [{ rotate: "352deg" }],
+                }}
+              />
+            ),
+            headerRight: () => (
+              <FontForgeIcon
+                name="doctor_profile"
+                size={30}
+                color={Colors.PURPLE_VERY_LIGHT}
+                style={{
+                  marginRight: 20,
+                  marginBottom: 7,
+                }}
+              />
+            ),
+          }}
         />
         <Stack.Screen
           name="AddPatient"
