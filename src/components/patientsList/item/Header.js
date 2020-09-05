@@ -22,7 +22,7 @@ const Header = ({ style, patient }) => {
           size={32}
           color={Colors.PINK_MEDIUM}
         />
-        <Text style={styles.code}>{patient.code}</Text>
+        <Text style={styles.code}>{patient.id}</Text>
       </View>
     </View>
   );

@@ -1,16 +1,13 @@
 import React from "react";
 import { FlatList } from "react-native";
 import PropTypes from "prop-types";
-import { PatientsContext } from "../../modules/context/PatientsContext";
 import Item from "./item";
+import Patient from "../../constants/propTypes";
 
-const List = ({ navigation }) => {
-  const { patients } = React.useContext(PatientsContext);
-
+const List = ({ navigation, patients }) => {
   const onItemPressed = ({ patient }) => {
     navigation.navigate("PatientCard", { patient });
   };
-
   return (
     <FlatList
       data={patients}
@@ -22,9 +19,14 @@ const List = ({ navigation }) => {
   );
 };
 
+List.defaultProps = {
+  patients: [],
+};
+
 List.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
+  patients: PropTypes.arrayOf(Patient),
 };
 export default List;

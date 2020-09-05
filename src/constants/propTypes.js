@@ -25,17 +25,17 @@ const Patient = PropTypes.shape({
   weight: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   bmi: PropTypes.number.isRequired,
-  diagnosis: PropTypes.arrayOf(PropTypes.string).isRequired,
-  medicines: PropTypes.arrayOf(PropTypes.string).isRequired,
-  hospitalization_times: PropTypes.number.isRequired,
+  diagnosis: PropTypes.arrayOf(PropTypes.string),
+  medicines: PropTypes.arrayOf(PropTypes.string),
+  hospitalization_times: PropTypes.number,
   pesel: PropTypes.string.isRequired,
   date_of_birth: PropTypes.string.isRequired,
   note: PropTypes.string.isRequired,
   person_authorized: PropTypes.string.isRequired,
   phone_authorized: PropTypes.string.isRequired,
   guardianship: PropTypes.bool.isRequired,
-  first_hospitalization: PropTypes.string.isRequired,
-  code: CodeProp.isRequired,
+  first_hospitalization: PropTypes.string,
+  code: CodeProp,
 });
 
 export default Patient;

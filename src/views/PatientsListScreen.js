@@ -6,9 +6,32 @@ import { Colors } from "../constants/styles";
 import List from "../components/patientsList";
 import FontForgeIcon from "../components/common/FontForgeIcon";
 import CircleButton from "../components/common/CircleButton";
+import { PatientsContext } from "../modules/context/PatientsContext";
 
+const MINIMUM_SEARCH_STRING_LENGTH = 3;
 const PatientsListScreen = ({ navigation }) => {
+  const { patients } = React.useContext(PatientsContext);
+
+  const [filteredPatients, setFilteredPatients] = useState(patients);
   const [search, setSearch] = useState("");
+
+  const onSearchChange = (searchString) => {
+    setSearch(searchString);
+    const searchLowerCase = searchString.toLowerCase();
+
+    let newPatients = patients;
+    if (search.length >= MINIMUM_SEARCH_STRING_LENGTH) {
+      newPatients = patients.filter((patient) => {
+        const nameFilter = patient.name.toLowerCase().includes(searchLowerCase);
+        const surnameFilter = patient.surname
+          .toLowerCase()
+          .includes(searchLowerCase);
+        return nameFilter || surnameFilter;
+      });
+    }
+    setFilteredPatients(newPatients);
+  };
+
   const addNewPatientBtPressed = () => {
     navigation.navigate("AddPatient");
   };
@@ -35,13 +58,13 @@ const PatientsListScreen = ({ navigation }) => {
             }}
             searchIcon={null}
             value={search}
-            onChangeText={setSearch}
+            onChangeText={onSearchChange}
             placeholder="Szukaj pacjenta..."
             clearIcon={{ size: 32, color: Colors.PINK }}
           />
           <CircleButton icon="add" size={32} onPress={addNewPatientBtPressed} />
         </View>
-        <List navigation={navigation} />
+        <List navigation={navigation} patients={filteredPatients} />
       </View>
     </View>
   );
