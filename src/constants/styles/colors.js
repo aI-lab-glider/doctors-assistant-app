@@ -23,3 +23,6 @@ export const GRAY_VERY_LIGHT = "#f2f2f2";
 export const GRAY_LIGHT = "#e6e6e6";
 export const GRAY_MEDIUM = "#cacaca";
 export const GRAY_DARK = "#8a8a8a";
+
+export const GREEN_LIGHT = "#7ACAAF";
+export const GREEN_MEDIUM = "#67a797";

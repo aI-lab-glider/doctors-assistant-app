@@ -2,26 +2,59 @@ import React from "react";
 import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import FontForgeIcon from "../../common/FontForgeIcon";
 import Patient from "../../../constants/propTypes";
+import { Colors } from "../../../constants/styles";
+import {
+  FONT_REGULAR,
+  FONT_BOLD,
+  FONT_SIZE_18,
+} from "../../../constants/styles/typography";
 
 const Header = ({ style, patient }) => {
   return (
     <View style={[styles.container, style]}>
-      <View style={styles.nameContainer}>
-        <Text>{patient.name}</Text>
-        <Text>{patient.surname}</Text>
-      </View>
-      <View style={style.codeContainer}>
-        <FontForgeIcon name="patient_number" size={32} />
-        <Text>{patient.code}</Text>
+      <Text style={styles.surname}>
+        {patient.surname}
+        <Text style={styles.name}> {patient.name}</Text>
+      </Text>
+      <View style={styles.codeContainer}>
+        <FontForgeIcon
+          name="patient_number"
+          size={32}
+          color={Colors.PINK_MEDIUM}
+        />
+        <Text style={styles.code}>{patient.code}</Text>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flexDirection: "row", justifyContent: "space-between" },
-  nameContainer: { flexDirection: "row" },
-  codeContainer: { flexDirection: "row" },
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 5,
+  },
+  codeContainer: { flexDirection: "row", alignItems: "center" },
+  surname: {
+    ...FONT_BOLD,
+    fontSize: FONT_SIZE_18,
+    color: Colors.PURPLE,
+    flexShrink: 0.5,
+  },
+  name: {
+    ...FONT_REGULAR,
+    fontSize: FONT_SIZE_18,
+    color: Colors.PURPLE,
+    alignSelf: "center",
+  },
+  code: {
+    ...FONT_BOLD,
+    fontSize: FONT_SIZE_18,
+    color: Colors.PINK,
+    alignSelf: "center",
+    marginLeft: 8,
+  },
 });
 
 Header.defaultProps = {
