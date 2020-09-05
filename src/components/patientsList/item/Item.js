@@ -49,7 +49,7 @@ const Item = ({ onPress, item: patient }) => {
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,

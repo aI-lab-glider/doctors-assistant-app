@@ -9,42 +9,55 @@ import CircleButton from "../components/common/CircleButton";
 
 const PatientsListScreen = ({ navigation }) => {
   const [search, setSearch] = useState("");
+  const addNewPatientBtPressed = () => {
+    navigation.navigate("AddPatient");
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.searchHeader}>
-        <FontForgeIcon name="search" size={32} color={Colors.PINK} />
-        <SearchBar
-          containerStyle={{
-            backgroundColor: "transparent",
-            borderTopColor: "transparent",
-            borderBottomColor: "transparent",
-            flex: 1,
-          }}
-          inputContainerStyle={{
-            backgroundColor: "transparent",
-          }}
-          inputStyle={{
-            backgroundColor: "transparent",
-            borderBottomColor: Colors.PURPLE,
-            borderBottomWidth: 2,
-          }}
-          searchIcon={null}
-          value={search}
-          onChangeText={setSearch}
-          placeholder="Szukaj pacjenta..."
-          clearIcon={{ size: 32, color: Colors.PINK }}
-        />
-        <CircleButton icon="add" size={32} onPress={() => {}} />
+    <View style={styles.backgroundContainer}>
+      <View style={styles.container}>
+        <View style={styles.searchHeader}>
+          <FontForgeIcon name="search" size={32} color={Colors.PINK} />
+          <SearchBar
+            containerStyle={{
+              backgroundColor: "transparent",
+              borderTopColor: "transparent",
+              borderBottomColor: "transparent",
+              flex: 1,
+            }}
+            inputContainerStyle={{
+              backgroundColor: "transparent",
+            }}
+            inputStyle={{
+              backgroundColor: "transparent",
+              borderBottomColor: Colors.PURPLE,
+              borderBottomWidth: 2,
+            }}
+            searchIcon={null}
+            value={search}
+            onChangeText={setSearch}
+            placeholder="Szukaj pacjenta..."
+            clearIcon={{ size: 32, color: Colors.PINK }}
+          />
+          <CircleButton icon="add" size={32} onPress={addNewPatientBtPressed} />
+        </View>
+        <List navigation={navigation} />
       </View>
-      <List navigation={navigation} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundContainer: {
+    flex: 1,
+    backgroundColor: Colors.PURPLE,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+    borderTopRightRadius: 50,
+    paddingTop: 22,
     justifyContent: "center",
   },
   searchHeader: {
