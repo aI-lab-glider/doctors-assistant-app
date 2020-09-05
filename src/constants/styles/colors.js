@@ -10,6 +10,7 @@ export const PURPLE_MEDIUM = "#724C82";
 export const PURPLE = "#482358";
 export const PINK_MEDIUM = "#CE8CA1";
 export const PINK = "#CA7B95";
+export const GREEN = "#67a797";
 
 // ACTIONS
 export const SUCCESS = "#3adb76";
