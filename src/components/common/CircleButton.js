@@ -6,16 +6,8 @@ import FontForgeIcon from "./FontForgeIcon";
 import { Colors } from "../../constants/styles";
 
 const CircleButton = ({ style, onPress, icon, size, color }) => {
-  const round = () => {
-    return {
-      width: size,
-      height: size,
-      radius: size / 2,
-    };
-  };
-
   return (
-    <TouchableOpacity style={[styles.button, style, round()]} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
       <FontForgeIcon name={icon} size={size} color={color} />
     </TouchableOpacity>
   );

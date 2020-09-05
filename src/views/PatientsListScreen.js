@@ -34,7 +34,7 @@ const PatientsListScreen = ({ navigation }) => {
           placeholder="Szukaj pacjenta..."
           clearIcon={{ size: 32, color: Colors.PINK }}
         />
-        <CircleButton icon="add" size={32} onPress={{}} />
+        <CircleButton icon="add" size={32} onPress={() => {}} />
       </View>
       <List navigation={navigation} />
     </View>

@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
     .nullable()
     .matches(
       DATE_REGEX,
-      "Nieprawidłowy format daty. Data musi być postaci 01-01-1900"
+      "Nieprawidłowy format daty. Data musi być w formacie 01-01-1900"
     )
     .label("Data urodzenia"),
   weight: Yup.number().integer("Waga musi być liczbą całkowitą").label("Waga"),

@@ -19,27 +19,29 @@ const Item = ({ onPress, item: patient }) => {
         <Param
           icon="diagnosis"
           name="Diagnoza"
-          value={patient.diagnosis.join(", ")}
+          value={patient.diagnosis ? patient.diagnosis.join(", ") : ""}
         />
         <Param
           icon="medicines"
           name="Leki"
-          value={patient.medicines.join(", ")}
+          value={patient.medicines ? patient.medicines.join(", ") : ""}
         />
         <Param
           icon="hospital"
           name="Liczba hospitalizacji"
-          value={patient.hospitalizations.toString()}
+          value={
+            patient.hospitalization_times
+              ? patient.hospitalization_times.toString()
+              : "0"
+          }
         />
       </TouchableOpacity>
       <CircleButton
         icon="add"
         size={32}
-        onPress={() => {
-          console.log("AA");
-        }}
+        onPress={() => {}}
         style={styles.addButton}
-        color={Colors.GREEN_MEDIUM}
+        color={Colors.GREEN}
       />
     </View>
   );
