@@ -1,37 +1,92 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button } from "native-base";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
+import { SearchBar } from "react-native-elements";
 import { Colors } from "../constants/styles";
-import PatientsList from "../components/patientsList";
+import List from "../components/patientsList";
+import FontForgeIcon from "../components/common/FontForgeIcon";
+import CircleButton from "../components/common/CircleButton";
+import { PatientsContext } from "../modules/context/PatientsContext";
 
+const MINIMUM_SEARCH_STRING_LENGTH = 3;
 const PatientsListScreen = ({ navigation }) => {
-  const onButtonPressed = () => {
+  const { patients } = React.useContext(PatientsContext);
+
+  const [filteredPatients, setFilteredPatients] = useState(patients);
+  const [search, setSearch] = useState("");
+
+  const onSearchChange = (searchString) => {
+    setSearch(searchString);
+    const searchLowerCase = searchString.toLowerCase();
+
+    let newPatients = patients;
+    if (search.length >= MINIMUM_SEARCH_STRING_LENGTH) {
+      newPatients = patients.filter((patient) => {
+        const nameFilter = patient.name.toLowerCase().includes(searchLowerCase);
+        const surnameFilter = patient.surname
+          .toLowerCase()
+          .includes(searchLowerCase);
+        return nameFilter || surnameFilter;
+      });
+    }
+    setFilteredPatients(newPatients);
+  };
+
+  const addNewPatientBtPressed = () => {
     navigation.navigate("AddPatient");
   };
+
   return (
-    <View style={styles.container}>
-      <PatientsList navigation={navigation} />
-      <Button
-        onPress={() => onButtonPressed()}
-        rounded
-        success
-        style={styles.button}
-      >
-        <Text>Add new patient</Text>
-      </Button>
+    <View style={styles.backgroundContainer}>
+      <View style={styles.container}>
+        <View style={styles.searchHeader}>
+          <FontForgeIcon name="search" size={32} color={Colors.PINK} />
+          <SearchBar
+            containerStyle={{
+              backgroundColor: "transparent",
+              borderTopColor: "transparent",
+              borderBottomColor: "transparent",
+              flex: 1,
+            }}
+            inputContainerStyle={{
+              backgroundColor: "transparent",
+            }}
+            inputStyle={{
+              backgroundColor: "transparent",
+              borderBottomColor: Colors.PURPLE,
+              borderBottomWidth: 2,
+            }}
+            searchIcon={null}
+            value={search}
+            onChangeText={onSearchChange}
+            placeholder="Szukaj pacjenta..."
+            clearIcon={{ size: 32, color: Colors.PINK }}
+          />
+          <CircleButton icon="add" size={32} onPress={addNewPatientBtPressed} />
+        </View>
+        <List navigation={navigation} patients={filteredPatients} />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundContainer: {
     flex: 1,
-    backgroundColor: Colors.PRIMARY,
+    backgroundColor: Colors.PURPLE,
     justifyContent: "center",
   },
-  button: {
-    alignSelf: "center",
+  container: {
+    flex: 1,
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+    borderTopRightRadius: 50,
+    paddingTop: 22,
+    justifyContent: "center",
+  },
+  searchHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 18,
   },
 });
 

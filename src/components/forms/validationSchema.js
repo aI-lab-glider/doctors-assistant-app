@@ -1,4 +1,10 @@
 import * as Yup from "yup";
+import {
+  DATE_REGEX,
+  PATIENT_CODE_REGEX,
+  PESEL_REGEX,
+  PHONE_REGEX,
+} from "../../constants/constants";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Imię jest wymaganym polem").label("Imię"),
@@ -7,19 +13,16 @@ const validationSchema = Yup.object().shape({
     .label("Nazwisko"),
   sex: Yup.string().oneOf(["male", "female"]).required().label("Płeć"),
   code: Yup.string()
-    .matches(
-      /^([a-tA-T]|[v-zV-Z])\d[a-zA-Z0-9](\.[a-zA-Z0-9]{1,4})?$/,
-      "Kod musi być w formacie ICD-10"
-    )
+    .matches(PATIENT_CODE_REGEX, "Kod musi być w formacie ICD-10")
     .label("Kod rozpoznania"),
   pesel: Yup.string()
-    .matches(/^[0-9]{11}$/, "Nieprawidłowy Pesel")
+    .matches(PESEL_REGEX, "Nieprawidłowy Pesel")
     .label("Pesel"),
   date_of_birth: Yup.string()
     .nullable()
     .matches(
-      /^(0[1-9]|[12][0-9]|3[01])([- /.]|( - ))(0[1-9]|1[012])([- /.]|( - ))(19|20)\d\d$/,
-      "Nieprawidłowy format daty. Data musi być postaci 01-01-1970"
+      DATE_REGEX,
+      "Nieprawidłowy format daty. Data musi być w formacie 01-01-1900"
     )
     .label("Data urodzenia"),
   weight: Yup.number().integer("Waga musi być liczbą całkowitą").label("Waga"),
@@ -29,11 +32,11 @@ const validationSchema = Yup.object().shape({
   bmi: Yup.number().label("Bmi"),
   note: Yup.string().label("Notatka"),
   phone: Yup.string()
-    .matches(/^[0-9+]{8,13}$/, "Nieprawidłowy nr telefonu")
+    .matches(PHONE_REGEX, "Nieprawidłowy nr telefonu")
     .label("Telefon"),
   person_authorized: Yup.string().label("Osoba upoważniona"),
   phone_authorized: Yup.string()
-    .matches(/^[0-9+]{8,13}$/, "Nieprawidłowy nr telefonu")
+    .matches(PHONE_REGEX, "Nieprawidłowy nr telefonu")
     .label("Telefon do osoby upoważnionej"),
   guardianship: Yup.boolean(),
 });

@@ -21,7 +21,6 @@ import AppButton from "../components/common/AppButton";
 import validationSchema from "../components/forms/validationSchema";
 
 const AddPatientScreen = ({ navigation }) => {
-  // ID = key (PatientContextReducer) => first press - add Tabaluga, second press - edit his name
   const patient = {
     id: 7,
     name: "",

@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Colors, Typography } from "../constants/styles";
 import FontForgeIcon from "../components/common/FontForgeIcon";
 import BottomMenu from "../components/patientCard/bottomMenu";
+import Patient from "../constants/propTypes";
 
 const PatientCardScreen = ({ route }) => {
   const { patient } = route.params;
@@ -285,25 +286,7 @@ PatientCardScreen.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      patient: PropTypes.shape({
-        id: PropTypes.number,
-        name: PropTypes.string,
-        surname: PropTypes.string,
-        sex: PropTypes.string,
-        code: PropTypes.string,
-        pesel: PropTypes.string,
-        date_of_birth: PropTypes.string,
-        weight: PropTypes.number,
-        height: PropTypes.number,
-        bmi: PropTypes.number,
-        note: PropTypes.string,
-        phone: PropTypes.string,
-        person_authorized: PropTypes.string,
-        phone_authorized: PropTypes.string,
-        guardianship: PropTypes.bool,
-        first_hospitalization: PropTypes.string,
-        hospitalization_times: PropTypes.number,
-      }).isRequired,
+      patient: Patient.isRequired,
     }),
   }).isRequired,
 };

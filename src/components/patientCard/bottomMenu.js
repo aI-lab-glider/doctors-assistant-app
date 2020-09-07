@@ -1,49 +1,32 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../common/FontForgeIcon";
+import { StyleSheet, View } from "react-native";
+import { Colors } from "../../constants/styles";
+import ButtonWithLabel from "./ButtonWithLabel";
 
 const BottomMenu = () => {
   const onButtonPressed = () => {};
 
   return (
     <View style={styles.iconContainer}>
-      <TouchableOpacity onPress={onButtonPressed} style={styles.button}>
-        <View style={styles.menuIcon}>
-          <FontForgeIcon
-            name="history"
-            size={44}
-            color={Colors.PINK_MEDIUM}
-            style={styles.instaIcon}
-          />
-          <Text style={styles.instaText}>Historia</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={onButtonPressed} style={styles.button}>
-        <View style={styles.menuIcon}>
-          <FontForgeIcon
-            name="new_examination"
-            size={44}
-            color={Colors.GREEN}
-            style={styles.instaIcon}
-          />
-          <Text style={[styles.instaText, { color: Colors.GREEN }]}>
-            Nowe badanie
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={onButtonPressed} style={styles.button}>
-        <View style={styles.menuIcon}>
-          <FontForgeIcon
-            name="results"
-            size={44}
-            color={Colors.PINK}
-            style={styles.instaIcon}
-          />
-          <Text style={styles.instaText}>Wyniki</Text>
-        </View>
-      </TouchableOpacity>
+      <ButtonWithLabel
+        label="Historia"
+        onPress={onButtonPressed}
+        icon="history"
+        size={44}
+      />
+      <ButtonWithLabel
+        label="Nowe badanie"
+        onPress={onButtonPressed}
+        icon="new_examination"
+        size={44}
+        color={Colors.GREEN}
+      />
+      <ButtonWithLabel
+        label="Wyniki"
+        onPress={onButtonPressed}
+        icon="results"
+        size={44}
+      />
     </View>
   );
 };
@@ -54,24 +37,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "flex-end",
-  },
-  button: {
-    flex: 1,
-  },
-  menuIcon: {
-    flex: 1,
-    flexDirection: "column",
-    margin: 20,
-  },
-  instaIcon: {
-    alignSelf: "center",
-  },
-  instaText: {
-    color: Colors.PINK,
-    fontSize: Typography.FONT_SIZE_12,
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-    alignSelf: "center",
-    paddingTop: 5,
   },
 });
 
