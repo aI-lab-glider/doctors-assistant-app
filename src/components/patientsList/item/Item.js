@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import PropTypes from "prop-types";
 import { Colors } from "../../../constants/styles";
 import Header from "./Header";
-import Param from "./Param";
+import InterviewInfo from "./InterviewInfo";
 import Patient from "../../../constants/propTypes";
 import CircleButton from "../../common/CircleButton";
 import {
@@ -16,17 +16,17 @@ const Item = ({ onPress, item: patient }) => {
     <View style={styles.item}>
       <TouchableOpacity onPress={onPress}>
         <Header patient={patient} />
-        <Param
+        <InterviewInfo
           icon="diagnosis"
           name="Diagnoza"
           value={patient.diagnosis ? patient.diagnosis.join(", ") : ""}
         />
-        <Param
+        <InterviewInfo
           icon="medicines"
           name="Leki"
           value={patient.medicines ? patient.medicines.join(", ") : ""}
         />
-        <Param
+        <InterviewInfo
           icon="hospital"
           name="Liczba hospitalizacji"
           value={

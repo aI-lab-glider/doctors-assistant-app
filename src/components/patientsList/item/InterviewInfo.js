@@ -8,7 +8,7 @@ import {
   FONT_SIZE_16,
 } from "../../../constants/styles/typography";
 
-const Param = ({ style, icon, name, value }) => {
+const InterviewInfo = ({ style, icon, name, value }) => {
   return (
     <View style={[styles.container, style]}>
       <FontForgeIcon name={icon} size={32} color={Colors.PINK} />
@@ -39,15 +39,15 @@ const styles = StyleSheet.create({
   },
 });
 
-Param.defaultProps = {
+InterviewInfo.defaultProps = {
   style: {},
 };
 
-Param.propTypes = {
+InterviewInfo.propTypes = {
   icon: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   style: ViewPropTypes.style,
 };
 
-export default Param;
+export default InterviewInfo;

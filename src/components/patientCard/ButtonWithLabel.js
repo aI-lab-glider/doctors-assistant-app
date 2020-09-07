@@ -15,7 +15,7 @@ const ButtonWithLabel = ({ style, onPress, size, color, icon, label }) => {
           color={color}
           style={styles.instaIcon}
         />
-        <Text style={styles.instaText}>{label}</Text>
+        <Text style={[styles.instaText, { color }]}>{label}</Text>
       </View>
     </TouchableOpacity>
   );
