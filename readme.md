@@ -16,12 +16,12 @@ The main app feature includes:
   <img src="/images/patient_card.jpg" width="30%">
 </p>
 
-##💻 How to run it?
+## 📱 How to run it?
 1. Clone the repository e.g.:
     ```
     git clone https://github.com/Project-Summer-AI-Lab-Glider/doctors-assistant-app.git
     ```
-2. Install required dependencies. In main project directory run:
+2. Install required dependencies. In the main project directory run:
     ```
     yarn install
     ```
