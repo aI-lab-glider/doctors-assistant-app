@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { PATIENT_CODE_REGEX } from "./constants";
 
-const CodeProp = function (props, propName, componentName) {
+const CodeProp = (props, propName, componentName) => {
   if (
     !PATIENT_CODE_REGEX.test(
       // eslint-disable-next-line react/destructuring-assignment
@@ -21,10 +21,10 @@ const Patient = PropTypes.shape({
   name: PropTypes.string.isRequired,
   surname: PropTypes.string.isRequired,
   sex: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
-  weight: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  bmi: PropTypes.number.isRequired,
+  phone: PropTypes.string,
+  weight: PropTypes.number,
+  height: PropTypes.number,
+  bmi: PropTypes.number,
   diagnosis: PropTypes.arrayOf(PropTypes.string),
   medicines: PropTypes.arrayOf(PropTypes.string),
   hospitalization_times: PropTypes.number,
@@ -33,7 +33,7 @@ const Patient = PropTypes.shape({
   note: PropTypes.string,
   person_authorized: PropTypes.string,
   phone_authorized: PropTypes.string,
-  guardianship: PropTypes.bool.isRequired,
+  guardianship: PropTypes.bool,
   first_hospitalization: PropTypes.string,
   code: CodeProp,
 });

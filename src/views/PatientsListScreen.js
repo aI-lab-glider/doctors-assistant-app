@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.GRAY_VERY_LIGHT,
     borderTopRightRadius: 50,
-    paddingTop: 22,
+    paddingTop: 16,
     justifyContent: "center",
   },
   searchHeader: {

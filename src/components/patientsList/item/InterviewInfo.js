@@ -5,7 +5,7 @@ import FontForgeIcon from "../../common/FontForgeIcon";
 import { Colors } from "../../../constants/styles";
 import {
   FONT_REGULAR,
-  FONT_SIZE_16,
+  FONT_SIZE_14,
 } from "../../../constants/styles/typography";
 
 const InterviewInfo = ({ style, icon, name, value }) => {
@@ -25,14 +25,14 @@ const styles = StyleSheet.create({
   },
   name: {
     ...FONT_REGULAR,
-    fontSize: FONT_SIZE_16,
+    fontSize: FONT_SIZE_14,
     color: Colors.PURPLE,
     marginLeft: 4,
   },
   value: {
     ...FONT_REGULAR,
     color: Colors.PURPLE,
-    fontSize: FONT_SIZE_16,
+    fontSize: FONT_SIZE_14,
     marginLeft: 4,
     marginRight: 4,
     flexShrink: 1,

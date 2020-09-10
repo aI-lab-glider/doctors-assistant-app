@@ -6,7 +6,7 @@ import { Colors } from "../../../constants/styles";
 import {
   FONT_REGULAR,
   FONT_BOLD,
-  FONT_SIZE_18,
+  FONT_SIZE_16,
 } from "../../../constants/styles/typography";
 
 const Header = ({ style, patient }) => {
@@ -33,24 +33,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 5,
+    padding: 4,
   },
   codeContainer: { flexDirection: "row", alignItems: "center" },
   surname: {
     ...FONT_BOLD,
-    fontSize: FONT_SIZE_18,
+    fontSize: FONT_SIZE_16,
     color: Colors.PURPLE,
     flexShrink: 0.5,
   },
   name: {
     ...FONT_REGULAR,
-    fontSize: FONT_SIZE_18,
+    fontSize: FONT_SIZE_16,
     color: Colors.PURPLE,
     alignSelf: "center",
   },
   code: {
     ...FONT_BOLD,
-    fontSize: FONT_SIZE_18,
+    fontSize: FONT_SIZE_16,
     color: Colors.PINK,
     alignSelf: "center",
     marginLeft: 8,
