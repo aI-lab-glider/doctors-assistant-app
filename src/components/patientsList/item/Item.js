@@ -19,7 +19,9 @@ const Item = ({ onPress, item: patient }) => {
         <InterviewInfo
           icon="diagnosis"
           name="Diagnoza"
-          value={patient.diagnosis ? patient.diagnosis.join(", ") : ""}
+          value={
+            patient.diagnosis ? patient.diagnosis.join(", ") : patient.code
+          }
         />
         <InterviewInfo
           icon="medicines"
@@ -50,8 +52,8 @@ const Item = ({ onPress, item: patient }) => {
 const styles = StyleSheet.create({
   item: {
     backgroundColor: Colors.GRAY_VERY_LIGHT,
-    padding: 10,
-    marginVertical: 8,
+    padding: 6,
+    marginVertical: 6,
     marginHorizontal: 16,
     borderRadius: BORDER_RADIUS,
     ...BOX_SHADOW,
