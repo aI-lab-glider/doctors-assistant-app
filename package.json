@@ -21,6 +21,7 @@
     "expo": "~38.0.8",
     "expo-cli": "^3.26.2",
     "expo-font": "^8.2.2",
+    "expo-sqlite": "~8.2.1",
     "expo-status-bar": "^1.0.2",
     "formik": "^2.1.5",
     "metro-config": "^0.62.0",
