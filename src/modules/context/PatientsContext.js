@@ -1,21 +1,36 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import reducer from "./PatientsContextReducer";
-import patientsData from "../../constants/data/patientsData";
+import { database } from "../database/database";
 
 export const PatientsContext = createContext({
   patients: [],
 });
 
-const initialState = { patients: patientsData };
-
 function PatientsContextProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, { patients: [] });
+
+  useEffect(() => {
+    refreshPatients();
+  }, []);
+
+  const refreshPatients = () => {
+    return database.getPatients(setPatients);
+  };
+
+  const setPatient = (patient) => {
+    dispatch({ type: "SET_PATIENT", payload: { patient } });
+  };
+
+  const setPatients = (patients) => {
+    patients.forEach((patient) => {
+      setPatient(patient);
+    });
+  };
+
   const value = {
     ...state,
-    setPatient: (patient) => {
-      dispatch({ type: "SET_PATIENT", payload: { patient } });
-    },
+    setPatient,
   };
 
   return (
