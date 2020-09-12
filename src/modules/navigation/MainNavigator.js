@@ -5,20 +5,24 @@ import PatientsListScreen from "../../views/PatientsListScreen";
 import PatientCardScreen from "../../views/PatientCardScreen";
 import AddPatientScreen from "../../views/AddPatientScreen";
 
-import AuthProvider from "../context/Auth";
+import AuthProvider, { useAuth } from "../context/Auth";
 import AuthStack from "./Auth";
-import AuthLoading from "../../views/authentication/AuthLoading";
 
 const Stack = createStackNavigator();
 
 const AppStack = createStackNavigator();
 
 const AppStackScreen = () => {
+  const { state } = useAuth();
+  const { isLoggedIn } = state;
+
   return (
     <AppStack.Navigator>
-      <AppStack.Screen name="Loading" component={AuthLoading} />
-      <AppStack.Screen name="Home" component={HomeScreen} />
-      <AppStack.Screen name="Auth" component={AuthStack} />
+      {isLoggedIn === false ? (
+        <AppStack.Screen name="Auth" component={AuthStack} />
+      ) : (
+        <AppStack.Screen name="Home" component={HomeScreen} />
+      )}
     </AppStack.Navigator>
   );
 };

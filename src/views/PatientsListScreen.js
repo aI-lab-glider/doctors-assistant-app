@@ -10,11 +10,11 @@ const PatientsListScreen = ({ navigation }) => {
   const onButtonPressed = () => {
     navigation.navigate("AddPatient");
   };
-  const { state } = useAuth();
+  const { state, handleLogout } = useAuth();
   const { user } = state;
   return (
     <View style={styles.container}>
-      <Text>{`Welcome ${user.firstName} ${user.lastName} `}</Text>
+      <Text>{`Welcome ${user} ${user} `}</Text>
       <PatientsList navigation={navigation} />
       <Button
         onPress={() => onButtonPressed()}
@@ -23,6 +23,9 @@ const PatientsListScreen = ({ navigation }) => {
         style={styles.button}
       >
         <Text>Add new patient</Text>
+      </Button>
+      <Button title="Sign out" onPress={handleLogout} style={styles.button}>
+        <Text>Logout</Text>
       </Button>
     </View>
   );

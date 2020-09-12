@@ -12,7 +12,6 @@ import { Colors } from "../../constants/styles";
 
 export default function Login(props) {
   const { navigation } = props;
-  const { navigate } = navigation;
 
   // 1 - DECLARE VARIABLES
   const [error, setError] = useState(null);
@@ -35,7 +34,7 @@ export default function Login(props) {
 
       // check if username is null
       const username = response.user.username !== null;
-      if (username) navigate("Home");
+      if (username);
       else navigation.replace("Username");
     } catch (err) {
       setError(err.message);

@@ -37,14 +37,17 @@ export default function Register(props) {
   }
 
   const registerSchema = yup.object({
-    firstName: yup.string().required("First name is required"),
-    lastName: yup.string().required("Last name is required"),
-    email: yup.string().email().required(),
-    password: yup.string().required("Password is required").min(8),
+    firstName: yup.string().required("Imię jest wymagane"),
+    lastName: yup.string().required("Nazwisko jest wymagane"),
+    email: yup.string().email().required("Email jest wymagany"),
+    password: yup
+      .string()
+      .required("Hasło jest wymagane, minimum 8 znaków")
+      .min(8),
     passwordConfirmation: yup
       .string()
-      .required("Please confirm password")
-      .oneOf([yup.ref("password"), null], "Passwords must match"),
+      .required("Proszę potwierdz hasło")
+      .oneOf([yup.ref("password"), null], "Hasła muszą się zgadzać"),
   });
 
   return (
@@ -78,10 +81,10 @@ export default function Register(props) {
           handleSubmit,
         }) => (
           <View>
-            <Header title="Register" />
+            <Header title="Rejestracja" />
             <TextInput
               style={AUTH_STYLES.inputs}
-              placeholder="first name"
+              placeholder="imię"
               onChangeText={handleChange("firstName")}
               onBlur={handleBlur("firstName")}
               value={values.title}
@@ -90,7 +93,7 @@ export default function Register(props) {
 
             <TextInput
               style={AUTH_STYLES.inputs}
-              placeholder="last name"
+              placeholder="nazwisko"
               onChangeText={handleChange("lastName")}
               value={values.title}
               s
@@ -110,7 +113,7 @@ export default function Register(props) {
             <TextInput
               secureTextEntry
               style={AUTH_STYLES.inputs}
-              placeholder="password"
+              placeholder="hasło"
               onChangeText={handleChange("password")}
               value={values.title}
               onBlur={handleBlur("password")}
@@ -120,7 +123,7 @@ export default function Register(props) {
             <TextInput
               secureTextEntry
               style={AUTH_STYLES.inputs}
-              placeholder="confirm password"
+              placeholder="potwierdzenie hasła"
               onChangeText={handleChange("passwordConfirmation")}
               value={values.title}
               onBlur={handleBlur("passwordConfirmation")}
@@ -131,12 +134,12 @@ export default function Register(props) {
             </Text>
 
             <Button
-              title="submit"
+              title="Wyślij"
               color={Colors.AUTH_VIOLET}
               onPress={handleSubmit}
             />
             <CTA
-              title="Already have an account?"
+              title="Masz już konto ?"
               ctaText="Login"
               onPress={() => navigation.replace("Login")}
               style={AUTH_STYLES.login}
