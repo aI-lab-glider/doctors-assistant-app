@@ -49,6 +49,5 @@ export const FONT_BOLD = {
 };
 
 export const FONT_AUTH = {
-  fontFamily: Platform.OS === "ios" ? "HelveticaNeue" : "Roboto",
   fontWeight: "500",
 };

@@ -43,6 +43,8 @@ export default function Login(props) {
   }
 
   const formProps = { title: "Login", fields, onSubmit, loading };
+  const { bypass } = useAuth();
+
   return (
     <View style={styles.container}>
       <Header title="Login" />
@@ -59,13 +61,20 @@ export default function Login(props) {
             onPress={() => navigation.navigate("ForgotPassword")}
             style={styles.forgotPassword}
           />
-
           <CTA
             title={"Don't have an account?"}
             ctaText="Register"
             onPress={() => navigation.replace("Register")}
             style={styles.register}
           />
+          {process.env.NODE_ENV === "development" && (
+            <CTA
+              title="bypass"
+              ctaText="bypass"
+              onPress={bypass}
+              style={styles.register}
+            />
+          )}
         </Form>
       </View>
     </View>

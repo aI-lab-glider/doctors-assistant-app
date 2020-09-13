@@ -5,7 +5,12 @@ import PropTypes from "prop-types";
 import { TOKEN_KEY, USER_KEY } from "../../constants/keys/Auth";
 
 // IMPORT REDUCER, INITIAL STATE AND ACTION TYPES
-import reducer, { initialState, LOGGED_IN, LOGGED_OUT } from "./AuthReducer";
+import reducer, {
+  initialState,
+  LOGGED_IN,
+  LOGGED_OUT,
+  BYPASS,
+} from "./AuthReducer";
 
 // CONFIG KEYS [Storage Keys]===================================
 export const keys = [TOKEN_KEY, USER_KEY];
@@ -82,8 +87,19 @@ function AuthProvider(props) {
     }
   };
 
+  const bypass = () => {
+    dispatch({ type: BYPASS });
+  };
+
   const value = useMemo(() => {
-    return { state, getAuthState, handleLogin, handleLogout, updateUser };
+    return {
+      state,
+      getAuthState,
+      handleLogin,
+      handleLogout,
+      updateUser,
+      bypass,
+    };
   }, [state]);
 
   AuthProvider.propTypes = {
