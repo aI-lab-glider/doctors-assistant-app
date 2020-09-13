@@ -29,8 +29,8 @@ export function padding(top, right, bottom, left) {
 export function boxShadow(
   color,
   offset = { height: 2, width: 2 },
-  radius = 8,
-  opacity = 0.2
+  radius = 6,
+  opacity = 0.5
 ) {
   return {
     shadowColor: color,
