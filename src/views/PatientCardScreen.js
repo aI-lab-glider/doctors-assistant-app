@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import PropTypes from "prop-types";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Colors, Typography } from "../constants/styles";
 import FontForgeIcon from "../components/common/FontForgeIcon";
+import SubtitleLabelWithButton from "../components/patientCard/SubtitleLabelWithButton";
+import SubtitleLabel from "../components/patientCard/SubtitleLabel";
 import BottomMenu from "../components/patientCard/bottomMenu";
 import Patient from "../constants/propTypes";
 
@@ -83,34 +84,20 @@ const PatientCardScreen = ({ route }) => {
                   ? "pacjent ubezwłasnowolniony"
                   : ""}
               </Text>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.diagnosisSubtitle}>Diagnoza</Text>
-                <FontForgeIcon
-                  name="diagnosis"
-                  size={22}
-                  color={Colors.PINK}
-                  style={styles.diagnosisLeftIcon}
-                />
-                <TouchableOpacity onPress={onAdd} style={styles.buttonAdd}>
-                  <FontForgeIcon name="add" size={20} color={Colors.PINK} />
-                </TouchableOpacity>
-              </View>
+              <SubtitleLabelWithButton
+                subtitle="Diagnoza"
+                iconName="diagnosis"
+                onAdd={onAdd}
+              />
               <Text style={styles.fieldText}>14.08.2020</Text>
               <Text style={styles.listItemFieldText}>
                 {">"} {patient.code}
               </Text>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.noteSubtitle}>Notatka</Text>
-                <FontForgeIcon
-                  name="pen"
-                  size={22}
-                  color={Colors.PINK}
-                  style={styles.noteLeftIcon}
-                />
-                <TouchableOpacity onPress={onAdd} style={styles.buttonAdd}>
-                  <FontForgeIcon name="add" size={20} color={Colors.PINK} />
-                </TouchableOpacity>
-              </View>
+              <SubtitleLabelWithButton
+                subtitle="Notatka"
+                iconName="pen"
+                onAdd={onAdd}
+              />
               <Text style={styles.fieldText}>14.08.2020</Text>
               <Text
                 style={[styles.noteListItemFieldText, noteTextSize()]}
@@ -121,15 +108,7 @@ const PatientCardScreen = ({ route }) => {
               >
                 {textNote}
               </Text>
-              <View style={styles.phoneContainer}>
-                <Text style={styles.phoneSubtitle}>Dane kontaktowe</Text>
-                <FontForgeIcon
-                  name="phone"
-                  size={22}
-                  color={Colors.PINK}
-                  style={styles.phoneLeftIcon}
-                />
-              </View>
+              <SubtitleLabel subtitle="Dane kontaktowe" iconName="phone" />
               <Text style={styles.fieldText}>Tel: {patient.phone}</Text>
               <Text style={styles.fieldText}>Osoba upoważniona:</Text>
               <Text style={styles.listItemFieldText}>
@@ -207,44 +186,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginLeft: 70,
   },
-  subtitleContainer: {
-    flex: 2,
-    flexDirection: "row",
-    alignSelf: "flex-start",
-  },
-  diagnosisSubtitle: {
-    flex: 4,
-    marginLeft: 35,
-    marginVertical: 7,
-    paddingTop: 4,
-    color: Colors.PURPLE,
-    fontSize: Typography.FONT_SIZE_14,
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-    alignSelf: "center",
-  },
-  diagnosisLeftIcon: {
-    flex: 11,
-    alignSelf: "center",
-    marginVertical: 5,
-    marginLeft: -8,
-    paddingTop: 4,
-  },
-  noteSubtitle: {
-    flex: 3,
-    marginLeft: 35,
-    marginVertical: 5,
-    paddingTop: 4,
-    color: Colors.PURPLE,
-    fontSize: Typography.FONT_SIZE_14,
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-    alignSelf: "center",
-  },
-  noteLeftIcon: {
-    flex: 10,
-    alignSelf: "center",
-    marginVertical: 5,
-    marginLeft: -4,
-  },
   noteListItemFieldText: {
     color: Colors.PURPLE,
     fontSize: Typography.FONT_SIZE_14,
@@ -252,29 +193,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginLeft: 70,
     width: "75%",
-  },
-  phoneContainer: {
-    flex: 2,
-    flexDirection: "row",
-  },
-  phoneSubtitle: {
-    marginLeft: 35,
-    marginVertical: 5,
-    paddingTop: 10,
-    color: Colors.PURPLE,
-    fontSize: Typography.FONT_SIZE_14,
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-    alignSelf: "center",
-  },
-  phoneLeftIcon: {
-    alignSelf: "center",
-    marginTop: 10,
-    marginLeft: 3,
-  },
-  buttonAdd: {
-    alignSelf: "center",
-    marginRight: 30,
-    marginTop: 12,
   },
   bottomMenu: {
     flex: 1,
