@@ -47,3 +47,7 @@ export const FONT_BOLD = {
   fontFamily: FONT_FAMILY_BOLD,
   fontWeight: FONT_WEIGHT_BOLD,
 };
+
+export const FONT_AUTH = {
+  fontWeight: "500",
+};
