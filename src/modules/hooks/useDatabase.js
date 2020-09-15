@@ -11,6 +11,8 @@ function useDatabase() {
         await database.dropDatabaseTablesAsync();
         await database.setupDatabaseAsync();
         await database.setupPatientsAsync();
+        await database.setupDiagnosisAsync();
+        await database.setupPatientsDiagnosisAsync();
 
         setDBLoadingComplete(true);
       } catch (e) {

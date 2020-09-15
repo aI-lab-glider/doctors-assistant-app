@@ -1,5 +1,6 @@
 import * as SQLite from "expo-sqlite";
 import patientsData from "../../constants/data/patientsData";
+import diagnosisData from "../../constants/data/diagnosisData";
 
 const db = SQLite.openDatabase(process.env.DATABASE_NAME);
 
@@ -11,8 +12,7 @@ const getPatients = (setPatientsFunc) => {
       });
     },
     (t, error) => {
-      console.log("db error load patients");
-      console.log(error);
+      console.log(`db error load patients ${error}`);
     },
     () => {
       console.log("db load patients");
@@ -26,8 +26,7 @@ const insertPatient = (patientName, successFunc) => {
       tx.executeSql("insert into patients (name) values (?)", [patientName]);
     },
     (t, error) => {
-      console.log("db error insertPatient");
-      console.log(error);
+      console.log(`db error insertPatient ${error}`);
     },
     () => {
       successFunc();
@@ -49,6 +48,28 @@ const dropDatabaseTablesAsync = async () => {
           reject(error);
         }
       );
+      tx.executeSql(
+        "drop table if exists diagnosis",
+        [],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, error) => {
+          console.warn("error dropping patients table");
+          reject(error);
+        }
+      );
+      tx.executeSql(
+        "drop table if exists patients_diagnosis",
+        [],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, error) => {
+          console.warn("error dropping patients table");
+          reject(error);
+        }
+      );
     });
   });
 };
@@ -58,10 +79,10 @@ const setupDatabaseAsync = async () => {
     db.transaction(
       (tx) => {
         tx.executeSql(
-          "create table if not exists patients " +
+          "CREATE TABLE IF NOT EXISTS patients " +
             "(" +
-            " id integer primary key not null," +
-            " name text," +
+            " id INTEGER primary key not null," +
+            " name TEXT," +
             " surname text," +
             " sex text," +
             " pesel text," +
@@ -78,14 +99,47 @@ const setupDatabaseAsync = async () => {
             " code text" +
             ");"
         );
+
+        tx.executeSql(
+          "create table if not exists diagnosis" +
+            "(" +
+            "id integer primary key," +
+            "code text not null," +
+            "name text not null" +
+            ")"
+        );
+        tx.executeSql(
+          "create table if not exists patients_diagnosis " +
+            "(" +
+            " id integer primary key not null," +
+            " patient_id integer not null," +
+            " diagnosis_id integer not null," +
+            " FOREIGN KEY(patient_id) REFERENCES patients," +
+            " FOREIGN KEY(diagnosis_id) REFERENCES diagnosis" +
+            ")"
+        );
+        // tx.executeSql(
+        //   "create table if not exists patients_medicines " +
+        //     "(" +
+        //     " id integer primary key not null," +
+        //     " patient_id integer foreign key not null," +
+        //     " medicine_id integer foreign key not null," +
+        //     ")"
+        // );
+        // tx.executeSql(
+        //   "create table if not exists medicines" +
+        //     "(" +
+        //     " id integer primary key not null," +
+        //     " name text not null," +
+        //     ")"
+        // );
       },
       (_, error) => {
-        console.warn("db error creating tables");
-        console.error(error);
+        console.error(`db error creating tables ${error}`);
         reject(error);
       },
       (_, success) => {
-        console.log("success");
+        console.log("db create success");
         resolve(success);
       }
     );
@@ -126,12 +180,58 @@ const setupPatientsAsync = async () => {
         });
       },
       (t, error) => {
-        console.warn("db error insertPatient");
-        console.error(error);
+        console.warn(`db error insertPatient ${error}`);
         resolve();
       },
       (t, success) => {
         console.log("db success InsertPatients");
+        resolve(success);
+      }
+    );
+  });
+};
+
+const setupPatientsDiagnosisAsync = async () => {
+  return new Promise((resolve) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          "insert into patients_diagnosis " +
+            "(id, patient_id, diagnosis_id) " +
+            " values (?,?,?)",
+          [1, 1, 1]
+        );
+      },
+      (t, error) => {
+        console.warn(`db error insert Patient diagnosis ${error}`);
+        resolve();
+      },
+      (t, success) => {
+        console.log("db success insert Patient diagnosis ");
+        resolve(success);
+      }
+    );
+  });
+};
+
+const setupDiagnosisAsync = async () => {
+  return new Promise((resolve) => {
+    db.transaction(
+      (tx) => {
+        diagnosisData.forEach((diagnosis) => {
+          tx.executeSql(
+            // eslint-disable-next-line no-useless-concat
+            "insert into diagnosis  " + " (id, code, name)" + " values (?,?,?)",
+            [diagnosis.id, diagnosis.code, diagnosis.name]
+          );
+        });
+      },
+      (t, error) => {
+        console.warn(`db error insert diagnosis ${error}`);
+        resolve();
+      },
+      (t, success) => {
+        console.log("db success insert diagnosis ");
         resolve(success);
       }
     );
@@ -145,4 +245,6 @@ export const database = {
   setupDatabaseAsync,
   setupPatientsAsync,
   dropDatabaseTablesAsync,
+  setupPatientsDiagnosisAsync,
+  setupDiagnosisAsync,
 };

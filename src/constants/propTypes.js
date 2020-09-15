@@ -33,7 +33,7 @@ const Patient = PropTypes.shape({
   note: PropTypes.string,
   person_authorized: PropTypes.string,
   phone_authorized: PropTypes.string,
-  guardianship: PropTypes.bool,
+  guardianship: PropTypes.number,
   first_hospitalization: PropTypes.string,
   code: CodeProp,
 });
