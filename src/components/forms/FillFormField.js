@@ -1,16 +1,17 @@
 import React from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, Text, StyleSheet } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../common/FontForgeIcon";
 
-const FormField = ({
+const FillFormField = ({
   name,
   leftIcon,
   keyboardType,
   placeholder,
+  labelText,
   calculateDependentValue,
   ...otherProps
 }) => {
@@ -32,14 +33,15 @@ const FormField = ({
       <View style={styles.container}>
         {leftIcon && (
           <FontForgeIcon
-            name={leftIcon}
+            name="name"
             size={38}
             color={Colors.PINK_MEDIUM}
             style={styles.icon}
           />
         )}
+        <Text style={[styles.labelText, leftMargin()]}>{labelText}</Text>
         <TextInput
-          style={[styles.input, leftMargin()]}
+          style={styles.input}
           placeholderTextColor={Colors.PURPLE_LIGHT}
           placeholder={placeholder}
           onChangeText={(text) => setFieldValue(name, text)}
@@ -57,17 +59,26 @@ const FormField = ({
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: Colors.GRAY_VERY_LIGHT,
     flexDirection: "row",
     padding: 7,
+    justifyContent: "center",
+    alignItems: "center",
     alignSelf: "center",
     right: 20,
   },
   icon: {
     marginRight: 15,
   },
+  labelText: {
+    fontSize: Typography.FONT_SIZE_14,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    color: Colors.BLACK,
+    marginRight: 20,
+  },
   input: {
-    width: "60%",
+    width: "16%",
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_LIGHT,
     color: Colors.BLACK,
@@ -76,17 +87,18 @@ const styles = StyleSheet.create({
   },
 });
 
-FormField.defaultProps = {
+FillFormField.defaultProps = {
   leftIcon: null,
   calculateDependentValue: null,
 };
 
-FormField.propTypes = {
+FillFormField.propTypes = {
   name: PropTypes.string.isRequired,
   leftIcon: PropTypes.string,
   keyboardType: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  labelText: PropTypes.string.isRequired,
   calculateDependentValue: PropTypes.func,
 };
 
-export default FormField;
+export default FillFormField;

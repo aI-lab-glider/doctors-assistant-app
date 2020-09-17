@@ -3,6 +3,7 @@ import { AppLoading } from "expo";
 import { useFonts } from "expo-font";
 import MainNavigator from "./src/modules/navigation/MainNavigator";
 import PatientsContextProvider from "./src/modules/context/PatientsContext";
+import BasicDataContextProvider from "./src/modules/context/BasicDataContext";
 import OpenSansLight from "./src/assets/fonts/OpenSans-Light.ttf";
 import OpenSansRegular from "./src/assets/fonts/OpenSans-Regular.ttf";
 import OpenSansBold from "./src/assets/fonts/OpenSans-Bold.ttf";
@@ -23,7 +24,9 @@ export default function App() {
   }
   return (
     <PatientsContextProvider>
-      <MainNavigator />
+      <BasicDataContextProvider>
+        <MainNavigator />
+      </BasicDataContextProvider>
     </PatientsContextProvider>
   );
 }

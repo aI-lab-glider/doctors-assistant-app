@@ -4,9 +4,9 @@ import {
   PATIENT_CODE_REGEX,
   PESEL_REGEX,
   PHONE_REGEX,
-} from "../../constants/constants";
+} from "../constants";
 
-const validationSchema = Yup.object().shape({
+const personalDataValidationSchema = Yup.object().shape({
   name: Yup.string().required("Imię jest wymaganym polem").label("Imię"),
   surname: Yup.string()
     .required("Nazwisko jest wymaganym polem")
@@ -42,4 +42,4 @@ const validationSchema = Yup.object().shape({
   guardianship: Yup.boolean(),
 });
 
-export default validationSchema;
+export default personalDataValidationSchema;

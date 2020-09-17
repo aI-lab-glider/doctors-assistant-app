@@ -6,10 +6,11 @@ import FontForgeIcon from "../components/common/FontForgeIcon";
 import SubtitleLabelWithButton from "../components/patientCard/SubtitleLabelWithButton";
 import SubtitleLabel from "../components/patientCard/SubtitleLabel";
 import BottomMenu from "../components/patientCard/bottomMenu";
-import Patient from "../constants/propTypes";
+import Patient from "../constants/propTypes/patientPropTypes";
+import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
 
 const PatientCardScreen = ({ route }) => {
-  const { patient } = route.params;
+  const { patient, patientBasicData } = route.params;
   const calculateAge = (dateOfBirth) => {
     if (dateOfBirth) {
       const from = dateOfBirth.split(/-| - /);
@@ -73,10 +74,11 @@ const PatientCardScreen = ({ route }) => {
               </Text>
               <Text style={styles.fieldText}>Hospitalizacja</Text>
               <Text style={styles.listItemFieldText}>
-                {">"} Pierwszy raz w {patient.first_hospitalization}
+                {">"} Pierwszy raz w {patientBasicData.first_hospitalization}
               </Text>
               <Text style={styles.listItemFieldText}>
-                {">"} Liczba hospitalizacji: {patient.hospitalization_times}
+                {">"} Liczba hospitalizacji:{" "}
+                {patientBasicData.hospitalization_times}
               </Text>
               <Text style={styles.fieldText}>
                 Inne:{" "}
@@ -208,6 +210,7 @@ PatientCardScreen.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       patient: Patient.isRequired,
+      patientBasicData: PatientBasicData.isRequired,
     }),
   }).isRequired,
 };

@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import PatientsListScreen from "../../views/PatientsListScreen";
 import PatientCardScreen from "../../views/PatientCardScreen";
 import AddPatientScreen from "../../views/AddPatientScreen";
+import BasicDataScreen from "../../views/BasicDataScreen";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../../components/common/FontForgeIcon";
 
@@ -74,6 +75,13 @@ const MainNavigator = () => {
           component={AddPatientScreen}
           options={{
             title: "Dane osobowe",
+          }}
+        />
+        <Stack.Screen
+          name="BasicData"
+          component={BasicDataScreen}
+          options={{
+            title: "Informacje podstawowe",
           }}
         />
       </Stack.Navigator>
