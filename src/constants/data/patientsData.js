@@ -16,7 +16,6 @@ const patientsData = [
     guardianship: false,
     diagnosis: ["depresja", "nerwica", "nerwica", "nerwica", "nerwica"],
     medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
   },
   {
@@ -36,7 +35,6 @@ const patientsData = [
     guardianship: false,
     diagnosis: ["depresja", "nerwica"],
     medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
   },
   {
@@ -51,7 +49,6 @@ const patientsData = [
     bmi: 2,
     diagnosis: ["depresja", "nerwica"],
     medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
     note: "",
     phone: "2342342342",
@@ -76,7 +73,6 @@ const patientsData = [
     guardianship: false,
     diagnosis: ["depresja", "nerwica"],
     medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
   },
   {
@@ -96,7 +92,6 @@ const patientsData = [
     guardianship: false,
     diagnosis: ["depresja", "nerwica"],
     medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
   },
   {
@@ -118,8 +113,6 @@ const patientsData = [
     person_authorized: "Jan Kłapouchy",
     phone_authorized: "999888777",
     guardianship: true,
-    first_hospitalization: "2018",
-    hospitalization_times: 3,
   },
 ];
 

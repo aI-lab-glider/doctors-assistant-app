@@ -2,18 +2,34 @@ import React from "react";
 import { FlatList } from "react-native";
 import PropTypes from "prop-types";
 import Item from "./item";
-import Patient from "../../constants/propTypes";
+import Patient from "../../constants/propTypes/patientPropTypes";
+import PatientBasicData from "../../constants/propTypes/basicDataPropTypes";
 
-const List = ({ navigation, patients }) => {
-  const onItemPressed = ({ patient }) => {
-    navigation.navigate("PatientCard", { patient });
+const List = ({ navigation, patients, patientsBasicData }) => {
+  const getPatientBasicData = (id) => {
+    return patientsBasicData.find(
+      (dataElement) => dataElement.patient_id === id
+    );
   };
+  const onItemPressed = ({ patient, patientBasicData }) => {
+    navigation.navigate("PatientCard", { patient, patientBasicData });
+  };
+
   return (
     <FlatList
       data={patients}
       keyExtractor={(patient) => patient.id.toString()}
       renderItem={({ item }) => (
-        <Item item={item} onPress={() => onItemPressed({ patient: item })} />
+        <Item
+          item={item}
+          data={getPatientBasicData(item.id)}
+          onPress={() =>
+            onItemPressed({
+              patient: item,
+              patientBasicData: getPatientBasicData(item.id),
+            })
+          }
+        />
       )}
     />
   );
@@ -21,6 +37,7 @@ const List = ({ navigation, patients }) => {
 
 List.defaultProps = {
   patients: [],
+  patientsBasicData: [],
 };
 
 List.propTypes = {
@@ -28,5 +45,6 @@ List.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
   patients: PropTypes.arrayOf(Patient),
+  patientsBasicData: PropTypes.arrayOf(PatientBasicData),
 };
 export default List;

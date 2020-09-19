@@ -4,14 +4,15 @@ import PropTypes from "prop-types";
 import { Colors } from "../../../constants/styles";
 import Header from "./Header";
 import InterviewInfo from "./InterviewInfo";
-import Patient from "../../../constants/propTypes";
+import Patient from "../../../constants/propTypes/patientPropTypes";
 import CircleButton from "../../common/CircleButton";
 import {
   BORDER_RADIUS,
   BOX_SHADOW,
 } from "../../../constants/styles/typography";
+import PatientBasicData from "../../../constants/propTypes/basicDataPropTypes";
 
-const Item = ({ onPress, item: patient }) => {
+const Item = ({ onPress, item: patient, data: patientBasicData }) => {
   return (
     <View style={styles.item}>
       <TouchableOpacity onPress={onPress}>
@@ -32,8 +33,8 @@ const Item = ({ onPress, item: patient }) => {
           icon="hospital"
           name="Liczba hospitalizacji"
           value={
-            patient.hospitalization_times
-              ? patient.hospitalization_times.toString()
+            patientBasicData.hospitalization_times
+              ? patientBasicData.hospitalization_times.toString()
               : "0"
           }
         />
@@ -67,6 +68,7 @@ const styles = StyleSheet.create({
 
 Item.propTypes = {
   item: Patient.isRequired,
+  data: PatientBasicData.isRequired,
   onPress: PropTypes.func.isRequired,
 };
 

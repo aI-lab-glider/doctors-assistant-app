@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import FontForgeIcon from "../../common/FontForgeIcon";
-import Patient from "../../../constants/propTypes";
+import Patient from "../../../constants/propTypes/patientPropTypes";
 import { Colors } from "../../../constants/styles";
 import {
   FONT_REGULAR,

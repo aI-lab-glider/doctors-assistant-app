@@ -17,7 +17,7 @@ const CheckboxFormField = ({ name, text }) => {
         <TouchableOpacity
           style={styles.choice}
           onPress={() => {
-            setFieldValue("guardianship", !isChecked);
+            setFieldValue(name, !isChecked);
             setChecked(!isChecked);
           }}
         >

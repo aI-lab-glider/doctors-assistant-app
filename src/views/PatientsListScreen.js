@@ -7,11 +7,12 @@ import List from "../components/patientsList";
 import FontForgeIcon from "../components/common/FontForgeIcon";
 import CircleButton from "../components/common/CircleButton";
 import { PatientsContext } from "../modules/context/PatientsContext";
+import { BasicDataContext } from "../modules/context/BasicDataContext";
 
 const MINIMUM_SEARCH_STRING_LENGTH = 3;
 const PatientsListScreen = ({ navigation }) => {
   const { patients } = React.useContext(PatientsContext);
-
+  const { patientsBasicData } = React.useContext(BasicDataContext);
   const [filteredPatients, setFilteredPatients] = useState(patients);
   const [search, setSearch] = useState("");
 
@@ -64,7 +65,11 @@ const PatientsListScreen = ({ navigation }) => {
           />
           <CircleButton icon="add" size={32} onPress={addNewPatientBtPressed} />
         </View>
-        <List navigation={navigation} patients={filteredPatients} />
+        <List
+          navigation={navigation}
+          patients={filteredPatients}
+          patientsBasicData={patientsBasicData}
+        />
       </View>
     </View>
   );
