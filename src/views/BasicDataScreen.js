@@ -115,7 +115,7 @@ const BasicDataScreen = ({ route, navigation }) => {
 
   return (
     <KeyboardAvoidingView style={styles.backgroundContainer}>
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <View style={styles.container}>
           <Text style={styles.titleText}>Wywiad</Text>
           <Formik
@@ -578,6 +578,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GRAY_VERY_LIGHT,
     borderTopRightRadius: 50,
     paddingTop: 22,
+    paddingBottom: 22,
   },
   buttonContainer: {
     margin: 25,
