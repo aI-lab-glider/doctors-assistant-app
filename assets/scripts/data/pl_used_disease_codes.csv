@@ -1,0 +1,22 @@
+Code,Description
+F3200,Epizod depresji łagodny bez objawów somatycznych
+F3201,Epizod depresji łagodny z objawami somatycznymi
+F3210,Epizod depresji umiarkowany bez objawów somatycznych
+F3211,Epizod depresji umiarkowany z objawami somatycznymi
+F3220,Epizod cieżkiej depresji bez objawów psychotycznych i somatycznych
+F3221,"Epizod cieżkiej depresji bez objawów psychotycznych, z objawami somatycznymi"
+F3230,"Epizod depresji ciężki, z objawami psychotycznymi, bez objawów somatycznych"
+F3231,"Epizod depresji ciężki, z objawami psychotycznymi i somatycznymi"
+F328,Inne epizody depresyjne
+F329,"Epizod depresyjny, nieokreślony"
+F3300,"Zaburzenia depresyjne nawracające, obecnie epizod depresyjny łagodny, bez objawów somatycznych"
+F3301,"Zaburzenia depresyjne nawracające, obecnie epizod depresyjny łagodny z objawami somatycznymi"
+F3310,"Zaburzenia depresyjne nawracające, obecnie epizod depresyjny umiarkowany, bez objawów somatycznych"
+F3311,"Zaburzenia depresyjne nawracające, obecnie epizod depresyjny umiarkowany z objawami somatycznymi"
+F3320,"Zaburzenia depresyjne nawracające, obecnie epizod depresyjny ciężki bez objawów psychotycznych i somatycznych"
+F3321,"Zaburzenia depresyjne nawracające, obecnie epizod depresyjny ciężki bez objawów psychotycznych, z objawami somatycznymi"
+F3330,"Zaburzenia depresyjne nawracające, obecnie epizod depresyjny ciężki z objawami psychotycznymi, bez objawów somatycznych"
+F3331,"Zaburzenia depresyjne nawracające, obecnie epizod depresyjny ciężki z objawami psychotycznymi i somatycznymi"
+F334,"Zaburzenia depresyjne nawracające, obecnie remisja"
+F338,Inne nawracające zaburzenia depresyjne
+F339,"Nawracające zaburzenia depresyjne, nieokreślone"
