@@ -41,7 +41,7 @@ const patientsBasicData = [
     family_interview: "",
   },
   {
-    id: 1,
+    id: 2,
     patient_id: 2,
     reason_of_report: "",
     major_ailments: "",
@@ -82,7 +82,7 @@ const patientsBasicData = [
     family_interview: "",
   },
   {
-    id: 1,
+    id: 3,
     patient_id: 3,
     reason_of_report: "",
     major_ailments: "",
@@ -123,7 +123,7 @@ const patientsBasicData = [
     family_interview: "",
   },
   {
-    id: 1,
+    id: 4,
     patient_id: 4,
     reason_of_report: "",
     major_ailments: "",
@@ -164,7 +164,7 @@ const patientsBasicData = [
     family_interview: "",
   },
   {
-    id: 1,
+    id: 5,
     patient_id: 5,
     reason_of_report: "",
     major_ailments: "",
@@ -205,7 +205,7 @@ const patientsBasicData = [
     family_interview: "",
   },
   {
-    id: 1,
+    id: 6,
     patient_id: 123456789,
     reason_of_report: "",
     major_ailments: "",

@@ -6,7 +6,7 @@ import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../common/FontForgeIcon";
 
-const CheckboxFormField = ({ name, text }) => {
+const CheckboxFormField = ({ name, text, marginLeft }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
   const [isChecked, setChecked] = useState(false);
   const leftIcon = isChecked ? "checked" : "unchecked";
@@ -15,7 +15,7 @@ const CheckboxFormField = ({ name, text }) => {
     <>
       <View style={styles.container}>
         <TouchableOpacity
-          style={styles.choice}
+          style={[styles.choice, { marginLeft }]}
           onPress={() => {
             setFieldValue(name, !isChecked);
             setChecked(!isChecked);
@@ -60,9 +60,14 @@ const styles = StyleSheet.create({
   },
 });
 
+CheckboxFormField.defaultProps = {
+  marginLeft: 0,
+};
+
 CheckboxFormField.propTypes = {
   name: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
+  marginLeft: PropTypes.number,
 };
 
 export default CheckboxFormField;

@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import MainNavigator from "./src/modules/navigation/MainNavigator";
 import PatientsContextProvider from "./src/modules/context/PatientsContext";
 import BasicDataContextProvider from "./src/modules/context/BasicDataContext";
+import PhysicalExaminationProvider from "./src/modules/context/PhysicalExaminationContext";
 import OpenSansLight from "./src/assets/fonts/OpenSans-Light.ttf";
 import OpenSansRegular from "./src/assets/fonts/OpenSans-Regular.ttf";
 import OpenSansBold from "./src/assets/fonts/OpenSans-Bold.ttf";
@@ -25,7 +26,9 @@ export default function App() {
   return (
     <PatientsContextProvider>
       <BasicDataContextProvider>
-        <MainNavigator />
+        <PhysicalExaminationProvider>
+          <MainNavigator />
+        </PhysicalExaminationProvider>
       </BasicDataContextProvider>
     </PatientsContextProvider>
   );
