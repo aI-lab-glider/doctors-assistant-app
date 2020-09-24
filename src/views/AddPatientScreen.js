@@ -33,8 +33,8 @@ const AddPatientScreen = ({ navigation }) => {
     bmi: 0,
     note: "",
     phone: "",
-    person_authorized: "",
-    phone_authorized: "",
+    person_guard: "",
+    phone_guard: "",
     guardianship: false,
   };
 
@@ -50,8 +50,8 @@ const AddPatientScreen = ({ navigation }) => {
     patient.bmi = parseFloat(Math.round(values.bmi * 100) / 100);
     patient.note = values.note;
     patient.phone = values.phone;
-    patient.person_authorized = values.person_authorized;
-    patient.phone_authorized = values.phone_authorized;
+    patient.person_guard = values.person_guard;
+    patient.phone_guard = values.phone_guard;
     patient.guardianship = values.guardianship;
     navigation.navigate("BasicData", {
       patient,
@@ -201,19 +201,19 @@ const AddPatientScreen = ({ navigation }) => {
                 />
                 <Text style={styles.subtitleText}>Dane osoby upoważnionej</Text>
                 <FormField
-                  name="person_authorized"
+                  name="person_guard"
                   leftIcon="person"
-                  onChangeText={handleChange("person_authorized")}
+                  onChangeText={handleChange("person_guard")}
                   placeholder="Imię i Nazwisko"
-                  onBlur={handleBlur("person_authorized")}
+                  onBlur={handleBlur("person_guard")}
                   keyboardType="default"
                 />
                 <FormField
-                  name="phone_authorized"
+                  name="phone_guard"
                   leftIcon="phone"
-                  onChangeText={handleChange("phone_authorized")}
+                  onChangeText={handleChange("phone_guard")}
                   placeholder=""
-                  onBlur={handleBlur("phone_authorized")}
+                  onBlur={handleBlur("phone_guard")}
                   keyboardType="numeric"
                 />
                 <CheckboxFormField

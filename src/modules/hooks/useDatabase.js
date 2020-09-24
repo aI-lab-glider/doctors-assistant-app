@@ -8,11 +8,7 @@ function useDatabase() {
   useEffect(() => {
     async function loadDataAsync() {
       try {
-        await database.dropDatabaseTablesAsync();
-        await database.setupDatabaseAsync();
-        await database.setupPatientsAsync();
-        await database.setupDiagnosisAsync();
-        await database.setupPatientsDiagnosisAsync();
+        await database.initDB();
 
         setDBLoadingComplete(true);
       } catch (e) {

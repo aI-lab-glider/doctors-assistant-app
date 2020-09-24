@@ -1,21 +1,38 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import basicDataReducer from "./BasicDataContextReducer";
-import patientsBasicData from "../../constants/data/patientsBasicData";
+import { database } from "../database/database";
 
 export const BasicDataContext = createContext({
   patientsBasicData: [],
 });
 
-const initialState = { patientsBasicData };
-
 function BasicDataContextProvider({ children }) {
-  const [state, dispatch] = useReducer(basicDataReducer, initialState);
+  const [state, dispatch] = useReducer(basicDataReducer, {
+    patientsBasicData: [],
+  });
+
+  useEffect(() => {
+    refreshBasicData();
+  }, []);
+
+  const setBasicData = (basicData) => {
+    dispatch({ type: "SET_BASIC_DATA", payload: { basicData } });
+  };
+
+  const refreshBasicData = () => {
+    return database.getBasicPatientsData(setMultiplePatientsData);
+  };
+
+  const setMultiplePatientsData = (basicDataArray) => {
+    basicDataArray.forEach((basicData) => {
+      setBasicData(basicData);
+    });
+  };
+
   const value = {
     ...state,
-    setBasicData: (basicData) => {
-      dispatch({ type: "SET_BASIC_DATA", payload: { basicData } });
-    },
+    setBasicData,
   };
 
   return (

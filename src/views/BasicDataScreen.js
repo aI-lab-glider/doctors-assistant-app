@@ -41,7 +41,7 @@ const BasicDataScreen = ({ route, navigation }) => {
     pharmacotherapy: "",
     psychotherapy: "",
     family_therapy: "",
-    medications_used: "",
+    medications: "",
     allergies: "",
     hygiene: "",
     education_choice: "",

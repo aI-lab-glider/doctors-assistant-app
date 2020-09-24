@@ -114,8 +114,7 @@ const PatientCardScreen = ({ route }) => {
               <Text style={styles.fieldText}>Tel: {patient.phone}</Text>
               <Text style={styles.fieldText}>Osoba upoważniona:</Text>
               <Text style={styles.listItemFieldText}>
-                {">"} {patient.person_authorized} tel.{" "}
-                {patient.phone_authorized}
+                {">"} {patient.person_guard} tel. {patient.phone_guard}
               </Text>
             </View>
           </View>
