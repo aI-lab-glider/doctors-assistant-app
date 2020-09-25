@@ -1,6 +1,6 @@
 const reducer = (state, action) => {
   switch (action.type) {
-    case "SET_PATIENT": {
+    case "INSERT_OR_UPDATE_PATIENT": {
       const { patient: setPatient } = action.payload;
       const { patients } = state;
 
@@ -13,6 +13,13 @@ const reducer = (state, action) => {
         patients.push(setPatient);
       }
 
+      return {
+        ...state,
+        patients,
+      };
+    }
+    case "REFRESH_PATIENTS": {
+      const { patients } = action.payload;
       return {
         ...state,
         patients,

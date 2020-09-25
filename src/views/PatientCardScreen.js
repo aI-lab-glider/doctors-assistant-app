@@ -12,6 +12,7 @@ import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
 const PatientCardScreen = ({ route }) => {
   const { patient, patientBasicData } = route.params;
   const calculateAge = (dateOfBirth) => {
+    // TODO: Add dateOfBirth validation
     if (dateOfBirth) {
       const from = dateOfBirth.split(/-| - /);
       const birthdateTimeStamp = new Date(from[2], from[1] - 1, from[0]);
@@ -21,8 +22,9 @@ const PatientCardScreen = ({ route }) => {
     return "";
   };
   const onAdd = () => {};
+  const patientNote = patient.note ? patient.note : "";
   const [textNote, setTextNote] = useState(
-    patient.note.length > 50
+    patientNote > 50
       ? `> ${patient.note.substring(0, 20)}...`
       : `> ${patient.note}`
   );
@@ -39,6 +41,7 @@ const PatientCardScreen = ({ route }) => {
       setLengthMore(!lengthMore);
     }
   };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 0.9 }}>
@@ -74,11 +77,16 @@ const PatientCardScreen = ({ route }) => {
               </Text>
               <Text style={styles.fieldText}>Hospitalizacja</Text>
               <Text style={styles.listItemFieldText}>
-                {">"} Pierwszy raz w {patientBasicData.first_hospitalization}
+                {">"} Pierwszy raz w{" "}
+                {patientBasicData.first_hospitalization
+                  ? patientBasicData.first_hospitalization
+                  : ""}
               </Text>
               <Text style={styles.listItemFieldText}>
                 {">"} Liczba hospitalizacji:{" "}
-                {patientBasicData.hospitalization_times}
+                {patientBasicData.hospitalization_times
+                  ? patientBasicData.hospitalization_times
+                  : "0"}
               </Text>
               <Text style={styles.fieldText}>
                 Inne:{" "}
@@ -210,7 +218,7 @@ PatientCardScreen.propTypes = {
     params: PropTypes.shape({
       patient: Patient.isRequired,
       patientBasicData: PatientBasicData.isRequired,
-    }),
+    }).isRequired,
   }).isRequired,
 };
 

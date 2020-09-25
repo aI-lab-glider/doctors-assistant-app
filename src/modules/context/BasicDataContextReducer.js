@@ -18,6 +18,13 @@ const basicDataReducer = (state, action) => {
         patientsBasicData,
       };
     }
+    case "REFRESH_BASIC_DATA": {
+      const { patientsBasicData } = action.payload;
+      return {
+        ...state,
+        patientsBasicData,
+      };
+    }
     default:
       return state;
   }

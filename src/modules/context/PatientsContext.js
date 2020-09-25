@@ -8,24 +8,21 @@ export const PatientsContext = createContext({
 });
 
 function PatientsContextProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, { patients: [] });
+  const [state, dispatch] = useReducer(reducer, {
+    patients: [],
+  });
 
   useEffect(() => {
+    const refreshPatients = async () => {
+      const patients = await database.getPatients();
+      dispatch({ type: "REFRESH_PATIENTS", payload: { patients } });
+    };
+
     refreshPatients();
   }, []);
 
-  const refreshPatients = () => {
-    return database.getPatients(setPatients);
-  };
-
   const setPatient = (patient) => {
-    dispatch({ type: "SET_PATIENT", payload: { patient } });
-  };
-
-  const setPatients = (patients) => {
-    patients.forEach((patient) => {
-      setPatient(patient);
-    });
+    dispatch({ type: "INSERT_OR_UPDATE_PATIENT", payload: { patient } });
   };
 
   const value = {

@@ -12,23 +12,18 @@ function BasicDataContextProvider({ children }) {
     patientsBasicData: [],
   });
 
-  useEffect(() => {
-    refreshBasicData();
-  }, []);
-
   const setBasicData = (basicData) => {
     dispatch({ type: "SET_BASIC_DATA", payload: { basicData } });
   };
 
-  const refreshBasicData = () => {
-    return database.getBasicPatientsData(setMultiplePatientsData);
-  };
+  useEffect(() => {
+    const refreshBasicData = async () => {
+      const patientsBasicData = await database.getBasicPatientsData();
+      dispatch({ type: "REFRESH_BASIC_DATA", payload: { patientsBasicData } });
+    };
 
-  const setMultiplePatientsData = (basicDataArray) => {
-    basicDataArray.forEach((basicData) => {
-      setBasicData(basicData);
-    });
-  };
+    refreshBasicData();
+  }, []);
 
   const value = {
     ...state,
