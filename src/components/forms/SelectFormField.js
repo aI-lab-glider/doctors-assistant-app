@@ -6,10 +6,18 @@ import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../common/FontForgeIcon";
 
-const SelectFormField = ({ name, leftText, rightText }) => {
+const SelectFormField = ({
+  name,
+  leftText,
+  rightText,
+  defaultOption,
+  calculateDependentValueWhenRightChecked,
+}) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [isLeftChecked, setLeftChecked] = useState(false);
-  const [isRightChecked, setRightChecked] = useState(false);
+  const [isLeftChecked, setLeftChecked] = useState(!!defaultOption);
+  const [isRightChecked, setRightChecked] = useState(
+    !(defaultOption || defaultOption === null)
+  );
 
   const pressLeft = () => {
     setLeftChecked(true);
@@ -20,6 +28,8 @@ const SelectFormField = ({ name, leftText, rightText }) => {
     setLeftChecked(false);
     setRightChecked(true);
     setFieldValue(name, false);
+    if (calculateDependentValueWhenRightChecked != null)
+      calculateDependentValueWhenRightChecked();
   };
 
   return (
@@ -73,11 +83,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
+SelectFormField.defaultProps = {
+  defaultOption: null,
+  calculateDependentValueWhenRightChecked: null,
+};
 
 SelectFormField.propTypes = {
   name: PropTypes.string.isRequired,
   leftText: PropTypes.string.isRequired,
   rightText: PropTypes.string.isRequired,
+  defaultOption: PropTypes.bool,
+  calculateDependentValueWhenRightChecked: PropTypes.func,
 };
 
 export default SelectFormField;

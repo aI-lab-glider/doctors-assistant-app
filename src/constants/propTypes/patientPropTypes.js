@@ -26,7 +26,6 @@ const Patient = PropTypes.shape({
   height: PropTypes.number,
   bmi: PropTypes.number,
   diagnosis: PropTypes.arrayOf(PropTypes.string),
-  medicines: PropTypes.arrayOf(PropTypes.string),
   pesel: PropTypes.string,
   date_of_birth: PropTypes.string.isRequired,
   note: PropTypes.string,

@@ -27,7 +27,11 @@ const Item = ({ onPress, item: patient, data: patientBasicData }) => {
         <InterviewInfo
           icon="medicines"
           name="Leki"
-          value={patient.medicines ? patient.medicines.join(", ") : ""}
+          value={
+            patientBasicData.medications_used
+              ? patientBasicData.medications_used
+              : ""
+          }
         />
         <InterviewInfo
           icon="hospital"
