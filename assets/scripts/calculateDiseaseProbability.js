@@ -10,7 +10,7 @@
 function calculateDiseasesProbability(major_answers,minor_answers,diagnosis_data) {
 
   var all_answers = major_answers.concat(minor_answers);
-  
+
   var probability_data = [];
 
   diagnosis_data.forEach((disease) => {
@@ -41,7 +41,7 @@ function calculateSingleDiseaseSideProbability(all_answers, diagnosis_conditions
   var true_side_conds_numbers = 0;
 
   for (cond in diagnosis_conditions) {
-    if (cond.slice(0,4) == 'side' && diagnosis_conditions[cond] != null) {
+    if (cond.slice(0,4) == 'side' && diagnosis_conditions[cond] != 'null') {
       side_conds_numbers += 1;
       if (getCondValue(diagnosis_conditions[cond], all_answers)) {
         true_side_conds_numbers += 1;
@@ -97,63 +97,69 @@ function compareWithAnswers(questions, comparisonSign, comparisonValue, all_answ
   }
 }
 
-test_json = [
-  { disease_icd10: 'F3200',
-  disease_name: 'Epizod depresji łagodny bez objawów somatycznych',
-  diagnosis_conditions: {
-    main_cond_1: 'PYT(1) == 1',
-    main_cond_2: 'PYT(12,13,14) == 0',
-    side_cond_1: 'PYT(1,3,15) > 1',
-    side_cond_2: 'PYT(1,3,8,9,15,16,17,18,19,20) > 3',
-    side_cond_3: null,
-    side_cond_4: null,
-    side_cond_5: null,
-    side_cond_6: null,
-    side_cond_7: 'PYT(3,5,6,7,8,9,10,11) < 4'
-  }
-},
-{ disease_icd10: 'F3201',
-disease_name: 'Epizod depresji łagodny z objawami somatycznymi',
-diagnosis_conditions: {
-  main_cond_1: 'PYT(1) == 1',
-  main_cond_2: 'PYT(12,13,14) == 0',
-  side_cond_1: 'PYT(1,3,15) > 1',
-  side_cond_2: 'PYT(1,3,8,9,15,16,17,18,19,20) > 3',
-  side_cond_3: null,
-  side_cond_4: null,
-  side_cond_5: null,
-  side_cond_6: null,
-  side_cond_7: 'PYT(3,5,6,7,8,9,10,11) >= 4'
-}
-},
-{ disease_icd10: 'F3210',
-disease_name: 'Epizod depresji umiarkowany bez objawów somatycznych',
-diagnosis_conditions: {
-  main_cond_1: 'PYT(1) == 1',
-  main_cond_2: 'PYT(12,13,14) == 0',
-  side_cond_1: 'PYT(1,3,15) > 1',
-  side_cond_2: 'PYT(1,3,8,9,15,16,17,18,19,20) > 3',
-  side_cond_3: null,
-  side_cond_4: null,
-  side_cond_5: null,
-  side_cond_6: null,
-  side_cond_7: 'PYT(3,5,6,7,8,9a,10,11) < 4'
-}
-},
-{ disease_icd10: 'F3211',
-disease_name: 'Epizod depresji umiarkowany z objawami somatycznymi',
-diagnosis_conditions: {
-  main_cond_1: 'PYT(1) == 1',
-  main_cond_2: 'PYT(12,13,14) == 0',
-  side_cond_1: 'PYT(1,3,15) > 1',
-  side_cond_2: 'PYT(1,3,8,9,15,16,17,18,19,20) > 3',
-  side_cond_3: null,
-  side_cond_4: null,
-  side_cond_5: null,
-  side_cond_6: null,
-  side_cond_7: 'PYT(3,5,6,7,8,9a,10,11) >= 4'
-}
-}
-]
+// test_json = [
+//   {
+//     disease_icd10: 'F3200',
+//     disease_name: 'Epizod depresji łagodny bez objawów somatycznych',
+//     diagnosis_conditions: {
+//       main_cond_1: 'PYT(1) == 1',
+//       main_cond_2: 'PYT(12,13,14) == 0',
+//       side_cond_1: 'PYT(1,3,15) > 1',
+//       side_cond_2: 'PYT(1,3,8,9,15,16,17,18,19,20) > 3',
+//       side_cond_3: 'null',
+//       side_cond_4: 'null',
+//       side_cond_5: 'null',
+//       side_cond_6: 'null',
+//       side_cond_7: 'PYT(3,5,6,7,8,9,10,11) < 4'
+//     }
+//   },
+//   {
+//     disease_icd10: 'F3201',
+//     disease_name: 'Epizod depresji łagodny z objawami somatycznymi',
+//     diagnosis_conditions: {
+//       main_cond_1: 'PYT(1) == 1',
+//       main_cond_2: 'PYT(12,13,14) == 0',
+//       side_cond_1: 'PYT(1,3,15) > 1',
+//       side_cond_2: 'PYT(1,3,8,9,15,16,17,18,19,20) > 3',
+//       side_cond_3: 'null',
+//       side_cond_4: 'null',
+//       side_cond_5: 'null',
+//       side_cond_6: 'null',
+//       side_cond_7: 'PYT(3,5,6,7,8,9,10,11) >= 4'
+//     }
+//   },
+//   {
+//     disease_icd10: 'F3210',
+//     disease_name: 'Epizod depresji umiarkowany bez objawów somatycznych',
+//     diagnosis_conditions: {
+//       main_cond_1: 'PYT(1) == 1',
+//       main_cond_2: 'PYT(12,13,14) == 0',
+//       side_cond_1: 'PYT(1,3,15) > 1',
+//       side_cond_2: 'PYT(1,3,8,9,15,16,17,18,19,20) > 3',
+//       side_cond_3: 'null',
+//       side_cond_4: 'null',
+//       side_cond_5: 'null',
+//       side_cond_6: 'null',
+//       side_cond_7: 'PYT(3,5,6,7,8,9a,10,11) < 4'
+//     }
+//   },
+//   {
+//     disease_icd10: 'F3211',
+//     disease_name: 'Epizod depresji umiarkowany z objawami somatycznymi',
+//     diagnosis_conditions: {
+//       main_cond_1: 'PYT(1) == 1',
+//       main_cond_2: 'PYT(12,13,14) == 0',
+//       side_cond_1: 'PYT(1,3,15) > 1',
+//       side_cond_2: 'PYT(1,3,8,9,15,16,17,18,19,20) > 3',
+//       side_cond_3: 'null',
+//       side_cond_4: 'null',
+//       side_cond_5: 'null',
+//       side_cond_6: 'null',
+//       side_cond_7: 'PYT(3,5,6,7,8,9a,10,11) >= 4'
+//     }
+//   }
+// ]
 
-console.log(calculateDiseasesProbability([1,0,0,1], [0,1,0,1,1,1,0,0,0,0,0,0,1,1,1,0], test_json))
+// test_json = jQuery.getJSON('data.json')
+
+console.log(calculateDiseasesProbability([1,0,0,1], [0,1,0,1,1,1,0,0,0,0,0,0,1,1,1,0], 'data.json'))
