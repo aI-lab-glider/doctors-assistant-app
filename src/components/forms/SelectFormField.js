@@ -11,25 +11,19 @@ const SelectFormField = ({
   leftText,
   rightText,
   defaultOption,
-  calculateDependentValueWhenRightChecked,
+  calculateDependentValueWhenFalse,
 }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [isLeftChecked, setLeftChecked] = useState(!!defaultOption);
-  const [isRightChecked, setRightChecked] = useState(
-    !(defaultOption || defaultOption === null)
-  );
-
+  const [isChecked, setChecked] = useState(defaultOption);
   const pressLeft = () => {
-    setLeftChecked(true);
-    setRightChecked(false);
+    setChecked(true);
     setFieldValue(name, true);
   };
   const pressRight = () => {
-    setLeftChecked(false);
-    setRightChecked(true);
+    setChecked(false);
     setFieldValue(name, false);
-    if (calculateDependentValueWhenRightChecked != null)
-      calculateDependentValueWhenRightChecked();
+    if (calculateDependentValueWhenFalse != null)
+      calculateDependentValueWhenFalse();
   };
 
   return (
@@ -37,7 +31,9 @@ const SelectFormField = ({
       <View style={styles.container}>
         <TouchableOpacity onPress={pressLeft}>
           <FontForgeIcon
-            name={isLeftChecked ? "checked" : "unchecked"}
+            name={
+              isChecked === false || isChecked == null ? "unchecked" : "checked"
+            }
             size={38}
             color={Colors.PINK_MEDIUM}
             style={styles.icon}
@@ -46,7 +42,9 @@ const SelectFormField = ({
         <Text style={styles.text}>{leftText}</Text>
         <TouchableOpacity onPress={pressRight}>
           <FontForgeIcon
-            name={isRightChecked ? "checked" : "unchecked"}
+            name={
+              isChecked === true || isChecked == null ? "unchecked" : "checked"
+            }
             size={38}
             color={Colors.PINK_MEDIUM}
             style={styles.icon}
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
 });
 SelectFormField.defaultProps = {
   defaultOption: null,
-  calculateDependentValueWhenRightChecked: null,
+  calculateDependentValueWhenFalse: null,
 };
 
 SelectFormField.propTypes = {
@@ -93,7 +91,7 @@ SelectFormField.propTypes = {
   leftText: PropTypes.string.isRequired,
   rightText: PropTypes.string.isRequired,
   defaultOption: PropTypes.bool,
-  calculateDependentValueWhenRightChecked: PropTypes.func,
+  calculateDependentValueWhenFalse: PropTypes.func,
 };
 
 export default SelectFormField;

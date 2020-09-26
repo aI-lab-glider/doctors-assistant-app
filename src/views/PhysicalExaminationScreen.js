@@ -65,7 +65,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
     cardiovascular_appearance: "",
     cardiovascular_efficient: "",
     cardiovascular_auscultation: "",
-    cardiovascular_pulse_choice: false,
+    cardiovascular_pulse_choice: null,
     cardiovascular_pulse: "",
     stomach: "wysklepiony w poziomie klp",
     stomach_hernia: "",
@@ -174,7 +174,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                 <Text style={styles.subtitleText}>Stan ogólny</Text>
                 <RadioButton
                   name="general_conditions"
-                  options={["stan dobry", "stan średni", "stan ciężki"]}
+                  options={["dobry", "średni", "ciężki"]}
                   defaultOptionIndex={0}
                 />
                 <Text style={styles.listItemFieldText}>
@@ -290,7 +290,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                 <CheckboxFormField
                   name="head_appearance_choice"
                   text="wysklepiona symetrycznie, prawidłowo"
-                  marginLeft={60}
+                  style={styles.choice}
                 />
                 <FormField
                   name="head_appearance"
@@ -462,7 +462,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                 <CheckboxFormField
                   name="chest_auscultation_choice"
                   text="nad polami płucnymi osłuchowo szmery oddechowe prawidłowe"
-                  marginLeft={60}
+                  style={styles.choice}
                 />
                 <FormField
                   name="chest_auscultation"
@@ -755,6 +755,10 @@ const styles = StyleSheet.create({
     marginLeft: 50,
     marginRight: 20,
     paddingTop: 7,
+  },
+  choice: {
+    marginRight: 15,
+    marginLeft: 60,
   },
 });
 

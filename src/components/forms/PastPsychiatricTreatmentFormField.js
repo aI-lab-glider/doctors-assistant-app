@@ -7,11 +7,11 @@ const PastPsychiatricTreatmentFormField = ({
   name,
   leftText,
   rightText,
-  defaultOption = null,
+  defaultOption,
 }) => {
   const { setFieldValue } = useFormikContext();
 
-  const calculateDependentValueWhenRightChecked = () => {
+  const calculateDependentValueWhenFalse = () => {
     setFieldValue("hospitalization_times", "0");
   };
 
@@ -21,9 +21,7 @@ const PastPsychiatricTreatmentFormField = ({
       leftText={leftText}
       rightText={rightText}
       defaultOption={defaultOption}
-      calculateDependentValueWhenRightChecked={
-        calculateDependentValueWhenRightChecked
-      }
+      calculateDependentValueWhenFalse={calculateDependentValueWhenFalse}
     />
   );
 };
