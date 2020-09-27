@@ -9,8 +9,9 @@
 function calculateDiseasesProbability(major_answers, minor_answers, module_code, diagnosis_data) {
   var all_answers = major_answers.concat(minor_answers);
   var probability_data = [];
+  console.log(getThisModuleData(diagnosis_data, module_code))
 
-  diagnosis_data.forEach((disease) => {
+  getThisModuleData(diagnosis_data, module_code).module_data.forEach((disease) => {
     var disease_probability = calculateSingledisease_probability(all_answers, disease);
     probability_data.push(disease_probability);
   });
@@ -95,6 +96,16 @@ function compareWithAnswers(questions, comparisonSign, comparisonValue, all_answ
     case '<=':
       return sumOfTrueAnswers <= comparisonValue;
   }
+}
+
+function getThisModuleData(diagnosis_data, this_module_code){
+  var this_module_data;
+  diagnosis_data.forEach((module) => {
+    if (module.module_code == this_module_code) {
+      this_module_data = module;
+    }
+  });
+  return this_module_data;
 }
 
 module.exports.calculateDiseasesProbability = calculateDiseasesProbability;
