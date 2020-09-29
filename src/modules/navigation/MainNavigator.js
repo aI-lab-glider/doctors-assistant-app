@@ -7,6 +7,7 @@ import AddPatientScreen from "../../views/AddPatientScreen";
 import BasicDataScreen from "../../views/BasicDataScreen";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../../components/common/FontForgeIcon";
+import DiagnosisScreen from "../../views/DiagnosisScreen";
 
 const Stack = createStackNavigator();
 
@@ -82,6 +83,13 @@ const MainNavigator = () => {
           component={BasicDataScreen}
           options={{
             title: "Informacje podstawowe",
+          }}
+        />
+        <Stack.Screen
+          name="Diagnosis"
+          component={DiagnosisScreen}
+          options={{
+            title: "Diagnoza",
           }}
         />
       </Stack.Navigator>

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import PropTypes from "prop-types";
+import { NavigationContext } from "@react-navigation/native";
 import { Colors, Typography } from "../constants/styles";
 import FontForgeIcon from "../components/common/FontForgeIcon";
 import SubtitleLabelWithButton from "../components/patientCard/SubtitleLabelWithButton";
@@ -8,11 +9,11 @@ import SubtitleLabel from "../components/patientCard/SubtitleLabel";
 import BottomMenu from "../components/patientCard/bottomMenu";
 import Patient from "../constants/propTypes/patientPropTypes";
 import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
-import goOnDetailsQuestions from "../modules/diagnosis/goOnDetailsQuestions";
-import calculateDiseasesProbability from "../modules/diagnosis/calculateDiseasesProbability";
 
 const PatientCardScreen = ({ route }) => {
   const { patient, patientBasicData } = route.params;
+  const navigation = useContext(NavigationContext);
+
   const calculateAge = (dateOfBirth) => {
     if (dateOfBirth) {
       const from = dateOfBirth.split(/-| - /);
@@ -25,14 +26,7 @@ const PatientCardScreen = ({ route }) => {
   const onAdd = () => {};
   const onDiagnosisAdd = () => {
     // TODO: Change to navigation to diagnosis form
-    const moduleCode = "duza_depresja";
-    const majorAnswers = [1, 0, 0, 1];
-    const minorAnswers = [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0];
-    if (goOnDetailsQuestions(moduleCode, majorAnswers)) {
-      console.log(
-        calculateDiseasesProbability(majorAnswers, minorAnswers, moduleCode)
-      );
-    }
+    navigation.navigate("Diagnosis");
   };
   const [textNote, setTextNote] = useState(
     patient.note.length > 50
