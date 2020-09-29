@@ -6,7 +6,7 @@ import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../common/FontForgeIcon";
 
-const RadioButton = ({ name, options, defaultOptionIndex = null }) => {
+const RadioButton = ({ name, options, defaultOptionIndex }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
   const [optionChecked, setOptionChecked] = useState(defaultOptionIndex);
   return (

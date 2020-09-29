@@ -56,9 +56,11 @@ const physicalExaminationValidationSchema = Yup.object().shape({
   cardiovascular_auscultation: Yup.string().label(
     "Układ krążenia - osłuchiwano"
   ),
-  cardiovascular_pulse_choice: Yup.bool().label(
-    "Tętno na tt. promieniowych i grzbietowych stopy zgodne z akcją serca"
-  ),
+  cardiovascular_pulse_choice: Yup.bool()
+    .nullable()
+    .label(
+      "Tętno na tt. promieniowych i grzbietowych stopy zgodne z akcją serca"
+    ),
   cardiovascular_pulse: Yup.string().label(
     "Tętno na tt. promieniowych i grzbietowych stopy zgodne z akcją serca"
   ),
