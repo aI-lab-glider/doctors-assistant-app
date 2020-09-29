@@ -8,6 +8,8 @@ import SubtitleLabel from "../components/patientCard/SubtitleLabel";
 import BottomMenu from "../components/patientCard/bottomMenu";
 import Patient from "../constants/propTypes/patientPropTypes";
 import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
+import goOnDetailsQuestions from "../modules/diagnosis/goOnDetailsQuestions";
+import calculateDiseasesProbability from "../modules/diagnosis/calculateDiseasesProbability";
 
 const PatientCardScreen = ({ route }) => {
   const { patient, patientBasicData } = route.params;
@@ -21,6 +23,17 @@ const PatientCardScreen = ({ route }) => {
     return "";
   };
   const onAdd = () => {};
+  const onDiagnosisAdd = () => {
+    // TODO: Change to navigation to diagnosis form
+    const moduleCode = "duza_depresja";
+    const majorAnswers = [1, 0, 0, 1];
+    const minorAnswers = [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0];
+    if (goOnDetailsQuestions(moduleCode, majorAnswers)) {
+      console.log(
+        calculateDiseasesProbability(majorAnswers, minorAnswers, moduleCode)
+      );
+    }
+  };
   const [textNote, setTextNote] = useState(
     patient.note.length > 50
       ? `> ${patient.note.substring(0, 20)}...`
@@ -89,7 +102,7 @@ const PatientCardScreen = ({ route }) => {
               <SubtitleLabelWithButton
                 subtitle="Diagnoza"
                 iconName="diagnosis"
-                onAdd={onAdd}
+                onAdd={onDiagnosisAdd}
               />
               <Text style={styles.fieldText}>14.08.2020</Text>
               <Text style={styles.listItemFieldText}>
