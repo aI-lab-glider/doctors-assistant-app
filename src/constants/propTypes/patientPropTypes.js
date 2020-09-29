@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { PATIENT_CODE_REGEX } from "../constants";
 
-const CodeProp = (props, propName, componentName) => {
+export const CodeProp = (props, propName, componentName) => {
   if (
     !PATIENT_CODE_REGEX.test(
       // eslint-disable-next-line react/destructuring-assignment

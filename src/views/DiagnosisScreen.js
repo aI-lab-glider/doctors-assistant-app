@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Colors, Typography } from "../constants/styles";
 import goOnDetailsQuestions from "../modules/diagnosis/goOnDetailsQuestions";
 import calculateDiseasesProbability from "../modules/diagnosis/calculateDiseasesProbability";
+import Result from "../components/diagnosis/Result";
 
 const DiagnosisScreen = () => {
   const moduleCode = "duza_depresja";
@@ -25,16 +26,9 @@ const DiagnosisScreen = () => {
         <Text>Kod modułu: {moduleCode}</Text>
         <Text>Odpowiedzi na pytania podstawowe: {majorAnswers}</Text>
         <Text>Odpowiedzi na pytania szczegółowe: {minorAnswers}</Text>
-        <Text style={styles.module}>Moduł dużej depresji</Text>
-        <Text style={styles.summary}>Podsumowanie</Text>
         <FlatList
           data={diseaseProbability}
-          renderItem={({ item }) => (
-            <Text>
-              {item.disease_name}
-              {item.probability}
-            </Text>
-          )}
+          renderItem={({ item }) => <Result onPress={() => {}} item={item} />}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
