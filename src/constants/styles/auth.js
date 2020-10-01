@@ -4,18 +4,23 @@ import { Colors, Typography } from "./index";
 export const AUTH_STYLES = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+    borderTopRightRadius: 50,
+    borderBottomLeftRadius: 50,
+    borderBottomColor: Colors.PURPLE,
+    paddingTop: 16,
+    justifyContent: "center",
   },
   login: {
     marginTop: 50,
   },
   inputs: {
     fontSize: Typography.FONT_SIZE_16,
-    borderColor: Colors.AUTH_VIOLET,
-    borderWidth: 1,
+    borderColor: Colors.GRAY_VERY_LIGHT,
+    borderWidth: 3,
     padding: 10,
-    borderRadius: 6,
+    borderRadius: 5,
+    borderBottomColor: Colors.PURPLE,
   },
 });
 

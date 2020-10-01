@@ -62,14 +62,14 @@ const styles = StyleSheet.create({
 
   footerText: {
     fontSize: Typography.FONT_SIZE_16,
-    fontFamily: Typography.FONT_AUTH.fontFamily,
+    fontFamily: Typography.FONT_FAMILY_LIGHT,
     color: Colors.AUTH_GRAY,
   },
 
   footerCTA: {
     fontSize: Typography.FONT_SIZE_16,
-    color: Colors.AUTH_VIOLET,
-    fontWeight: Typography.FONT_AUTH.fontWeight,
-    fontFamily: Typography.FONT_AUTH.fontFamily,
+    color: Colors.PURPLE,
+    fontWeight: Typography.FONT_WEIGHT_LIGHT,
+    fontFamily: Typography.FONT_FAMILY_BOLD,
   },
 });

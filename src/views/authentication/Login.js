@@ -75,41 +75,51 @@ export default function Login(props) {
               touched,
               errors,
               handleSubmit,
+              isValid,
+              isSubmitting,
             }) => (
               <View>
                 <TextInput
                   style={AUTH_STYLES.inputs}
-                  placeholder="email"
+                  placeholder="Adres e-mail"
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
                   value={values.email}
                 />
-                <Text> {touched.email && errors.email}</Text>
+                <Text style={styles.alertFields}>
+                  {" "}
+                  {touched.email && errors.email}
+                </Text>
                 <TextInput
                   secureTextEntry
                   style={AUTH_STYLES.inputs}
-                  placeholder="hasło"
+                  placeholder="Hasło"
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
                   value={values.password}
                 />
-                <Text> {touched.password && errors.password}</Text>
+                <Text style={styles.alertFields}>
+                  {" "}
+                  {touched.password && errors.password}
+                </Text>
+                <CTA
+                  ctaText="Zapomniałeś hasła ?"
+                  onPress={() => navigation.navigate("ForgotPassword")}
+                  style={styles.ctaFooter}
+                  ctaStyle={styles.cta}
+                />
                 <AppButton
-                  buttonType="solid"
                   fontForgeIconStyle={styles.loginButton}
                   size={50}
                   icon="log_in"
                   onPress={handleSubmit}
+                  disabled={!isValid || isSubmitting}
                   loading={loading}
                 />
               </View>
             )}
           </Formik>
-          <CTA
-            ctaText="Forgot Password?"
-            onPress={() => navigation.navigate("ForgotPassword")}
-            style={styles.forgotPassword}
-          />
+
           <CTA
             title={"Don't have an account?"}
             ctaText="Register"
@@ -135,14 +145,20 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     justifyContent: "center",
   },
-  register: {
-    marginTop: 50,
+  ctaFooter: {
+    justifyContent: "flex-start",
   },
-  forgotPassword: {
-    marginTop: 20,
+  cta: {
+    fontFamily: Typography.FONT_FAMILY_LIGHT,
+    fontSize: Typography.FONT_SIZE_12,
+    marginHorizontal: 8,
+  },
+  register: {
+    marginTop: 25,
   },
   inputs: {
     flex: 1,
+    marginHorizontal: 50,
   },
   loginButton: {
     alignSelf: "center",

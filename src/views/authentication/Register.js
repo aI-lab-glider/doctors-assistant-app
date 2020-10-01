@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Alert, View, Button, TextInput, Text } from "react-native";
+import { Alert, View, Button, TextInput, Text, StyleSheet } from "react-native";
 
 import { Formik } from "formik";
 import * as yup from "yup";
 import CTA from "../../components/authentication/CTA";
-import { Header } from "../../components/authentication/Shared";
-import { Colors } from "../../constants/styles";
+import { Colors, Typography } from "../../constants/styles";
 import * as api from "../../api/Auth";
 import { AUTH_STYLES } from "../../constants/styles/auth";
 
@@ -51,105 +50,136 @@ export default function Register(props) {
   });
 
   return (
-    <View style={AUTH_STYLES.container}>
-      <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: "",
-          passwordConfirmation: "",
-        }}
-        validationSchema={registerSchema}
-        onSubmit={(values) => {
-          onSubmit(
-            (({ email, firstName, lastName, password }) => ({
-              email,
-              firstName,
-              lastName,
-              password,
-            }))(values)
-          );
-        }}
-      >
-        {({
-          handleChange,
-          values,
-          handleBlur,
-          touched,
-          errors,
-          handleSubmit,
-        }) => (
-          <View>
-            <Header title="Rejestracja" />
-            <TextInput
-              style={AUTH_STYLES.inputs}
-              placeholder="imię"
-              onChangeText={handleChange("firstName")}
-              onBlur={handleBlur("firstName")}
-              value={values.title}
-            />
-            <Text> {touched.firstName && errors.firstName}</Text>
+    <View style={styles.backgroundContainer}>
+      <View style={AUTH_STYLES.container}>
+        <Text style={styles.titleText}>Rejestracja</Text>
+        <View style={styles.inputs}>
+          <Formik
+            initialValues={{
+              firstName: "",
+              lastName: "",
+              email: "",
+              password: "",
+              passwordConfirmation: "",
+            }}
+            validationSchema={registerSchema}
+            onSubmit={(values) => {
+              onSubmit(
+                (({ email, firstName, lastName, password }) => ({
+                  email,
+                  firstName,
+                  lastName,
+                  password,
+                }))(values)
+              );
+            }}
+          >
+            {({
+              handleChange,
+              values,
+              handleBlur,
+              touched,
+              errors,
+              handleSubmit,
+              isValid,
+              isSubmitting,
+            }) => (
+              <View>
+                <TextInput
+                  style={AUTH_STYLES.inputs}
+                  placeholder="Imię"
+                  onChangeText={handleChange("firstName")}
+                  onBlur={handleBlur("firstName")}
+                  value={values.title}
+                />
+                <Text> {touched.firstName && errors.firstName}</Text>
 
-            <TextInput
-              style={AUTH_STYLES.inputs}
-              placeholder="nazwisko"
-              onChangeText={handleChange("lastName")}
-              value={values.title}
-              s
-              onBlur={handleBlur("lastName")}
-            />
-            <Text> {touched.lastName && errors.lastName}</Text>
+                <TextInput
+                  style={AUTH_STYLES.inputs}
+                  placeholder="Nazwisko"
+                  onChangeText={handleChange("lastName")}
+                  value={values.title}
+                  s
+                  onBlur={handleBlur("lastName")}
+                />
+                <Text> {touched.lastName && errors.lastName}</Text>
 
-            <TextInput
-              style={AUTH_STYLES.inputs}
-              placeholder="email"
-              onChangeText={handleChange("email")}
-              value={values.title}
-              onBlur={handleBlur("email")}
-            />
-            <Text> {touched.email && errors.email}</Text>
+                <TextInput
+                  style={AUTH_STYLES.inputs}
+                  placeholder="Adres e-mail"
+                  onChangeText={handleChange("email")}
+                  value={values.title}
+                  onBlur={handleBlur("email")}
+                />
+                <Text> {touched.email && errors.email}</Text>
 
-            <TextInput
-              secureTextEntry
-              style={AUTH_STYLES.inputs}
-              placeholder="hasło"
-              onChangeText={handleChange("password")}
-              value={values.title}
-              onBlur={handleBlur("password")}
-            />
-            <Text> {touched.password && errors.password}</Text>
+                <TextInput
+                  secureTextEntry
+                  style={AUTH_STYLES.inputs}
+                  placeholder="Hasło"
+                  onChangeText={handleChange("password")}
+                  value={values.title}
+                  onBlur={handleBlur("password")}
+                />
+                <Text> {touched.password && errors.password}</Text>
 
-            <TextInput
-              secureTextEntry
-              style={AUTH_STYLES.inputs}
-              placeholder="potwierdzenie hasła"
-              onChangeText={handleChange("passwordConfirmation")}
-              value={values.title}
-              onBlur={handleBlur("passwordConfirmation")}
-            />
-            <Text>
-              {" "}
-              {touched.passwordConfirmation && errors.passwordConfirmation}
-            </Text>
+                <TextInput
+                  secureTextEntry
+                  style={AUTH_STYLES.inputs}
+                  placeholder="Potwierdzenie hasła"
+                  onChangeText={handleChange("passwordConfirmation")}
+                  value={values.title}
+                  onBlur={handleBlur("passwordConfirmation")}
+                />
+                <Text>
+                  {" "}
+                  {touched.passwordConfirmation && errors.passwordConfirmation}
+                </Text>
 
-            <Button
-              title="Wyślij"
-              color={Colors.AUTH_VIOLET}
-              onPress={handleSubmit}
-            />
-            <CTA
-              title="Masz już konto ?"
-              ctaText="Login"
-              onPress={() => navigation.replace("Login")}
-              style={AUTH_STYLES.login}
-            />
-          </View>
-        )}
-      </Formik>
+                <Button
+                  style={styles.registerButton}
+                  title="Wyślij"
+                  color={Colors.PURPLE}
+                  onPress={handleSubmit}
+                  disabled={!isValid || isSubmitting}
+                />
+                <CTA
+                  title="Masz już konto ?"
+                  ctaText="Login"
+                  onPress={() => navigation.replace("Login")}
+                  style={AUTH_STYLES.login}
+                />
+              </View>
+            )}
+          </Formik>
+        </View>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  backgroundContainer: {
+    flex: 1,
+    backgroundColor: Colors.PURPLE,
+    justifyContent: "center",
+  },
+  registerButton: {
+    alignSelf: "center",
+    marginTop: 17,
+    marginRight: 17,
+  },
+  inputs: {
+    flex: 1,
+    marginHorizontal: 50,
+  },
+  titleText: {
+    textAlign: "center",
+    color: Colors.PURPLE,
+    fontSize: Typography.FONT_SIZE_24,
+    fontFamily: Typography.FONT_FAMILY_BOLD,
+  },
+});
 
 Register.propTypes = {
   navigation: PropTypes.shape({
