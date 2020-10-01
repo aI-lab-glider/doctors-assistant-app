@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import Form from "react-native-basic-form";
+import { Formik } from "formik";
+import * as yup from "yup";
+// import Form from "react-native-basic-form";
+import { TextInput } from "react-native-gesture-handler";
 import * as api from "../../api/Auth";
 import { useAuth } from "../../modules/context/Auth";
 
 import CTA from "../../components/authentication/CTA";
-import { Header, ErrorText } from "../../components/authentication/Shared";
-import { Colors } from "../../constants/styles";
+import { ErrorText } from "../../components/authentication/Shared";
+import { Colors, Typography } from "../../constants/styles";
+import { AUTH_STYLES } from "../../constants/styles/auth";
+import AppButton from "../../components/common/AppButton";
 
 export default function Login(props) {
   const { navigation } = props;
@@ -17,11 +22,6 @@ export default function Login(props) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { handleLogin } = useAuth();
-
-  const fields = [
-    { name: "email", label: "Email Address", required: true },
-    { name: "password", label: "Password", required: true, secure: true },
-  ];
 
   async function onSubmit(state) {
     setLoading(true);
@@ -37,25 +37,74 @@ export default function Login(props) {
       if (username);
       else navigation.replace("Username");
     } catch (err) {
+      Alert.alert("Login Unsuccessful", err.message);
       setError(err.message);
       setLoading(false);
     }
   }
 
-  const formProps = { title: "Login", fields, onSubmit, loading };
+  const loginSchema = yup.object({
+    email: yup
+      .string()
+      .email("Adres email nie jest poprawny")
+      .required("Musisz podać email!"),
+    password: yup.string().required("Musisz podać hasło!"),
+  });
   const { bypass } = useAuth();
 
   return (
-    <View style={styles.container}>
-      <Header title="Login" />
-      <View style={styles.inputs}>
-        <ErrorText error={error} />
-        <Form
-          title={formProps.title}
-          fields={formProps.fields}
-          onSubmit={formProps.onSubmit}
-          loading={formProps.loading}
-        >
+    <View style={styles.backgroundContainer}>
+      <View style={styles.container}>
+        <Text style={styles.titleText}>Logowanie</Text>
+        <View style={styles.inputs}>
+          <ErrorText error={error} />
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            validationSchema={loginSchema}
+            onSubmit={(values) => {
+              onSubmit(values);
+            }}
+          >
+            {({
+              handleChange,
+              values,
+              handleBlur,
+              touched,
+              errors,
+              handleSubmit,
+            }) => (
+              <View>
+                <TextInput
+                  style={AUTH_STYLES.inputs}
+                  placeholder="email"
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                />
+                <Text> {touched.email && errors.email}</Text>
+                <TextInput
+                  secureTextEntry
+                  style={AUTH_STYLES.inputs}
+                  placeholder="hasło"
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                />
+                <Text> {touched.password && errors.password}</Text>
+                <AppButton
+                  buttonType="solid"
+                  fontForgeIconStyle={styles.loginButton}
+                  size={50}
+                  icon="log_in"
+                  onPress={handleSubmit}
+                  loading={loading}
+                />
+              </View>
+            )}
+          </Formik>
           <CTA
             ctaText="Forgot Password?"
             onPress={() => navigation.navigate("ForgotPassword")}
@@ -68,14 +117,9 @@ export default function Login(props) {
             style={styles.register}
           />
           {process.env.NODE_ENV === "development" && (
-            <CTA
-              title="bypass"
-              ctaText="bypass"
-              onPress={bypass}
-              style={styles.register}
-            />
+            <CTA ctaText="bypass" onPress={bypass} style={styles.register} />
           )}
-        </Form>
+        </View>
       </View>
     </View>
   );
@@ -84,8 +128,12 @@ export default function Login(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+    borderTopRightRadius: 50,
+    borderBottomLeftRadius: 50,
+    borderBottomColor: Colors.PURPLE,
+    paddingTop: 16,
+    justifyContent: "center",
   },
   register: {
     marginTop: 50,
@@ -95,6 +143,22 @@ const styles = StyleSheet.create({
   },
   inputs: {
     flex: 1,
+  },
+  loginButton: {
+    alignSelf: "center",
+    marginTop: 17,
+    marginRight: 17,
+  },
+  backgroundContainer: {
+    flex: 1,
+    backgroundColor: Colors.PURPLE,
+    justifyContent: "center",
+  },
+  titleText: {
+    textAlign: "center",
+    color: Colors.PURPLE,
+    fontSize: Typography.FONT_SIZE_24,
+    fontFamily: Typography.FONT_FAMILY_BOLD,
   },
 });
 

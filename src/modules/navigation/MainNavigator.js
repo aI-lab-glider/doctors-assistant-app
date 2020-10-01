@@ -68,7 +68,7 @@ const HomeScreen = () => {
           />
         ),
         headerLeft: () => (
-            <Button title="wyloguj" onPress={handleLogout}/> //TODO for development only ??
+          <Button title="wyloguj" onPress={handleLogout} /> // TODO for development only ??
         ),
         headerBackImage: () => (
           <FontForgeIcon

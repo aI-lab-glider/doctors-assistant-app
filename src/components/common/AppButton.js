@@ -1,18 +1,18 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import FontForgeIcon from "./FontForgeIcon";
 
 import { Colors } from "../../constants/styles";
 
-const AppButton = ({ onPress, icon }) => {
+const AppButton = ({ onPress, icon, fontForgeIconStyle, size }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <FontForgeIcon
         name={icon}
-        size={80}
+        size={size || 80}
         color={Colors.PURPLE}
-        style={styles.icon}
+        style={fontForgeIconStyle || styles.icon}
       />
     </TouchableOpacity>
   );
@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
 AppButton.propTypes = {
   icon: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
+  fontForgeIconStyle: ViewPropTypes.style,
+  size: PropTypes.number,
 };
 
+AppButton.defaultProps = {
+  fontForgeIconStyle: null,
+  size: null,
+};
 export default AppButton;
