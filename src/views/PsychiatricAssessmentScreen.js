@@ -930,9 +930,7 @@ const PsychiatricAssessmentScreen = ({ route, navigation }) => {
                   multiline
                   numberOfLines={2}
                 />
-                <Text style={styles.subtitleText}>
-                  Parakinetyzy katatoniczne
-                </Text>
+                <Text style={styles.subtitleText}>Parakinezy katatoniczne</Text>
                 <MultiChoiceFormField
                   name="catatonic_parakinesis_choice"
                   options={[

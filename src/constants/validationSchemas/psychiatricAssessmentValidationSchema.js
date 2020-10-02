@@ -118,8 +118,8 @@ const psychiatricAssessmentValidationSchema = Yup.object().shape({
   criticism_disturbance: Yup.string().label("Zaburzenia krytycyzmu i wyglądu"),
   complex_activity_choice: Yup.string().label("Aktywność złożona"),
   complex_activity: Yup.string().label("Aktywność złożona"),
-  catatonic_parakinesis_choice: Yup.string().label("Parakinetyzy katatoniczne"),
-  catatonic_parakinesis: Yup.string().label("Parakinetyzy katatoniczne"),
+  catatonic_parakinesis_choice: Yup.string().label("Parakinezy katatoniczne"),
+  catatonic_parakinesis: Yup.string().label("Parakinezy katatoniczne"),
   memorizing_difficulties: Yup.bool().nullable().label("Zapamiętywanie"),
   memorizing: Yup.string().label("Zapamiętywanie"),
   attention_counting_difficulties: Yup.bool()
