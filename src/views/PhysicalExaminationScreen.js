@@ -9,8 +9,6 @@ import {
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { Colors, Typography } from "../constants/styles";
-import { PatientsContext } from "../modules/context/PatientsContext";
-import { BasicDataContext } from "../modules/context/BasicDataContext";
 import { PhysicalExaminationContext } from "../modules/context/PhysicalExaminationContext";
 import FormField from "../components/forms/FormField";
 import AppButton from "../components/common/AppButton";
@@ -18,20 +16,16 @@ import physicalExaminationValidationSchema from "../constants/validationSchemas/
 import SelectFormField from "../components/forms/SelectFormField";
 import MultiChoiceFormField from "../components/forms/MultiChoiceFormField";
 import RadioButton from "../components/forms/RadioButton";
-import Patient from "../constants/propTypes/patientPropTypes";
-import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
 import CheckboxFormField from "../components/forms/CheckboxFormField";
 
 const PhysicalExaminationScreen = ({ route, navigation }) => {
-  const { patient, basicData } = route.params;
-  const { setPatient } = useContext(PatientsContext);
-  const { setBasicData } = useContext(BasicDataContext);
+  const { patientId } = route.params;
   const { setPhysicalExamination } = useContext(PhysicalExaminationContext);
 
   const physicalExamination = {
     id: 8,
-    patient_id: patient.id,
-    general_conditions: "stan dobry",
+    patient_id: patientId,
+    general_conditions: "dobry",
     blood_pressure: "",
     pulse: "",
     body_temperature: "",
@@ -148,9 +142,9 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
       values.nervous_meningeal_signs;
     physicalExamination.nervous_focal_damage = values.nervous_focal_damage;
     setPhysicalExamination(physicalExamination);
-    setBasicData(basicData);
-    setPatient(patient);
-    navigation.navigate("PatientsList");
+    navigation.navigate("PsychiatricAssessment", {
+      patientId,
+    });
   };
 
   return (
@@ -185,7 +179,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                   onChangeText={handleChange("blood_pressure")}
                   placeholder="Miejsce do uzupełnienia"
                   onBlur={handleBlur("blood_pressure")}
-                  keyboardType="default"
+                  keyboardType="phone-pad"
                   multiline
                   numberOfLines={2}
                 />
@@ -195,7 +189,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                   onChangeText={handleChange("pulse")}
                   placeholder="Miejsce do uzupełnienia"
                   onBlur={handleBlur("pulse")}
-                  keyboardType="default"
+                  keyboardType="numeric"
                   multiline
                   numberOfLines={2}
                 />
@@ -207,7 +201,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                   onChangeText={handleChange("body_temperature")}
                   placeholder="Miejsce do uzupełnienia"
                   onBlur={handleBlur("body_temperature")}
-                  keyboardType="default"
+                  keyboardType="numeric"
                   multiline
                   numberOfLines={2}
                 />
@@ -362,7 +356,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} błony śluzowe
                 </Text>
-                <RadioButton
+                <MultiChoiceFormField
                   name="mucous_membrane_choice"
                   options={["różowe", "wilgotne"]}
                 />
@@ -401,9 +395,11 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>{"> "} tarczyca</Text>
                 <MultiChoiceFormField
                   name="neck_thyroid_choice"
-                  topText="powiększona"
-                  middleText="niepowiększona"
-                  bottomText="ruchoma połykowo"
+                  options={[
+                    "powiększona",
+                    "niepowiększona",
+                    "ruchoma połykowo",
+                  ]}
                 />
                 <FormField
                   name="neck_thyroid"
@@ -417,9 +413,11 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                 <Text style={styles.subtitleText}>Klatka piersiowa</Text>
                 <MultiChoiceFormField
                   name="chest_choice"
-                  topText="wysklepiona symetrycznie"
-                  middleText="wysklepiona niesymetrycznie"
-                  bottomText="ruchoma oddechowo"
+                  options={[
+                    "wysklepiona symetrycznie",
+                    "wysklepiona niesymetrycznie",
+                    "ruchoma oddechowo",
+                  ]}
                 />
                 <FormField
                   name="chest"
@@ -438,7 +436,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                   onChangeText={handleChange("breath_frequency")}
                   placeholder="Miejsce do uzupełnienia"
                   onBlur={handleBlur("breath_frequency")}
-                  keyboardType="default"
+                  keyboardType="numeric"
                   multiline
                   numberOfLines={2}
                 />
@@ -768,8 +766,7 @@ PhysicalExaminationScreen.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      patient: Patient.isRequired,
-      basicData: PatientBasicData.isRequired,
+      patientId: PropTypes.number,
     }),
   }).isRequired,
 };

@@ -6,6 +6,7 @@ import PatientCardScreen from "../../views/PatientCardScreen";
 import AddPatientScreen from "../../views/AddPatientScreen";
 import BasicDataScreen from "../../views/BasicDataScreen";
 import PhysicalExaminationScreen from "../../views/PhysicalExaminationScreen";
+import PsychiatricAssessmentScreen from "../../views/PsychiatricAssessmentScreen";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../../components/common/FontForgeIcon";
 
@@ -90,6 +91,13 @@ const MainNavigator = () => {
           component={PhysicalExaminationScreen}
           options={{
             title: "Badanie fizykalne",
+          }}
+        />
+        <Stack.Screen
+          name="PsychiatricAssessment"
+          component={PsychiatricAssessmentScreen}
+          options={{
+            title: "Badanie psychiatryczne",
           }}
         />
       </Stack.Navigator>

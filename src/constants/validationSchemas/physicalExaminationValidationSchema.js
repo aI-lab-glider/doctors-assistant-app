@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 const physicalExaminationValidationSchema = Yup.object().shape({
   general_conditions: Yup.string()
-    .oneOf(["stan dobry", "stan średni", "stan ciężki"])
+    .oneOf(["dobry", "średni", "ciężki"])
     .required("Stan ogólny jest wymaganym polem")
     .label("Stan ogólny"),
   blood_pressure: Yup.string().label("Ciśnienie tętnicze"),
@@ -32,9 +32,7 @@ const physicalExaminationValidationSchema = Yup.object().shape({
     .oneOf(["nieuporządkowane", "uporządkowane", "zaprotezowane"])
     .required("Jama ustna i uzębienie jest wymaganym polem")
     .label("Jama ustna i uzębienie"),
-  mucous_membrane_choice: Yup.string()
-    .oneOf(["różowe", "wilgotne"])
-    .label("Błony śluzowe"),
+  mucous_membrane_choice: Yup.string().label("Błony śluzowe"),
   mucous_membrane: Yup.string().label("Błony śluzowe"),
   neck_throat_tonsil: Yup.string().label("Gardło i migdałki"),
   neck_appearance: Yup.string().label("Szyja - wygląd"),
