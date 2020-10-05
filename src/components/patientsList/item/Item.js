@@ -25,12 +25,18 @@ const Item = ({ onPress, item: patient, data: patientBasicData }) => {
         <InterviewInfo
           icon="medicines"
           name="Leki"
-          value={patientBasicData.medications}
+          value={
+            patientBasicData.medications ? patientBasicData.medications : ""
+          }
         />
         <InterviewInfo
           icon="hospital"
           name="Liczba hospitalizacji"
-          value={patientBasicData.hospitalization_times}
+          value={
+            patientBasicData.hospitalization_times
+              ? `${patientBasicData.hospitalization_times}`
+              : ""
+          }
         />
       </TouchableOpacity>
       <CircleButton
@@ -60,16 +66,9 @@ const styles = StyleSheet.create({
   },
 });
 
-Item.defaultProps = {
-  data: {
-    hospitalization_times: "0",
-    medications: "",
-  },
-};
-
 Item.propTypes = {
   item: Patient.isRequired,
-  data: PatientBasicData,
+  data: PatientBasicData.isRequired,
   onPress: PropTypes.func.isRequired,
 };
 
