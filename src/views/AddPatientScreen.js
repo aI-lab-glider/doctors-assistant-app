@@ -148,7 +148,7 @@ const AddPatientScreen = ({ navigation }) => {
                       : patient.date_of_birth
                   }
                   onBlur={handleBlur("date_of_birth")}
-                  keyboardType="numeric"
+                  keyboardType="phone-pad"
                   value={calculateDateOfBirthValue(values.pesel)}
                   editable
                 />

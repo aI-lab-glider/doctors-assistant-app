@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignSelf: "flex-start",
     marginTop: 12,
-    marginLeft: 90,
+    marginLeft: 60,
   },
   choice: {
     flex: 1,

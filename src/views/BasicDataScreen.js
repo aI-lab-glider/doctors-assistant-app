@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -9,12 +9,11 @@ import {
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { Colors, Typography } from "../constants/styles";
-import { PatientsContext } from "../modules/context/PatientsContext";
-import { BasicDataContext } from "../modules/context/BasicDataContext";
 import FormField from "../components/forms/FormField";
 import AppButton from "../components/common/AppButton";
 import basicDataValidationSchema from "../constants/validationSchemas/basicDataValidationSchema";
 import SelectFormField from "../components/forms/SelectFormField";
+import PastPsychiatricTreatmentFormField from "../components/forms/PastPsychiatricTreatmentFormField";
 import MultiChoiceFormField from "../components/forms/MultiChoiceFormField";
 import FillFormField from "../components/forms/FillFormField";
 import RadioButton from "../components/forms/RadioButton";
@@ -22,8 +21,6 @@ import Patient from "../constants/propTypes/patientPropTypes";
 
 const BasicDataScreen = ({ route, navigation }) => {
   const { patient } = route.params;
-  const { setPatient } = useContext(PatientsContext);
-  const { setBasicData } = useContext(BasicDataContext);
 
   const basicData = {
     id: 8,
@@ -108,14 +105,15 @@ const BasicDataScreen = ({ route, navigation }) => {
     basicData.diet_choice = values.diet_choice;
     basicData.diet = values.diet;
     basicData.family_interview = values.family_interview;
-    setBasicData(basicData);
-    setPatient(patient);
-    navigation.navigate("PatientsList");
+    navigation.navigate("PhysicalExamination", {
+      patient,
+      basicData,
+    });
   };
 
   return (
     <KeyboardAvoidingView style={styles.backgroundContainer}>
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <View style={styles.container}>
           <Text style={styles.titleText}>Wywiad</Text>
           <Formik
@@ -126,6 +124,7 @@ const BasicDataScreen = ({ route, navigation }) => {
           >
             {({
               handleChange,
+              values,
               handleSubmit,
               isValid,
               handleBlur,
@@ -203,12 +202,9 @@ const BasicDataScreen = ({ route, navigation }) => {
                   Przebieg dotychczasowego leczenia
                 </Text>
                 <Text style={styles.listItemFieldText}>
-                  {"> "} farmakoterapia
-                </Text>
-                <Text style={styles.nestedListItemFieldText}>
                   W przeszłości pacjent {"  "}_____{"  "} psychiatrycznie
                 </Text>
-                <SelectFormField
+                <PastPsychiatricTreatmentFormField
                   name="past_psychiatric_treatment"
                   leftText="leczył się"
                   rightText="nie leczył się"
@@ -220,15 +216,28 @@ const BasicDataScreen = ({ route, navigation }) => {
                   labelText="Pierwszy raz przyjęty w:"
                   onBlur={handleBlur("first_hospitalization")}
                   keyboardType="numeric"
+                  editable={values.past_psychiatric_treatment !== false}
                 />
                 <FillFormField
                   name="hospitalization_times"
                   onChangeText={handleChange("hospitalization_times")}
-                  placeholder="ilość razy"
+                  placeholder={
+                    values.pastPsychiatricTreatment ||
+                    values.pastPsychiatricTreatment == null
+                      ? "ilość razy"
+                      : "0"
+                  }
                   labelText="Liczba hospitalizacji:      "
                   onBlur={handleBlur("hospitalization_times")}
                   keyboardType="numeric"
+                  editable={values.past_psychiatric_treatment !== false}
+                  value={
+                    values.past_psychiatric_treatment === false ? "0" : null
+                  }
                 />
+                <Text style={styles.listItemFieldText}>
+                  {"> "} farmakoterapia
+                </Text>
                 <FormField
                   name="pharmacotherapy"
                   onChangeText={handleChange("pharmacotherapy")}
@@ -578,6 +587,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GRAY_VERY_LIGHT,
     borderTopRightRadius: 50,
     paddingTop: 22,
+    paddingBottom: 22,
   },
   buttonContainer: {
     margin: 25,

@@ -6,9 +6,9 @@ import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../common/FontForgeIcon";
 
-const RadioButton = ({ name, options }) => {
+const RadioButton = ({ name, options, defaultOptionIndex }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [optionChecked, setOptionChecked] = useState(null);
+  const [optionChecked, setOptionChecked] = useState(defaultOptionIndex);
   return (
     <>
       <View style={styles.container}>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignSelf: "flex-start",
     marginTop: 12,
-    marginLeft: 90,
+    marginLeft: 60,
   },
   choice: {
     flex: 1,
@@ -75,13 +75,17 @@ const styles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     color: Colors.BLACK,
     alignSelf: "center",
-    marginRight: 20,
+    marginRight: 30,
   },
 });
+RadioButton.defaultProps = {
+  defaultOptionIndex: null,
+};
 
 RadioButton.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  defaultOptionIndex: PropTypes.number,
 };
 
 export default RadioButton;
