@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -11,6 +11,8 @@ import { Formik } from "formik";
 import { Colors, Typography } from "../constants/styles";
 import FormField from "../components/forms/FormField";
 import AppButton from "../components/common/AppButton";
+import { PatientsContext } from "../modules/context/PatientsContext";
+import { BasicDataContext } from "../modules/context/BasicDataContext";
 import basicDataValidationSchema from "../constants/validationSchemas/basicDataValidationSchema";
 import SelectFormField from "../components/forms/SelectFormField";
 import PastPsychiatricTreatmentFormField from "../components/forms/PastPsychiatricTreatmentFormField";
@@ -21,10 +23,13 @@ import Patient from "../constants/propTypes/patientPropTypes";
 
 const BasicDataScreen = ({ route, navigation }) => {
   const { patient } = route.params;
+  const { setPatient } = useContext(PatientsContext);
+  const { setBasicData } = useContext(BasicDataContext);
+  const patientId = patient.id;
 
   const basicData = {
     id: 8,
-    patient_id: patient.id,
+    patient_id: patientId,
     reason_of_report: "",
     major_ailments: "",
     suicidal_thoughts_choice: null,
@@ -105,9 +110,10 @@ const BasicDataScreen = ({ route, navigation }) => {
     basicData.diet_choice = values.diet_choice;
     basicData.diet = values.diet;
     basicData.family_interview = values.family_interview;
+    setBasicData(basicData);
+    setPatient(patient);
     navigation.navigate("PhysicalExamination", {
-      patient,
-      basicData,
+      patientId,
     });
   };
 
@@ -185,9 +191,11 @@ const BasicDataScreen = ({ route, navigation }) => {
                 </Text>
                 <MultiChoiceFormField
                   name="past_diseases_choice"
-                  topText="Poważne urazy głowy"
-                  middleText="Zapalenia w obrębie CSN"
-                  bottomText="Epizody drgawkowe"
+                  options={[
+                    "Poważne urazy głowy",
+                    "Zapalenia w obrębie CSN",
+                    "Epizody drgawkowe",
+                  ]}
                 />
                 <FormField
                   name="past_diseases"

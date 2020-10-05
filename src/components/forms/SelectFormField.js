@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 10,
-    marginLeft: 80,
-    marginRight: 60,
+    marginLeft: 60,
+    marginRight: 30,
   },
   icon: {
     flex: 1,

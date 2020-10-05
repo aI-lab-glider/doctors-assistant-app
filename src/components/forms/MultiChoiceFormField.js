@@ -6,25 +6,10 @@ import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../common/FontForgeIcon";
 
-const MultiChoiceFormField = ({ name, topText, middleText, bottomText }) => {
+const MultiChoiceFormField = ({ name, options }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [isTopChecked, setTopChecked] = useState(false);
-  const [isMiddleChecked, setMiddleChecked] = useState(false);
-  const [isBottomChecked, setBottomChecked] = useState(false);
-
-  const fieldValue = `${isTopChecked ? `${topText};` : ""}${
-    isMiddleChecked ? `${middleText};` : ""
-  }${isBottomChecked ? `${bottomText};` : ""}`;
-
-  const pressTop = () => {
-    setTopChecked(!isTopChecked);
-  };
-  const pressMiddle = () => {
-    setMiddleChecked(!isMiddleChecked);
-  };
-  const pressBottom = () => {
-    setBottomChecked(!isBottomChecked);
-  };
+  const [optionsChecked, setOptionsChecked] = useState([]);
+  const fieldValue = optionsChecked.join(";");
 
   useEffect(() => {
     setFieldValue(name, fieldValue);
@@ -33,39 +18,42 @@ const MultiChoiceFormField = ({ name, topText, middleText, bottomText }) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.choice}>
-          <TouchableOpacity onPress={pressTop}>
-            <FontForgeIcon
-              name={isTopChecked ? "checked" : "unchecked"}
-              size={38}
-              color={Colors.PINK_MEDIUM}
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-          <Text style={styles.text}>{topText}</Text>
-        </View>
-        <View style={styles.choice}>
-          <TouchableOpacity onPress={pressMiddle}>
-            <FontForgeIcon
-              name={isMiddleChecked ? "checked" : "unchecked"}
-              size={38}
-              color={Colors.PINK_MEDIUM}
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-          <Text style={styles.text}>{middleText}</Text>
-        </View>
-        <View style={styles.choice}>
-          <TouchableOpacity onPress={pressBottom}>
-            <FontForgeIcon
-              name={isBottomChecked ? "checked" : "unchecked"}
-              size={38}
-              color={Colors.PINK_MEDIUM}
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-          <Text style={styles.text}>{bottomText}</Text>
-        </View>
+        {options.map((option) => {
+          return (
+            <View key={option} style={styles.choice}>
+              {optionsChecked.includes(option) ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    setOptionsChecked(
+                      optionsChecked.filter((e) => e !== option)
+                    );
+                  }}
+                >
+                  <FontForgeIcon
+                    name="checked"
+                    size={38}
+                    color={Colors.PINK_MEDIUM}
+                    style={styles.icon}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    setOptionsChecked([...optionsChecked, option]);
+                  }}
+                >
+                  <FontForgeIcon
+                    name="unchecked"
+                    size={38}
+                    color={Colors.PINK_MEDIUM}
+                    style={styles.icon}
+                  />
+                </TouchableOpacity>
+              )}
+              <Text style={styles.text}>{option}</Text>
+            </View>
+          );
+        })}
       </View>
       <FormErrorMessage error={errors[name]} visible={touched[name]} />
     </>
@@ -103,9 +91,7 @@ const styles = StyleSheet.create({
 
 MultiChoiceFormField.propTypes = {
   name: PropTypes.string.isRequired,
-  topText: PropTypes.string.isRequired,
-  middleText: PropTypes.string.isRequired,
-  bottomText: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default MultiChoiceFormField;
