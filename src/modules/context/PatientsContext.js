@@ -21,8 +21,17 @@ function PatientsContextProvider({ children }) {
     refreshPatients();
   }, []);
 
-  const setPatient = (patient) => {
-    dispatch({ type: "INSERT_OR_UPDATE_PATIENT", payload: { patient } });
+  const setPatient = async (patient) => {
+    const id = await database.insertOrUpdatePatient(patient);
+    const patientWithId = patient;
+    patientWithId.id = id;
+    if (id) {
+      dispatch({
+        type: "INSERT_OR_UPDATE_PATIENT",
+        payload: { patient: patientWithId },
+      });
+    }
+    return id;
   };
 
   const value = {

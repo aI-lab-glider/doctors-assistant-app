@@ -23,7 +23,6 @@ const PsychiatricAssessmentScreen = ({ route, navigation }) => {
   const { setPsychiatricAssessment } = useContext(PsychiatricAssessmentContext);
 
   const psychiatricAssessment = {
-    id: 8,
     patient_id: patientId,
     general_appearance: "",
     outfit_choice: "",

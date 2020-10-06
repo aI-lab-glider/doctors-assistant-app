@@ -11,7 +11,6 @@ import { Formik } from "formik";
 import { Colors, Typography } from "../constants/styles";
 import FormField from "../components/forms/FormField";
 import AppButton from "../components/common/AppButton";
-import { PatientsContext } from "../modules/context/PatientsContext";
 import { BasicDataContext } from "../modules/context/BasicDataContext";
 import basicDataValidationSchema from "../constants/validationSchemas/basicDataValidationSchema";
 import SelectFormField from "../components/forms/SelectFormField";
@@ -23,12 +22,10 @@ import Patient from "../constants/propTypes/patientPropTypes";
 
 const BasicDataScreen = ({ route, navigation }) => {
   const { patient } = route.params;
-  const { setPatient } = useContext(PatientsContext);
   const { setBasicData } = useContext(BasicDataContext);
   const patientId = patient.id;
 
   const basicData = {
-    id: 8,
     patient_id: patientId,
     reason_of_report: "",
     major_ailments: "",
@@ -69,7 +66,7 @@ const BasicDataScreen = ({ route, navigation }) => {
     family_interview: "",
   };
 
-  const onButtonPressed = (values) => {
+  const onButtonPressed = async (values) => {
     basicData.reason_of_report = values.reason_of_report;
     basicData.major_ailments = values.major_ailments;
     basicData.suicidal_thoughts_choice = values.suicidal_thoughts_choice;
@@ -111,7 +108,6 @@ const BasicDataScreen = ({ route, navigation }) => {
     basicData.diet = values.diet;
     basicData.family_interview = values.family_interview;
     setBasicData(basicData);
-    setPatient(patient);
     navigation.navigate("PhysicalExamination", {
       patientId,
     });

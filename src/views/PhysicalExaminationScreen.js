@@ -23,7 +23,6 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
   const { setPhysicalExamination } = useContext(PhysicalExaminationContext);
 
   const physicalExamination = {
-    id: 8,
     patient_id: patientId,
     general_conditions: "dobry",
     blood_pressure: "",

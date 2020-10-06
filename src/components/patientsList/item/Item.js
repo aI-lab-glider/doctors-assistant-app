@@ -12,7 +12,7 @@ import {
 } from "../../../constants/styles/typography";
 import PatientBasicData from "../../../constants/propTypes/basicDataPropTypes";
 
-const Item = ({ onPress, item: patient, data: patientBasicData }) => {
+const Item = ({ onPress, patient, patientsBasicData }) => {
   return (
     <View style={styles.item}>
       <TouchableOpacity onPress={onPress}>
@@ -26,15 +26,15 @@ const Item = ({ onPress, item: patient, data: patientBasicData }) => {
           icon="medicines"
           name="Leki"
           value={
-            patientBasicData.medications ? patientBasicData.medications : ""
+            patientsBasicData.medications ? patientsBasicData.medications : ""
           }
         />
         <InterviewInfo
           icon="hospital"
           name="Liczba hospitalizacji"
           value={
-            patientBasicData.hospitalization_times
-              ? `${patientBasicData.hospitalization_times}`
+            patientsBasicData.hospitalization_times
+              ? `${patientsBasicData.hospitalization_times}`
               : ""
           }
         />
@@ -66,9 +66,16 @@ const styles = StyleSheet.create({
   },
 });
 
+Item.defaultProps = {
+  patientsBasicData: {
+    medications: "",
+    hospitalization_times: 0,
+  },
+};
+
 Item.propTypes = {
-  item: Patient.isRequired,
-  data: PatientBasicData.isRequired,
+  patient: Patient.isRequired,
+  patientsBasicData: PatientBasicData,
   onPress: PropTypes.func.isRequired,
 };
 

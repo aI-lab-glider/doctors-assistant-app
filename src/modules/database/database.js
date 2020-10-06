@@ -71,9 +71,23 @@ const getBasicPatientsData = async () => {
   }
 };
 
+const insertPatientGetId = async (patient) => {
+  try {
+    const patientWithoutId = patient;
+    patientWithoutId.id = null;
+    const id = await Builder().table("patients").insertGetId(patientWithoutId);
+    console.log(`Successfully insert patient with ${id}`);
+    return id;
+  } catch (e) {
+    console.log(`DB error insert patient ${e[0]}`);
+    return null;
+  }
+};
+
 // eslint-disable-next-line import/prefer-default-export
 export const database = {
   initDB,
   getPatients,
   getBasicPatientsData,
+  insertOrUpdatePatient: insertPatientGetId,
 };
