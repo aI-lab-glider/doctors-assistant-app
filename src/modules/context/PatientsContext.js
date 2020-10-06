@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import reducer from "./PatientsContextReducer";
-import { database } from "../database/database";
+import { database, TABLES } from "../database/database";
 
 export const PatientsContext = createContext({
   patients: [],
@@ -14,7 +14,7 @@ function PatientsContextProvider({ children }) {
 
   useEffect(() => {
     const refreshPatients = async () => {
-      const patients = await database.getPatients();
+      const patients = await database.getAllFromTable(TABLES.patients);
       dispatch({ type: "REFRESH_PATIENTS", payload: { patients } });
     };
 
@@ -22,10 +22,10 @@ function PatientsContextProvider({ children }) {
   }, []);
 
   const setPatient = async (patient) => {
-    const id = await database.insertOrUpdatePatient(patient);
-    const patientWithId = patient;
-    patientWithId.id = id;
+    const id = await database.insertObjectToTable(patient, TABLES.patients);
     if (id) {
+      const patientWithId = patient;
+      patientWithId.id = id;
       dispatch({
         type: "INSERT_OR_UPDATE_PATIENT",
         payload: { patient: patientWithId },

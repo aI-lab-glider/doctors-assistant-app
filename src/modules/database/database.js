@@ -45,41 +45,31 @@ async function initDB() {
   await loadDB();
 }
 
-const getPatients = async () => {
+export const TABLES = {
+  patients: "patients",
+  patients_basic_data: "patients_basic_data",
+};
+
+const getAllFromTable = async (table) => {
   try {
-    const patients = await Builder().table("patients").get();
-    console.log(`Successfully get ${patients.length} patients`);
-    return patients;
+    const records = await Builder().table(table).get();
+    console.log(`Successfully get ${records.length} from ${table} `);
+    return records;
   } catch (e) {
     console.log(`db error load patients ${e}`);
     return null;
   }
 };
 
-const getBasicPatientsData = async () => {
+const insertObjectToTable = async (object, table) => {
   try {
-    const patientsBasicData = await Builder()
-      .table("patients_basic_data")
-      .get();
-    console.log(
-      `Successfully get ${patientsBasicData.length} patientsBasicData`
-    );
-    return patientsBasicData;
-  } catch (e) {
-    console.log(`db error load patients basic data ${e}`);
-    return null;
-  }
-};
-
-const insertPatientGetId = async (patient) => {
-  try {
-    const patientWithoutId = patient;
-    patientWithoutId.id = null;
-    const id = await Builder().table("patients").insertGetId(patientWithoutId);
+    const objectWithoutId = object;
+    objectWithoutId.id = null;
+    const id = await Builder().table(table).insertGetId(objectWithoutId);
     console.log(`Successfully insert patient with ${id}`);
     return id;
   } catch (e) {
-    console.log(`DB error insert patient ${e[0]}`);
+    console.log(`DB error insert patient ${e}`);
     return null;
   }
 };
@@ -87,7 +77,6 @@ const insertPatientGetId = async (patient) => {
 // eslint-disable-next-line import/prefer-default-export
 export const database = {
   initDB,
-  getPatients,
-  getBasicPatientsData,
-  insertOrUpdatePatient: insertPatientGetId,
+  getAllFromTable,
+  insertObjectToTable,
 };
