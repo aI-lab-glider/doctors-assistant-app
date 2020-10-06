@@ -112,7 +112,7 @@ const PsychiatricAssessmentScreen = ({ route, navigation }) => {
     murder_plans: "",
   };
 
-  const onButtonPressed = (values) => {
+  const onButtonPressed = async (values) => {
     psychiatricAssessment.general_appearance = values.general_appearance;
     psychiatricAssessment.outfit_choice = values.outfit_choice;
     psychiatricAssessment.appearance_care = values.appearance_care;
@@ -228,8 +228,13 @@ const PsychiatricAssessmentScreen = ({ route, navigation }) => {
     psychiatricAssessment.murder_fantasies = values.murder_fantasies;
     psychiatricAssessment.murder_plans_choice = values.murder_plans_choice;
     psychiatricAssessment.murder_plans = values.murder_plans;
-    setPsychiatricAssessment(psychiatricAssessment);
-    navigation.navigate("PatientsList");
+    psychiatricAssessment.id = await setPsychiatricAssessment(
+      psychiatricAssessment
+    );
+    if (psychiatricAssessment.id) {
+      navigation.navigate("PatientsList");
+    }
+    // TODO: Show alert with info what is wrong
   };
 
   return (

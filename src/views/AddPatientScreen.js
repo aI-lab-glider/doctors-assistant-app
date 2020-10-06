@@ -42,7 +42,7 @@ const AddPatientScreen = ({ navigation }) => {
     patient.name = values.name;
     patient.surname = values.surname;
     patient.sex = values.sex;
-    // TODO: Add Diagnosis with code
+    // TODO: Create service to add new diagnosis to database
     // patient.code = values.code;
     patient.pesel = values.pesel;
     patient.date_of_birth = values.date_of_birth;
@@ -53,7 +53,7 @@ const AddPatientScreen = ({ navigation }) => {
     patient.phone = values.phone;
     patient.person_guard = values.person_guard;
     patient.phone_guard = values.phone_guard;
-    // TODO: Add guardianship to database
+    // TODO: Add guardianship to patient table
     // patient.guardianship = values.guardianship;
     console.log("SET");
     patient.id = await setPatient(patient);
@@ -63,6 +63,7 @@ const AddPatientScreen = ({ navigation }) => {
         patient,
       });
     }
+    // TODO: Show alert with info what is wrong
   };
 
   const calculateDateOfBirthValue = (pesel) => {

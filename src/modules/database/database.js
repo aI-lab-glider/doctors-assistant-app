@@ -46,8 +46,17 @@ async function initDB() {
 }
 
 export const TABLES = {
+  diagnosis: "diagnosis",
+  diagnosis_answers: "diagnosis_answers",
   patients: "patients",
   patients_basic_data: "patients_basic_data",
+  patients_diagnosis: "patients_diagnosis",
+  patients_psychiatric_assessment: "patients_psychiatric_assessment",
+  physical_examination: "physical_examination",
+  psychiatric_assessment: "psychiatric_assessment",
+  questions: "questions",
+  users: "users",
+  users_patients: "users_patients",
 };
 
 const getAllFromTable = async (table) => {
@@ -66,10 +75,10 @@ const insertObjectToTable = async (object, table) => {
     const objectWithoutId = object;
     objectWithoutId.id = null;
     const id = await Builder().table(table).insertGetId(objectWithoutId);
-    console.log(`Successfully insert patient with ${id}`);
+    console.log(`Successfully insert object to ${table} with ${id}`);
     return id;
   } catch (e) {
-    console.log(`DB error insert patient ${e}`);
+    console.log(`DB error insert object to ${table} ${e[0]}`);
     return null;
   }
 };

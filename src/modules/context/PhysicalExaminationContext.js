@@ -1,7 +1,8 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import physicalExaminationReducer from "./PhysicalExaminationReducer";
 import patientsPhysicalExamination from "../../constants/data/patientsPhysicalExamination";
+import { database, TABLES } from "../database/database";
 
 export const PhysicalExaminationContext = createContext({
   patientsPhysicalExamination: [],
@@ -14,14 +15,37 @@ function PhysicalExaminationProvider({ children }) {
     physicalExaminationReducer,
     initialState
   );
-  const value = {
-    ...state,
-    setPhysicalExamination: (physicalExamination) => {
+
+  useEffect(() => {
+    const refreshPhysicalExamination = async () => {
+      const physicalExaminations = await database.getAllFromTable(
+        TABLES.physical_examination
+      );
+      dispatch({ type: "REFRESH", payload: { physicalExaminations } });
+    };
+
+    refreshPhysicalExamination();
+  }, []);
+
+  const setPhysicalExamination = async (physicalExamination) => {
+    const id = await database.insertObjectToTable(
+      physicalExamination,
+      TABLES.physical_examination
+    );
+    if (id) {
+      const examinationWithId = physicalExamination;
+      examinationWithId.id = id;
       dispatch({
         type: "SET_PHYSICAL_EXAMINATION",
-        payload: { physicalExamination },
+        payload: { physicalExamination: examinationWithId },
       });
-    },
+    }
+    return id;
+  };
+
+  const value = {
+    ...state,
+    setPhysicalExamination,
   };
 
   return (

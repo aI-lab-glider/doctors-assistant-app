@@ -1,7 +1,8 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import psychiatricAssessmentReducer from "./PsychiatricAssessmentReducer";
 import patientsPsychiatricAssessment from "../../constants/data/patientsPsychiatricAssessment";
+import { database, TABLES } from "../database/database";
 
 export const PsychiatricAssessmentContext = createContext({
   patientsPsychiatricAssessment: [],
@@ -14,14 +15,37 @@ function PsychiatricAssessmentProvider({ children }) {
     psychiatricAssessmentReducer,
     initialState
   );
-  const value = {
-    ...state,
-    setPsychiatricAssessment: (psychiatricAssessment) => {
+
+  useEffect(() => {
+    const refreshPsychiatricAssessment = async () => {
+      const psychiatricAssessment = await database.getAllFromTable(
+        TABLES.psychiatric_assessment
+      );
+      dispatch({ type: "REFRESH", payload: { psychiatricAssessment } });
+    };
+
+    refreshPsychiatricAssessment();
+  }, []);
+
+  const setPsychiatricAssessment = async (psychiatricAssessment) => {
+    const id = await database.insertObjectToTable(
+      psychiatricAssessment,
+      TABLES.psychiatric_assessment
+    );
+    if (id) {
+      const assessmentWithId = psychiatricAssessment;
+      assessmentWithId.id = id;
       dispatch({
         type: "SET_PSYCHIATRIC_ASSESSMENT",
-        payload: { psychiatricAssessment },
+        payload: { psychiatricAssessment: assessmentWithId },
       });
-    },
+    }
+    return id;
+  };
+
+  const value = {
+    ...state,
+    setPsychiatricAssessment,
   };
 
   return (
