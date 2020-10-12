@@ -22,6 +22,13 @@ const physicalExaminationReducer = (state, action) => {
         patientsPhysicalExamination,
       };
     }
+    case "REFRESH": {
+      const { physicalExamination } = action.payload;
+      return {
+        ...state,
+        physicalExamination,
+      };
+    }
     default:
       return state;
   }

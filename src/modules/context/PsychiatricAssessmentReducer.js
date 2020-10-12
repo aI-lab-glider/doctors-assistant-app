@@ -24,6 +24,13 @@ const psychiatricAssessmentReducer = (state, action) => {
         patientsPsychiatricAssessment,
       };
     }
+    case "REFRESH": {
+      const { psychiatricAssessment } = action.payload;
+      return {
+        ...state,
+        psychiatricAssessment,
+      };
+    }
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { PATIENT_CODE_REGEX } from "../constants";
 
+// eslint-disable-next-line no-unused-vars
 const CodeProp = (props, propName, componentName) => {
   if (
     !PATIENT_CODE_REGEX.test(
@@ -25,14 +26,11 @@ const Patient = PropTypes.shape({
   weight: PropTypes.number,
   height: PropTypes.number,
   bmi: PropTypes.number,
-  diagnosis: PropTypes.arrayOf(PropTypes.string),
   pesel: PropTypes.string,
   date_of_birth: PropTypes.string.isRequired,
   note: PropTypes.string,
-  person_authorized: PropTypes.string,
-  phone_authorized: PropTypes.string,
-  guardianship: PropTypes.bool,
-  code: CodeProp,
+  person_guard: PropTypes.string,
+  phone_guard: PropTypes.string,
 });
 
 export default Patient;

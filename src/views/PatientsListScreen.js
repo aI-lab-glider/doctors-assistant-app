@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { SearchBar } from "react-native-elements";
@@ -15,6 +15,11 @@ const PatientsListScreen = ({ navigation }) => {
   const { patientsBasicData } = React.useContext(BasicDataContext);
   const [filteredPatients, setFilteredPatients] = useState(patients);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    setFilteredPatients(patients);
+    setSearch("");
+  }, [patients]);
 
   const onSearchChange = (searchString) => {
     setSearch(searchString);

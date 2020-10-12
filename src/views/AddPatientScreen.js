@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -18,14 +18,15 @@ import BmiFormField from "../components/forms/BmiFormField";
 import CheckboxFormField from "../components/forms/CheckboxFormField";
 import AppButton from "../components/common/AppButton";
 import personalDataValidationSchema from "../constants/validationSchemas/personalDataValidationSchema";
+import { PatientsContext } from "../modules/context/PatientsContext";
 
 const AddPatientScreen = ({ navigation }) => {
+  const { setPatient } = useContext(PatientsContext);
+
   const patient = {
-    id: 7,
     name: "",
     surname: "",
     sex: "male",
-    code: "",
     pesel: "",
     date_of_birth: "",
     weight: 0,
@@ -33,16 +34,16 @@ const AddPatientScreen = ({ navigation }) => {
     bmi: 0,
     note: "",
     phone: "",
-    person_authorized: "",
-    phone_authorized: "",
-    guardianship: false,
+    person_guard: "",
+    phone_guard: "",
   };
 
-  const onButtonPressed = (values) => {
+  const onButtonPressed = async (values) => {
     patient.name = values.name;
     patient.surname = values.surname;
     patient.sex = values.sex;
-    patient.code = values.code;
+    // TODO: Create service to add new diagnosis to database
+    // patient.code = values.code;
     patient.pesel = values.pesel;
     patient.date_of_birth = values.date_of_birth;
     patient.weight = parseInt(values.weight, 10);
@@ -50,12 +51,19 @@ const AddPatientScreen = ({ navigation }) => {
     patient.bmi = parseFloat(Math.round(values.bmi * 100) / 100);
     patient.note = values.note;
     patient.phone = values.phone;
-    patient.person_authorized = values.person_authorized;
-    patient.phone_authorized = values.phone_authorized;
-    patient.guardianship = values.guardianship;
-    navigation.navigate("BasicData", {
-      patient,
-    });
+    patient.person_guard = values.person_guard;
+    patient.phone_guard = values.phone_guard;
+    // TODO: Add guardianship to patient table
+    // patient.guardianship = values.guardianship;
+    console.log("SET");
+    patient.id = await setPatient(patient);
+    console.log(patient.id);
+    if (patient.id) {
+      navigation.navigate("BasicData", {
+        patient,
+      });
+    }
+    // TODO: Show alert with info what is wrong
   };
 
   const calculateDateOfBirthValue = (pesel) => {
@@ -201,19 +209,19 @@ const AddPatientScreen = ({ navigation }) => {
                 />
                 <Text style={styles.subtitleText}>Dane osoby upoważnionej</Text>
                 <FormField
-                  name="person_authorized"
+                  name="person_guard"
                   leftIcon="person"
-                  onChangeText={handleChange("person_authorized")}
+                  onChangeText={handleChange("person_guard")}
                   placeholder="Imię i Nazwisko"
-                  onBlur={handleBlur("person_authorized")}
+                  onBlur={handleBlur("person_guard")}
                   keyboardType="default"
                 />
                 <FormField
-                  name="phone_authorized"
+                  name="phone_guard"
                   leftIcon="phone"
-                  onChangeText={handleChange("phone_authorized")}
+                  onChangeText={handleChange("phone_guard")}
                   placeholder=""
-                  onBlur={handleBlur("phone_authorized")}
+                  onBlur={handleBlur("phone_guard")}
                   keyboardType="numeric"
                 />
                 <CheckboxFormField

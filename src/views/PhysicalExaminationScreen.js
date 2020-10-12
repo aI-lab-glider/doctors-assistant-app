@@ -23,7 +23,6 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
   const { setPhysicalExamination } = useContext(PhysicalExaminationContext);
 
   const physicalExamination = {
-    id: 8,
     patient_id: patientId,
     general_conditions: "dobry",
     blood_pressure: "",
@@ -77,7 +76,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
     nervous_focal_damage: "",
   };
 
-  const onButtonPressed = (values) => {
+  const onButtonPressed = async (values) => {
     physicalExamination.general_conditions = values.general_conditions;
     physicalExamination.blood_pressure = values.blood_pressure;
     physicalExamination.pulse = values.pulse;
@@ -141,10 +140,13 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
     physicalExamination.nervous_meningeal_signs =
       values.nervous_meningeal_signs;
     physicalExamination.nervous_focal_damage = values.nervous_focal_damage;
-    setPhysicalExamination(physicalExamination);
-    navigation.navigate("PsychiatricAssessment", {
-      patientId,
-    });
+    physicalExamination.id = await setPhysicalExamination(physicalExamination);
+    if (physicalExamination.id) {
+      navigation.navigate("PsychiatricAssessment", {
+        patientId,
+      });
+    }
+    // TODO: Show alert with info what is wrong
   };
 
   return (

@@ -21,8 +21,8 @@ const List = ({ navigation, patients, patientsBasicData }) => {
       keyExtractor={(patient) => patient.id.toString()}
       renderItem={({ item }) => (
         <Item
-          item={item}
-          data={getPatientBasicData(item.id)}
+          patient={item}
+          patientsBasicData={getPatientBasicData(item.id)}
           onPress={() =>
             onItemPressed({
               patient: item,
