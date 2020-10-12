@@ -12,7 +12,6 @@ import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
 const PatientCardScreen = ({ route }) => {
   const { patient, patientBasicData } = route.params;
   const calculateAge = (dateOfBirth) => {
-    // TODO: Add dateOfBirth validation
     if (dateOfBirth) {
       const from = dateOfBirth.split(/-| - /);
       const birthdateTimeStamp = new Date(from[2], from[1] - 1, from[0]);
@@ -25,19 +24,19 @@ const PatientCardScreen = ({ route }) => {
   const patientNote = patient.note ? patient.note : "";
   const [textNote, setTextNote] = useState(
     patientNote > 50
-      ? `> ${patient.note.substring(0, 20)}...`
-      : `> ${patient.note}`
+      ? `> ${patientNote.substring(0, 20)}...`
+      : `> ${patientNote}`
   );
   const [lengthMore, setLengthMore] = useState(false);
   const noteTextSize = () => {
     return {
-      flex: lengthMore ? patient.note.numberOfLines : 1,
+      flex: lengthMore ? patientNote.numberOfLines : 1,
     };
   };
 
   const expandNoteText = () => {
-    if (patient.note.length > 0) {
-      setTextNote(`> ${patient.note}`);
+    if (patientNote.length > 0) {
+      setTextNote(`> ${patientNote}`);
       setLengthMore(!lengthMore);
     }
   };
@@ -111,7 +110,7 @@ const PatientCardScreen = ({ route }) => {
               <Text style={styles.fieldText}>14.08.2020</Text>
               <Text
                 style={[styles.noteListItemFieldText, noteTextSize()]}
-                numberOfLines={lengthMore ? patient.note.numberOfLines : 1}
+                numberOfLines={lengthMore ? patientNote.numberOfLines : 1}
                 scrollEnabled
                 multiLine
                 onPress={expandNoteText}
