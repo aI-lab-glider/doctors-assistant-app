@@ -1,5 +1,5 @@
 /**
- * Decide about flow going on to details question
+ * Caclculate each disese probability
  * @param {Array} major_answers - Array with major questions answers
  * @param {Array} min_major_true - Array with minor questions answers
  * @return {Object} - Json with diseases probabilities
@@ -74,7 +74,7 @@ function calculateSingleDiseaseSideProbability(
   let sideCondsNumbers = 0;
   let trueSideCondsNumbers = 0;
   Object.keys(diagnosisConditions).forEach((cond) => {
-    if (cond.slice(0, 4) === "side" && diagnosisConditions[cond] !== "null") {
+    if (((cond.slice(0,4) === 'side' || cond.slice(0,6) === 'detail') && diagnosisConditions[cond] !== "null") {
       sideCondsNumbers += 1;
       if (getCondValue(diagnosisConditions[cond], allAnswers)) {
         trueSideCondsNumbers += 1;
@@ -94,17 +94,55 @@ function getThisModuleData(thisModuleCode) {
   return thisModuleData;
 }
 
+function conditionsAccomplishment(allAnswers, diseaseConditions) {
+  var conditionsAcc = {};
+
+  conditionsAcc.main = {};
+  conditionsAcc.side = {};
+  conditionsAcc.detail = {};
+
+  conditionsAcc.main.validAnswers = 0;
+  conditionsAcc.main.allAnswers = 0;
+  conditionsAcc.side.validAnswers = 0;
+  conditionsAcc.side.allAnswers = 0;
+  conditionsAcc.detail.validAnswers = 0;
+  conditionsAcc.detail.allAnswers = 0;
+
+  Object.keys(diseaseConditions).forEach((cond, index) => {
+    if (diseaseConditions[cond] !== "null") {
+      answer = getCondValue(diseaseConditions[cond], allAnswers);
+      switch (cond.slice(0, 4)) {
+        case "main":
+          conditionsAcc.main.validAnswers += answer;
+          conditionsAcc.main.allAnswers += 1;
+          break;
+        case "side":
+          conditionsAcc.side.validAnswers += answer;
+          conditionsAcc.side.allAnswers += 1;
+          break;
+        case "deta":
+          conditionsAcc.detail.validAnswers += answer;
+          conditionsAcc.detail.allAnswers += 1;
+          break;
+        default:
+          break;
+      }
+    }
+  });
+  return conditionsAcc;
+}
+
 function calculateSingleDiseaseProbability(allAnswers, singleDiagnosisData) {
   const newRecord = {};
   newRecord.disease_icd10 = singleDiagnosisData.disease_icd10;
   newRecord.disease_name = singleDiagnosisData.disease_name;
+  const { diagnosisConditions } = singleDiagnosisData.diagnosis_conditions;
+  newRecord.conditionsAcc = conditionsAccomplishment(allAnswers, singleDiagnosisData);
 
-  // eslint-disable-next-line camelcase
-  const { diagnosis_conditions } = singleDiagnosisData;
-  if (goOnSideConds(allAnswers, diagnosis_conditions)) {
+  if (goOnSideConds(allAnswers, diagnosisConditions)) {
     newRecord.probability = calculateSingleDiseaseSideProbability(
       allAnswers,
-      diagnosis_conditions
+      diagnosisConditions
     );
   } else {
     newRecord.probability = 0;
