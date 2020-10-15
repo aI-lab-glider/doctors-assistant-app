@@ -5,14 +5,24 @@ import FontForgeIcon from "./FontForgeIcon";
 
 import { Colors } from "../../constants/styles";
 
-const AppButton = ({ onPress, icon }) => {
+const getOpacity = (disabled) => {
+  return {
+    opacity: disabled ? 0.2 : 1,
+  };
+};
+
+const AppButton = ({ onPress, icon, disabled }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <FontForgeIcon
         name={icon}
         size={80}
         color={Colors.PURPLE}
-        style={styles.icon}
+        style={[styles.icon, getOpacity(disabled)]}
       />
     </TouchableOpacity>
   );
@@ -34,6 +44,7 @@ const styles = StyleSheet.create({
 AppButton.propTypes = {
   icon: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default AppButton;

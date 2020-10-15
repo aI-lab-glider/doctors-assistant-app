@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -23,6 +23,7 @@ import Patient from "../constants/propTypes/patientPropTypes";
 const BasicDataScreen = ({ route, navigation }) => {
   const { patient } = route.params;
   const { setBasicData } = useContext(BasicDataContext);
+  const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
   const patientId = patient.id;
 
   const basicData = {
@@ -67,6 +68,7 @@ const BasicDataScreen = ({ route, navigation }) => {
   };
 
   const onButtonPressed = async (values) => {
+    setNextButtonDisabled(true);
     basicData.reason_of_report = values.reason_of_report;
     basicData.major_ailments = values.major_ailments;
     basicData.suicidal_thoughts_choice = values.suicidal_thoughts_choice;
@@ -114,6 +116,7 @@ const BasicDataScreen = ({ route, navigation }) => {
         patientId,
       });
     }
+    setNextButtonDisabled(false);
     // TODO: Show alert with info what is wrong
   };
 
@@ -573,7 +576,7 @@ const BasicDataScreen = ({ route, navigation }) => {
                   buttonType="solid"
                   icon="next_btn"
                   onPress={handleSubmit}
-                  disabled={!isValid || isSubmitting}
+                  disabled={!isValid || isSubmitting || isNextButtonDisabled}
                   loading={isSubmitting}
                 />
               </>

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Alert, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import PatientsListScreen from "../../views/PatientsListScreen";
@@ -10,6 +11,21 @@ import PsychiatricAssessmentScreen from "../../views/PsychiatricAssessmentScreen
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../../components/common/FontForgeIcon";
 
+const backIcon = (
+  <FontForgeIcon
+    name="back"
+    size={32}
+    color={Colors.PURPLE_VERY_LIGHT}
+    style={{
+      paddingTop: 8,
+      marginLeft: 11,
+      alignSelf: "flex-start",
+      fontWeight: Typography.FONT_WEIGHT_BOLD,
+      transform: [{ rotate: "352deg" }],
+    }}
+  />
+);
+
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
@@ -17,7 +33,7 @@ const MainNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="List"
-        screenOptions={{
+        screenOptions={({ navigation }) => ({
           headerStyle: {
             backgroundColor: Colors.PURPLE,
             height: 105,
@@ -44,21 +60,32 @@ const MainNavigator = () => {
               }}
             />
           ),
-          headerBackImage: () => (
-            <FontForgeIcon
-              name="back"
-              size={32}
-              color={Colors.PURPLE_VERY_LIGHT}
-              style={{
-                paddingTop: 8,
-                marginLeft: 11,
-                alignSelf: "flex-start",
-                fontWeight: Typography.FONT_WEIGHT_BOLD,
-                transform: [{ rotate: "352deg" }],
-              }}
-            />
-          ),
-        }}
+          headerBackImage: () => {
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  Alert.alert(
+                    "",
+                    "Czy na pewno chcesz przerwać wywiad i powrócić do listy pacjentów?",
+                    [
+                      {
+                        text: "Kontynuuj",
+                        onPress: () => {},
+                        style: "cancel",
+                      },
+                      {
+                        text: "Przerwij",
+                        onPress: () => navigation.navigate("PatientsList"),
+                      },
+                    ]
+                  )
+                }
+              >
+                {backIcon}
+              </TouchableOpacity>
+            );
+          },
+        })}
       >
         <Stack.Screen
           name="PatientsList"
@@ -68,9 +95,18 @@ const MainNavigator = () => {
         <Stack.Screen
           name="PatientCard"
           component={PatientCardScreen}
-          options={{
+          options={({ navigation }) => ({
             title: "Karta pacjenta",
-          }}
+            headerBackImage: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("PatientsList")}
+                >
+                  {backIcon}
+                </TouchableOpacity>
+              );
+            },
+          })}
         />
         <Stack.Screen
           name="AddPatient"

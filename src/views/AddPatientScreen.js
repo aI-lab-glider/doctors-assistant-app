@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
   KeyboardAvoidingView,
   Text,
   ScrollView,
+  Alert,
+  BackHandler,
 } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
@@ -22,6 +24,7 @@ import { PatientsContext } from "../modules/context/PatientsContext";
 
 const AddPatientScreen = ({ navigation }) => {
   const { setPatient } = useContext(PatientsContext);
+  const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
   const patient = {
     name: "",
@@ -39,6 +42,7 @@ const AddPatientScreen = ({ navigation }) => {
   };
 
   const onButtonPressed = async (values) => {
+    setNextButtonDisabled(true);
     patient.name = values.name;
     patient.surname = values.surname;
     patient.sex = values.sex;
@@ -63,6 +67,7 @@ const AddPatientScreen = ({ navigation }) => {
         patient,
       });
     }
+    setNextButtonDisabled(false);
     // TODO: Show alert with info what is wrong
   };
 
@@ -95,6 +100,34 @@ const AddPatientScreen = ({ navigation }) => {
     return 0;
   };
 
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert(
+        "",
+        "Czy na pewno chcesz przerwać wywiad i powrócić do listy pacjentów?",
+        [
+          {
+            text: "Kontynuuj",
+            onPress: () => {},
+            style: "cancel",
+          },
+          {
+            text: "Przerwij",
+            onPress: () => navigation.navigate("PatientsList"),
+          },
+        ]
+      );
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <KeyboardAvoidingView style={styles.backgroundContainer}>
       <ScrollView>
@@ -110,7 +143,7 @@ const AddPatientScreen = ({ navigation }) => {
               handleChange,
               values,
               handleSubmit,
-              isValid,
+              isValid = true,
               handleBlur,
               isSubmitting,
             }) => (
@@ -232,7 +265,7 @@ const AddPatientScreen = ({ navigation }) => {
                   buttonType="solid"
                   icon="next_btn"
                   onPress={handleSubmit}
-                  disabled={!isValid || isSubmitting}
+                  disabled={!isValid || isSubmitting || isNextButtonDisabled}
                   loading={isSubmitting}
                 />
               </>

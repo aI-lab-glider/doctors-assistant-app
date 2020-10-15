@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -21,6 +21,7 @@ import CheckboxFormField from "../components/forms/CheckboxFormField";
 const PsychiatricAssessmentScreen = ({ route, navigation }) => {
   const { patientId } = route.params;
   const { setPsychiatricAssessment } = useContext(PsychiatricAssessmentContext);
+  const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
   const psychiatricAssessment = {
     patient_id: patientId,
@@ -113,6 +114,7 @@ const PsychiatricAssessmentScreen = ({ route, navigation }) => {
   };
 
   const onButtonPressed = async (values) => {
+    setNextButtonDisabled(true);
     psychiatricAssessment.general_appearance = values.general_appearance;
     psychiatricAssessment.outfit_choice = values.outfit_choice;
     psychiatricAssessment.appearance_care = values.appearance_care;
@@ -234,9 +236,9 @@ const PsychiatricAssessmentScreen = ({ route, navigation }) => {
     if (psychiatricAssessment.id) {
       navigation.navigate("PatientsList");
     }
+    setNextButtonDisabled(false);
     // TODO: Show alert with info what is wrong
   };
-
   return (
     <KeyboardAvoidingView style={styles.backgroundContainer}>
       <ScrollView style={styles.container}>
@@ -1130,7 +1132,7 @@ const PsychiatricAssessmentScreen = ({ route, navigation }) => {
                   buttonType="solid"
                   icon="next_btn"
                   onPress={handleSubmit}
-                  disabled={!isValid || isSubmitting}
+                  disabled={!isValid || isSubmitting || isNextButtonDisabled}
                   loading={isSubmitting}
                 />
               </>
