@@ -67,7 +67,6 @@ const AddPatientScreen = ({ navigation }) => {
         patient,
       });
     }
-    setNextButtonDisabled(false);
     // TODO: Show alert with info what is wrong
   };
 
@@ -108,11 +107,12 @@ const AddPatientScreen = ({ navigation }) => {
         [
           {
             text: "Kontynuuj",
-            onPress: () => {},
             style: "cancel",
+            onPress: () => {},
           },
           {
             text: "Przerwij",
+            style: "destructive",
             onPress: () => navigation.navigate("PatientsList"),
           },
         ]

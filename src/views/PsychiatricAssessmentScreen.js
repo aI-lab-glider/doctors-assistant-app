@@ -236,7 +236,6 @@ const PsychiatricAssessmentScreen = ({ route, navigation }) => {
     if (psychiatricAssessment.id) {
       navigation.navigate("PatientsList");
     }
-    setNextButtonDisabled(false);
     // TODO: Show alert with info what is wrong
   };
   return (

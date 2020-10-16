@@ -148,7 +148,6 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
         patientId,
       });
     }
-    setNextButtonDisabled(false);
     // TODO: Show alert with info what is wrong
   };
 
