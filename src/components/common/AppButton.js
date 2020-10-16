@@ -31,8 +31,9 @@ const AppButton = ({ onPress, icon, disabled }) => {
 const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
+    alignSelf: "flex-end",
     alignItems: "center",
-    width: "100%",
+    width: "25%",
   },
   icon: {
     alignSelf: "flex-end",
