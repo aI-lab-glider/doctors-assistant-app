@@ -8,15 +8,15 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
-import { Colors, Typography } from "../constants/styles";
-import { PhysicalExaminationContext } from "../modules/context/PhysicalExaminationContext";
-import FormField from "../components/forms/FormField";
-import AppButton from "../components/common/AppButton";
-import physicalExaminationValidationSchema from "../constants/validationSchemas/physicalExaminationValidationSchema";
-import SelectFormField from "../components/forms/SelectFormField";
-import MultiChoiceFormField from "../components/forms/MultiChoiceFormField";
-import RadioButton from "../components/forms/RadioButton";
-import CheckboxFormField from "../components/forms/CheckboxFormField";
+import { Colors, Typography } from "../../constants/styles";
+import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
+import FormField from "../../components/forms/FormField";
+import AppButton from "../../components/common/AppButton";
+import physicalExaminationValidationSchema from "../../constants/validationSchemas/physicalExaminationValidationSchema";
+import SelectFormField from "../../components/forms/SelectFormField";
+import MultiChoiceFormField from "../../components/forms/MultiChoiceFormField";
+import RadioButton from "../../components/forms/RadioButton";
+import CheckboxFormField from "../../components/forms/CheckboxFormField";
 
 const PhysicalExaminationScreen = ({ route, navigation }) => {
   const { patientId } = route.params;

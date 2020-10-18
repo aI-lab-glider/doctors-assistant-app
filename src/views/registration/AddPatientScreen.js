@@ -1,26 +1,24 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import {
-  StyleSheet,
-  View,
   KeyboardAvoidingView,
-  Text,
   ScrollView,
-  Alert,
-  BackHandler,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import dateFormat from "dateformat";
-import { Colors, Typography } from "../constants/styles";
-import FormField from "../components/forms/FormField";
-import SexFormField from "../components/forms/SexFormField";
-import PeselFormField from "../components/forms/PeselFormField";
-import WeightFormField from "../components/forms/WeightFormField";
-import BmiFormField from "../components/forms/BmiFormField";
-import CheckboxFormField from "../components/forms/CheckboxFormField";
-import AppButton from "../components/common/AppButton";
-import personalDataValidationSchema from "../constants/validationSchemas/personalDataValidationSchema";
-import { PatientsContext } from "../modules/context/PatientsContext";
+import { Colors, Typography } from "../../constants/styles";
+import FormField from "../../components/forms/FormField";
+import SexFormField from "../../components/forms/SexFormField";
+import PeselFormField from "../../components/forms/PeselFormField";
+import WeightFormField from "../../components/forms/WeightFormField";
+import BmiFormField from "../../components/forms/BmiFormField";
+import CheckboxFormField from "../../components/forms/CheckboxFormField";
+import AppButton from "../../components/common/AppButton";
+import personalDataValidationSchema from "../../constants/validationSchemas/personalDataValidationSchema";
+import { PatientsContext } from "../../modules/context/PatientsContext";
 
 const AddPatientScreen = ({ navigation }) => {
   const { setPatient } = useContext(PatientsContext);
@@ -59,9 +57,7 @@ const AddPatientScreen = ({ navigation }) => {
     patient.phone_guard = values.phone_guard;
     // TODO: Add guardianship to patient table
     // patient.guardianship = values.guardianship;
-    console.log("SET");
     patient.id = await setPatient(patient);
-    console.log(patient.id);
     if (patient.id) {
       navigation.navigate("BasicData", {
         patient,
@@ -98,35 +94,6 @@ const AddPatientScreen = ({ navigation }) => {
     }
     return 0;
   };
-
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert(
-        "",
-        "Czy na pewno chcesz przerwać wywiad i powrócić do listy pacjentów?",
-        [
-          {
-            text: "Kontynuuj",
-            style: "cancel",
-            onPress: () => {},
-          },
-          {
-            text: "Przerwij",
-            style: "destructive",
-            onPress: () => navigation.navigate("PatientsList"),
-          },
-        ]
-      );
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-
-    return () => backHandler.remove();
-  }, []);
 
   return (
     <KeyboardAvoidingView style={styles.backgroundContainer}>
@@ -310,6 +277,7 @@ const styles = StyleSheet.create({
 AddPatientScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
   }).isRequired,
 };
 

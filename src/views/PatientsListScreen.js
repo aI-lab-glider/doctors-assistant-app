@@ -39,7 +39,7 @@ const PatientsListScreen = ({ navigation }) => {
   };
 
   const addNewPatientBtPressed = () => {
-    navigation.navigate("AddPatient");
+    navigation.navigate("Registration");
   };
 
   return (
