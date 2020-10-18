@@ -23,9 +23,7 @@ const PatientCardScreen = ({ route }) => {
   const onAdd = () => {};
   const patientNote = patient.note ? patient.note : "";
   const [textNote, setTextNote] = useState(
-    patientNote > 50
-      ? `> ${patientNote.substring(0, 20)}...`
-      : `> ${patientNote}`
+    patientNote > 50 ? `${patientNote.substring(0, 20)}...` : `${patientNote}`
   );
   const [lengthMore, setLengthMore] = useState(false);
   const noteTextSize = () => {
@@ -36,7 +34,7 @@ const PatientCardScreen = ({ route }) => {
 
   const expandNoteText = () => {
     if (patientNote.length > 0) {
-      setTextNote(`> ${patientNote}`);
+      setTextNote(`${patientNote}`);
       setLengthMore(!lengthMore);
     }
   };
@@ -98,16 +96,16 @@ const PatientCardScreen = ({ route }) => {
                 iconName="diagnosis"
                 onAdd={onAdd}
               />
-              <Text style={styles.fieldText}>14.08.2020</Text>
+              {/* TODO: Revert date in diagnosis after MVP */}
+              {/* <Text style={styles.fieldText}>14.08.2020</Text> */}
               <Text style={styles.listItemFieldText}>
-                {">"} {patient.code}
+                {patient.code ? ">" : ""} {patient.code}
               </Text>
               <SubtitleLabelWithButton
                 subtitle="Notatka"
                 iconName="pen"
                 onAdd={onAdd}
               />
-              <Text style={styles.fieldText}>14.08.2020</Text>
               <Text
                 style={[styles.noteListItemFieldText, noteTextSize()]}
                 numberOfLines={lengthMore ? patientNote.numberOfLines : 1}
@@ -115,13 +113,14 @@ const PatientCardScreen = ({ route }) => {
                 multiLine
                 onPress={expandNoteText}
               >
-                {textNote}
+                {patientNote ? ">" : ""} {textNote}
               </Text>
               <SubtitleLabel subtitle="Dane kontaktowe" iconName="phone" />
               <Text style={styles.fieldText}>Tel: {patient.phone}</Text>
               <Text style={styles.fieldText}>Osoba upoważniona:</Text>
               <Text style={styles.listItemFieldText}>
-                {">"} {patient.person_guard} tel. {patient.phone_guard}
+                {patient.person_guard ? `> ${patient.person_guard} ` : ""}
+                {patient.phone_guard ? `tel. ${patient.phone_guard}` : ""}
               </Text>
             </View>
           </View>
@@ -199,7 +198,7 @@ const styles = StyleSheet.create({
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     alignSelf: "flex-start",
-    marginLeft: 70,
+    marginLeft: 50,
     width: "75%",
   },
   bottomMenu: {

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -21,6 +21,7 @@ import CheckboxFormField from "../components/forms/CheckboxFormField";
 const PhysicalExaminationScreen = ({ route, navigation }) => {
   const { patientId } = route.params;
   const { setPhysicalExamination } = useContext(PhysicalExaminationContext);
+  const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
   const physicalExamination = {
     patient_id: patientId,
@@ -77,6 +78,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
   };
 
   const onButtonPressed = async (values) => {
+    setNextButtonDisabled(true);
     physicalExamination.general_conditions = values.general_conditions;
     physicalExamination.blood_pressure = values.blood_pressure;
     physicalExamination.pulse = values.pulse;
@@ -686,7 +688,7 @@ const PhysicalExaminationScreen = ({ route, navigation }) => {
                   buttonType="solid"
                   icon="next_btn"
                   onPress={handleSubmit}
-                  disabled={!isValid || isSubmitting}
+                  disabled={!isValid || isSubmitting || isNextButtonDisabled}
                   loading={isSubmitting}
                 />
               </>
