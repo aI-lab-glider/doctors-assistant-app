@@ -20,7 +20,7 @@ import AppButton from "../../components/common/AppButton";
 import personalDataValidationSchema from "../../constants/validationSchemas/personalDataValidationSchema";
 import { PatientsContext } from "../../modules/context/PatientsContext";
 
-const AddPatientScreen = ({ navigation }) => {
+const AddPatient = ({ navigation }) => {
   const { setPatient } = useContext(PatientsContext);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
@@ -274,11 +274,11 @@ const styles = StyleSheet.create({
   },
 });
 
-AddPatientScreen.propTypes = {
+AddPatient.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
     addListener: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default AddPatientScreen;
+export default AddPatient;

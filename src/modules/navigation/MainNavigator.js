@@ -1,8 +1,8 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import PatientsListScreen from "../../views/PatientsListScreen";
-import PatientCardScreen from "../../views/PatientCardScreen";
+import PatientsList from "../../views/PatientsList";
+import PatientCard from "../../views/PatientCard";
 import HeaderOptions from "./HeaderOptions";
 import Navigator, { getHeaderTitle } from "./registrationNavigator/Navigator";
 
@@ -17,12 +17,12 @@ const MainNavigator = () => {
       >
         <Stack.Screen
           name="PatientsList"
-          component={PatientsListScreen}
+          component={PatientsList}
           options={{ title: "Lista pacjentów" }}
         />
         <Stack.Screen
           name="PatientCard"
-          component={PatientCardScreen}
+          component={PatientCard}
           options={{
             title: "Karta pacjenta",
           }}

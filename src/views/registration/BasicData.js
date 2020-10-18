@@ -20,7 +20,7 @@ import FillFormField from "../../components/forms/FillFormField";
 import RadioButton from "../../components/forms/RadioButton";
 import Patient from "../../constants/propTypes/patientPropTypes";
 
-const BasicDataScreen = ({ route, navigation }) => {
+const BasicData = ({ route, navigation }) => {
   const { patient } = route.params;
   const { setBasicData } = useContext(BasicDataContext);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
@@ -647,7 +647,7 @@ const styles = StyleSheet.create({
   },
 });
 
-BasicDataScreen.propTypes = {
+BasicData.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -658,4 +658,4 @@ BasicDataScreen.propTypes = {
   }).isRequired,
 };
 
-export default BasicDataScreen;
+export default BasicData;

@@ -10,7 +10,7 @@ import { PatientsContext } from "../modules/context/PatientsContext";
 import { BasicDataContext } from "../modules/context/BasicDataContext";
 
 const MINIMUM_SEARCH_STRING_LENGTH = 3;
-const PatientsListScreen = ({ navigation }) => {
+const PatientsList = ({ navigation }) => {
   const { patients } = React.useContext(PatientsContext);
   const { patientsBasicData } = React.useContext(BasicDataContext);
   const [filteredPatients, setFilteredPatients] = useState(patients);
@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
   },
 });
 
-PatientsListScreen.propTypes = {
+PatientsList.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
-export default PatientsListScreen;
+export default PatientsList;

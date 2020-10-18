@@ -18,7 +18,7 @@ import MultiChoiceFormField from "../../components/forms/MultiChoiceFormField";
 import RadioButton from "../../components/forms/RadioButton";
 import CheckboxFormField from "../../components/forms/CheckboxFormField";
 
-const PsychiatricAssessmentScreen = ({ route, navigation }) => {
+const PsychiatricAssessment = ({ route, navigation }) => {
   const { patientId } = route.params;
   const { setPsychiatricAssessment } = useContext(PsychiatricAssessmentContext);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
@@ -1207,7 +1207,7 @@ const styles = StyleSheet.create({
   },
 });
 
-PsychiatricAssessmentScreen.propTypes = {
+PsychiatricAssessment.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -1218,4 +1218,4 @@ PsychiatricAssessmentScreen.propTypes = {
   }).isRequired,
 };
 
-export default PsychiatricAssessmentScreen;
+export default PsychiatricAssessment;

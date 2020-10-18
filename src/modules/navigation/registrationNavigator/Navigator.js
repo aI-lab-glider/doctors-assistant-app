@@ -1,9 +1,9 @@
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import AddPatientScreen from "../../../views/registration/AddPatientScreen";
-import BasicDataScreen from "../../../views/registration/BasicDataScreen";
-import PhysicalExaminationScreen from "../../../views/registration/PhysicalExaminationScreen";
-import PsychiatricAssessmentScreen from "../../../views/registration/PsychiatricAssessmentScreen";
+import AddPatient from "../../../views/registration/AddPatient";
+import BasicData from "../../../views/registration/BasicData";
+import PhysicalExamination from "../../../views/registration/PhysicalExamination";
+import PsychiatricAssessment from "../../../views/registration/PsychiatricAssessment";
 import HeaderOptions from "../HeaderOptions";
 import listeners from "./Listeners";
 
@@ -12,23 +12,23 @@ const Stack = createStackNavigator();
 export const Routes = [
   {
     name: "AddPatient",
-    component: AddPatientScreen,
+    component: AddPatient,
     title: "Dane Osobowe",
   },
   {
     name: "BasicData",
-    component: BasicDataScreen,
+    component: BasicData,
     title: "Informacje podstawowe",
   },
   {
     name: "PhysicalExamination",
-    component: PhysicalExaminationScreen,
+    component: PhysicalExamination,
     title: "Badanie fizykalne",
   },
 
   {
     name: "PsychiatricAssessment",
-    component: PsychiatricAssessmentScreen,
+    component: PsychiatricAssessment,
     title: "Badanie psychiatryczne",
   },
 ];

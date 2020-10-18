@@ -9,7 +9,7 @@ import BottomMenu from "../components/patientCard/bottomMenu";
 import Patient from "../constants/propTypes/patientPropTypes";
 import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
 
-const PatientCardScreen = ({ route }) => {
+const PatientCard = ({ route }) => {
   const { patient, patientBasicData } = route.params;
   const calculateAge = (dateOfBirth) => {
     if (dateOfBirth) {
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   },
 });
 
-PatientCardScreen.propTypes = {
+PatientCard.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -220,4 +220,4 @@ PatientCardScreen.propTypes = {
   }).isRequired,
 };
 
-export default PatientCardScreen;
+export default PatientCard;
