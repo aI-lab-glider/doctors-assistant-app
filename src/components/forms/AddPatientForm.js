@@ -2,17 +2,17 @@ import { StyleSheet, Text } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
 
-import Sex from "../fields/Sex";
-import Pesel from "../fields/Pesel";
+import Sex from "./fields/Sex";
+import Pesel from "./fields/Pesel";
 
-import Weight from "../fields/Weight";
-import BmiForm from "../fields/BmiForm";
-import { Colors, Typography } from "../../../constants/styles";
-import FormField from "../fields/FormField";
+import Weight from "./fields/Weight";
+import BmiForm from "./fields/BmiForm";
+import { Colors, Typography } from "../../constants/styles";
+import FormField from "./fields/FormField";
 import {
   calculateBmiValue,
   calculateDateOfBirthValue,
-} from "../../../modules/utils/Calculators";
+} from "../../modules/utils/Calculators";
 
 const AddPatientForm = ({ handleChange, handleBlur, values }) => {
   return (

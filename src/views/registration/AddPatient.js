@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Formik } from "formik";
 import personalDataValidationSchema from "../../constants/validationSchemas/personalDataValidationSchema";
 import { PatientsContext } from "../../modules/context/PatientsContext";
-import AddPatientForm from "../../components/forms/addPatient/AddPatientForm";
+import AddPatientForm from "../../components/forms/AddPatientForm";
 import AppButton from "../../components/common/AppButton";
 import FormContainer from "./FormContainer";
 import { parseFormFieldValuesToObject } from "../../modules/utils/Parsers";
@@ -49,7 +49,7 @@ const AddPatient = ({ navigation }) => {
   };
 
   return (
-    <FormContainer>
+    <FormContainer title="Nowy Pacjent">
       <Formik
         initialValues={initialState}
         enableReinitialize

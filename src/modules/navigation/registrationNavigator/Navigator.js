@@ -54,6 +54,7 @@ const Navigator = () => {
       {Routes.map(({ name, component, title }) => (
         <Stack.Screen
           name={name}
+          key={name}
           component={component}
           options={{
             title,

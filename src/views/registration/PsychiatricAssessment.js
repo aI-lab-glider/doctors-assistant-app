@@ -1120,11 +1120,9 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <AppButton
-                  buttonType="solid"
                   icon="next_btn"
                   onPress={handleSubmit}
                   disabled={!isValid || isSubmitting || isNextButtonDisabled}
-                  loading={isSubmitting}
                 />
               </>
             )}
