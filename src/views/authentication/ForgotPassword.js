@@ -1,17 +1,25 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Alert, StyleSheet, View, Text, TextInput, Button, ActivityIndicator } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Button,
+  ActivityIndicator,
+} from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 import * as api from "../../api/Auth";
 import { Colors, Typography } from "../../constants/styles";
-import AUTH_STYLES from "../../constants/styles/auth";
+import { AUTH_STYLES } from "../../constants/styles/auth";
 
 export default function ForgotPassword(props) {
   const { navigation } = props;
 
   // 1 - DECLARE VARIABLES
-  const [error, setError] = useState(null);
+  const [setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(state) {
@@ -83,7 +91,7 @@ export default function ForgotPassword(props) {
                   onPress={handleSubmit}
                   disabled={!isValid || isSubmitting}
                 />
-                <ActivityIndicator animating={loading}/>
+                <ActivityIndicator animating={loading} />
               </View>
             )}
           </Formik>

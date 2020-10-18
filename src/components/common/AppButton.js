@@ -5,7 +5,13 @@ import FontForgeIcon from "./FontForgeIcon";
 
 import { Colors } from "../../constants/styles";
 
-const AppButton = ({ onPress, icon, fontForgeIconStyle, size, buttonStyle }) => {
+const AppButton = ({
+  onPress,
+  icon,
+  fontForgeIconStyle,
+  size,
+  buttonStyle,
+}) => {
   return (
     <TouchableOpacity style={buttonStyle || styles.button} onPress={onPress}>
       <FontForgeIcon
@@ -23,7 +29,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    
   },
   icon: {
     alignSelf: "center",
@@ -36,11 +41,13 @@ AppButton.propTypes = {
   icon: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
   fontForgeIconStyle: ViewPropTypes.style,
+  buttonStyle: ViewPropTypes.style,
   size: PropTypes.number,
 };
 
 AppButton.defaultProps = {
   fontForgeIconStyle: null,
+  buttonStyle: null,
   size: null,
 };
 export default AppButton;

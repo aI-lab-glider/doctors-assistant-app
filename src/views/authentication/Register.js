@@ -1,6 +1,14 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Alert, View, Button, TextInput, Text, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  Alert,
+  View,
+  Button,
+  TextInput,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -146,7 +154,7 @@ export default function Register(props) {
                   onPress={handleSubmit}
                   disabled={!isValid || isSubmitting}
                 />
-                <ActivityIndicator animating={loading}/>
+                <ActivityIndicator animating={loading} />
                 <CTA
                   title="Masz już konto ?"
                   ctaText="Zaloguj"

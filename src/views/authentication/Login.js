@@ -114,9 +114,9 @@ export default function Login(props) {
                   size={150}
                   icon="log_in"
                   onPress={handleSubmit}
-                  disabled={!isValid || isSubmitting}                
+                  disabled={!isValid || isSubmitting}
                 />
-                <ActivityIndicator animating={loading}/>
+                <ActivityIndicator animating={loading} />
               </View>
             )}
           </Formik>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 50,
   },
-  loginButton:{
+  loginButton: {
     justifyContent: "center",
     alignItems: "center",
     width: "45%",
@@ -171,8 +171,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 0,
     marginRight: 0,
-    marginVertical: -100
-
+    marginVertical: -100,
   },
   backgroundContainer: {
     flex: 1,
