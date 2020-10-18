@@ -7,25 +7,13 @@ import AddPatientForm from "../../components/forms/AddPatientForm";
 import AppButton from "../../components/common/AppButton";
 import FormContainer from "./FormContainer";
 import { parseFormFieldValuesToObject } from "../../modules/utils/Parsers";
+import { initialPatient } from "../../constants/values/initalFormValues";
 
 const AddPatient = ({ navigation }) => {
   const { setPatient } = useContext(PatientsContext);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-  const initialState = {
-    name: "",
-    surname: "",
-    sex: "male",
-    pesel: "",
-    date_of_birth: "",
-    weight: "0",
-    bmi: "0",
-    height: "0",
-    note: "",
-    phone: "",
-    person_guard: "",
-    phone_guard: "",
-  };
+  const initialState = initialPatient;
 
   const keysWithParserFunctions = {
     weight: (val) => parseInt(val, 10),

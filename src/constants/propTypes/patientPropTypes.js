@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { PATIENT_CODE_REGEX } from "../constants";
+import { PATIENT_CODE_REGEX } from "../values/constants";
 
 // eslint-disable-next-line no-unused-vars
 const CodeProp = (props, propName, componentName) => {

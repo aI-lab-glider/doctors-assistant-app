@@ -1,13 +1,13 @@
-import { StyleSheet, Text } from "react-native";
+import { Text } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
-import { Colors, Typography } from "../../constants/styles";
 import FormField from "./fields/FormField";
 import Select from "./fields/Select";
 import MultiChoice from "./fields/MultiChoice";
 import PastPsychiatricTreatment from "./fields/PastPsychiatricTreatment";
 import FillForm from "./fields/FillForm";
-import RadioButton from "./RadioButton";
+import RadioButton from "./fields/RadioButton";
+import formStyles from "../../constants/styles/formStyles";
 
 const BasicDataForm = ({ handleChange, handleBlur, values }) => {
   return (
@@ -414,44 +414,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  subtitleText: {
-    color: Colors.PURPLE,
-    marginLeft: 30,
-    paddingTop: 25,
-    fontSize: Typography.FONT_SIZE_13,
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-  },
-  listItemFieldText: {
-    flex: 1,
-    color: Colors.PURPLE,
-    fontSize: Typography.FONT_SIZE_14,
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-    alignSelf: "flex-start",
-    marginLeft: 50,
-    marginRight: 20,
-    paddingTop: 7,
-  },
-  nestedListItemFieldText: {
-    flex: 1,
-    color: Colors.PURPLE,
-    fontSize: Typography.FONT_SIZE_14,
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-    alignSelf: "flex-start",
-    marginLeft: 70,
-    paddingTop: 7,
-  },
-  commentFieldText: {
-    flex: 1,
-    color: Colors.PURPLE,
-    fontSize: Typography.FONT_SIZE_12,
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-    alignSelf: "flex-start",
-    marginLeft: 50,
-    marginRight: 20,
-    paddingTop: 7,
-  },
-});
+const styles = formStyles;
 
 BasicDataForm.propTypes = {
   handleChange: PropTypes.func.isRequired,

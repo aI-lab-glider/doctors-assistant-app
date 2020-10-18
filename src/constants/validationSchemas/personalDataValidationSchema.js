@@ -4,7 +4,7 @@ import {
   PATIENT_CODE_REGEX,
   PESEL_REGEX,
   PHONE_REGEX,
-} from "../constants";
+} from "../values/constants";
 
 const personalDataValidationSchema = Yup.object().shape({
   name: Yup.string().required("Imię jest wymaganym polem").label("Imię"),

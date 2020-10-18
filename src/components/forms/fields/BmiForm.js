@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormError from "../FormError";
+import FormError from "./FormError";
 import { Colors, Typography } from "../../../constants/styles";
-import * as Constants from "../../../constants/constants";
+import * as Constants from "../../../constants/values/constants";
 import FontForgeIcon from "../../common/FontForgeIcon";
 
 const regularIconColor = Colors.PINK_MEDIUM;

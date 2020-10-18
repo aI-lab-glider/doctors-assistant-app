@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormError from "../FormError";
+import FormError from "./FormError";
 import { Colors, Typography } from "../../../constants/styles";
 import FontForgeIcon from "../../common/FontForgeIcon";
 

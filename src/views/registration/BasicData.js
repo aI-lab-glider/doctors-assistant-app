@@ -4,57 +4,18 @@ import { Formik } from "formik";
 import AppButton from "../../components/common/AppButton";
 import { BasicDataContext } from "../../modules/context/BasicDataContext";
 import basicDataValidationSchema from "../../constants/validationSchemas/basicDataValidationSchema";
-import Patient from "../../constants/propTypes/patientPropTypes";
 import BasicDataForm from "../../components/forms/BasicDataForm";
 import FormContainer from "./FormContainer";
 import { parseFormFieldValuesToObject } from "../../modules/utils/Parsers";
+import { initialBasicData } from "../../constants/values/initalFormValues";
 
 const BasicData = ({ route, navigation }) => {
-  const { patient } = route.params;
+  const { patientId } = route.params;
   const { setBasicData } = useContext(BasicDataContext);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
-  const patientId = patient.id;
 
-  const initialState = {
-    patient_id: patientId,
-    reason_of_report: "",
-    major_ailments: "",
-    suicidal_thoughts_choice: null,
-    suicidal_thoughts: "",
-    other_ailments: "",
-    past_diseases_choice: "",
-    past_diseases: "",
-    past_psychiatric_treatment: false,
-    first_hospitalization: "",
-    hospitalization_times: 0,
-    pharmacotherapy: "",
-    psychotherapy: "",
-    family_therapy: "",
-    medications: "",
-    allergies: "",
-    hygiene: "",
-    education_choice: "",
-    education: "",
-    professional_status: "",
-    social_conditions: "",
-    social_assistance_choice: null,
-    social_assistance: "",
-    social_level_changes: "",
-    development_data: "",
-    family_situation: "",
-    family_situation_changes: "",
-    family_relationships: "",
-    hereditary_taint: "",
-    physical_activity: "",
-    self_mutilation: "",
-    occupational_exposure: "",
-    alcohol: "",
-    nicotine: "",
-    psychoactive_substances: "",
-    diet_choice: "",
-    diet: "",
-    family_interview: "",
-  };
+  const initialState = initialBasicData;
+  initialState.patient_id = patientId;
 
   const keysWithParserFunctions = {
     hospitalization_times: (val) => parseInt(val, 10),
@@ -116,7 +77,7 @@ BasicData.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      patient: Patient.isRequired,
+      patientId: PropTypes.number,
     }),
   }).isRequired,
 };

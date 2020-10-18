@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import FormError from "./FormError";
-import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../common/FontForgeIcon";
+import { Colors, Typography } from "../../../constants/styles";
+import FontForgeIcon from "../../common/FontForgeIcon";
 
 const RadioButton = ({ name, options, defaultOptionIndex }) => {
   const { setFieldValue, errors, touched } = useFormikContext();

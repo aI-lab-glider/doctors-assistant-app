@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 });
 
 FormContainer.defaultProps = {
-  title: "",
+  title: null,
 };
 
 FormContainer.propTypes = {

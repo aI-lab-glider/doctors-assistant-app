@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { Text } from "react-native";
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -7,12 +7,12 @@ import Pesel from "./fields/Pesel";
 
 import Weight from "./fields/Weight";
 import BmiForm from "./fields/BmiForm";
-import { Colors, Typography } from "../../constants/styles";
 import FormField from "./fields/FormField";
 import {
   calculateBmiValue,
   calculateDateOfBirthValue,
 } from "../../modules/utils/Calculators";
+import formStyles from "../../constants/styles/formStyles";
 
 const AddPatientForm = ({ handleChange, handleBlur, values }) => {
   return (
@@ -124,15 +124,7 @@ const AddPatientForm = ({ handleChange, handleBlur, values }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  subtitleText: {
-    color: Colors.PURPLE,
-    marginLeft: 30,
-    paddingTop: 25,
-    fontSize: Typography.FONT_SIZE_13,
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-  },
-});
+const styles = formStyles;
 
 AddPatientForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
