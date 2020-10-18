@@ -16,9 +16,9 @@ const CodeProp = (props, propName, componentName) => {
   }
   return null;
 };
-
+// TODO: Create service to add new diagnosis to database
+// TODO: Add guardianship to patient table
 const Patient = PropTypes.shape({
-  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   surname: PropTypes.string.isRequired,
   sex: PropTypes.string.isRequired,

@@ -9,14 +9,14 @@ import {
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { Colors, Typography } from "../../constants/styles";
-import FormField from "../../components/forms/FormField";
+import FormField from "../../components/forms/fields/FormField";
 import AppButton from "../../components/common/AppButton";
 import { BasicDataContext } from "../../modules/context/BasicDataContext";
 import basicDataValidationSchema from "../../constants/validationSchemas/basicDataValidationSchema";
-import SelectFormField from "../../components/forms/SelectFormField";
-import PastPsychiatricTreatmentFormField from "../../components/forms/PastPsychiatricTreatmentFormField";
-import MultiChoiceFormField from "../../components/forms/MultiChoiceFormField";
-import FillFormField from "../../components/forms/FillFormField";
+import Select from "../../components/forms/fields/Select";
+import PastPsychiatricTreatment from "../../components/forms/fields/PastPsychiatricTreatment";
+import MultiChoice from "../../components/forms/fields/MultiChoice";
+import FillForm from "../../components/forms/fields/FillForm";
 import RadioButton from "../../components/forms/RadioButton";
 import Patient from "../../constants/propTypes/patientPropTypes";
 
@@ -164,7 +164,7 @@ const BasicData = ({ route, navigation }) => {
                 <Text style={styles.subtitleText}>
                   Obecność myśli i tendencji suicydalnych lub homicydalnych
                 </Text>
-                <SelectFormField
+                <Select
                   name="suicidal_thoughts_choice"
                   leftText="Obecne"
                   rightText="Nieobecne"
@@ -191,7 +191,7 @@ const BasicData = ({ route, navigation }) => {
                 <Text style={styles.subtitleText}>
                   Przebyte choroby i operacje
                 </Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="past_diseases_choice"
                   options={[
                     "Poważne urazy głowy",
@@ -214,12 +214,12 @@ const BasicData = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   W przeszłości pacjent {"  "}_____{"  "} psychiatrycznie
                 </Text>
-                <PastPsychiatricTreatmentFormField
+                <PastPsychiatricTreatment
                   name="past_psychiatric_treatment"
                   leftText="leczył się"
                   rightText="nie leczył się"
                 />
-                <FillFormField
+                <FillForm
                   name="first_hospitalization"
                   onChangeText={handleChange("first_hospitalization")}
                   placeholder="rok"
@@ -228,7 +228,7 @@ const BasicData = ({ route, navigation }) => {
                   keyboardType="numeric"
                   editable={values.past_psychiatric_treatment !== false}
                 />
-                <FillFormField
+                <FillForm
                   name="hospitalization_times"
                   onChangeText={handleChange("hospitalization_times")}
                   placeholder={
@@ -369,7 +369,7 @@ const BasicData = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} korzystanie z pomocy społecznej
                 </Text>
-                <SelectFormField
+                <Select
                   name="social_assistance_choice"
                   leftText="tak"
                   rightText="nie"

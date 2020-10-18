@@ -1,9 +1,9 @@
 import React from "react";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import SelectFormField from "./SelectFormField";
+import Select from "./Select";
 
-const PastPsychiatricTreatmentFormField = ({
+const PastPsychiatricTreatment = ({
   name,
   leftText,
   rightText,
@@ -16,7 +16,7 @@ const PastPsychiatricTreatmentFormField = ({
   };
 
   return (
-    <SelectFormField
+    <Select
       name={name}
       leftText={leftText}
       rightText={rightText}
@@ -26,15 +26,15 @@ const PastPsychiatricTreatmentFormField = ({
   );
 };
 
-PastPsychiatricTreatmentFormField.defaultProps = {
+PastPsychiatricTreatment.defaultProps = {
   defaultOption: null,
 };
 
-PastPsychiatricTreatmentFormField.propTypes = {
+PastPsychiatricTreatment.propTypes = {
   name: PropTypes.string.isRequired,
   leftText: PropTypes.string.isRequired,
   rightText: PropTypes.string.isRequired,
   defaultOption: PropTypes.bool,
 };
 
-export default PastPsychiatricTreatmentFormField;
+export default PastPsychiatricTreatment;

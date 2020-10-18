@@ -2,11 +2,11 @@ import React from "react";
 import { View, TextInput, Text, StyleSheet } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormErrorMessage from "./FormErrorMessage";
-import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../common/FontForgeIcon";
+import FormError from "../FormError";
+import { Colors, Typography } from "../../../constants/styles";
+import FontForgeIcon from "../../common/FontForgeIcon";
 
-const FillFormField = ({
+const FillForm = ({
   name,
   leftIcon,
   keyboardType,
@@ -52,7 +52,7 @@ const FillFormField = ({
           {...otherProps}
         />
       </View>
-      <FormErrorMessage error={errors[name]} visible={touched[name]} />
+      <FormError error={errors[name]} visible={touched[name]} />
     </>
   );
 };
@@ -87,12 +87,12 @@ const styles = StyleSheet.create({
   },
 });
 
-FillFormField.defaultProps = {
+FillForm.defaultProps = {
   leftIcon: null,
   calculateDependentValue: null,
 };
 
-FillFormField.propTypes = {
+FillForm.propTypes = {
   name: PropTypes.string.isRequired,
   leftIcon: PropTypes.string,
   keyboardType: PropTypes.string.isRequired,
@@ -101,4 +101,4 @@ FillFormField.propTypes = {
   calculateDependentValue: PropTypes.func,
 };
 
-export default FillFormField;
+export default FillForm;

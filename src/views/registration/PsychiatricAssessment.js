@@ -10,13 +10,13 @@ import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { Colors, Typography } from "../../constants/styles";
 import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
-import FormField from "../../components/forms/FormField";
+import FormField from "../../components/forms/fields/FormField";
 import AppButton from "../../components/common/AppButton";
 import psychiatricAssessmentValidationSchema from "../../constants/validationSchemas/psychiatricAssessmentValidationSchema";
-import SelectFormField from "../../components/forms/SelectFormField";
-import MultiChoiceFormField from "../../components/forms/MultiChoiceFormField";
+import Select from "../../components/forms/fields/Select";
+import MultiChoice from "../../components/forms/fields/MultiChoice";
 import RadioButton from "../../components/forms/RadioButton";
-import CheckboxFormField from "../../components/forms/CheckboxFormField";
+import CheckboxForm from "../../components/forms/fields/CheckboxForm";
 
 const PsychiatricAssessment = ({ route, navigation }) => {
   const { patientId } = route.params;
@@ -270,7 +270,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.listItemFieldText}>{"> "} strój</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="outfit_choice"
                   options={[
                     "bez istotnych cech charaktery­stycznych (adekwatny, zadbany, czysty, schludny)",
@@ -307,7 +307,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} czy chętnie zgadza się na badanie?
                 </Text>
-                <SelectFormField
+                <Select
                   name="agree_examination_choice"
                   leftText="tak"
                   rightText="nie"
@@ -324,11 +324,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} czy jest ufny?
                 </Text>
-                <SelectFormField
-                  name="trusting_choice"
-                  leftText="tak"
-                  rightText="nie"
-                />
+                <Select name="trusting_choice" leftText="tak" rightText="nie" />
                 <FormField
                   name="trusting"
                   onChangeText={handleChange("trusting")}
@@ -341,7 +337,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} czy jest agresywny?
                 </Text>
-                <SelectFormField
+                <Select
                   name="aggressive_choice"
                   leftText="tak"
                   rightText="nie"
@@ -358,7 +354,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} czy skraca dystans?
                 </Text>
-                <SelectFormField
+                <Select
                   name="distance_shorten_choice"
                   leftText="tak"
                   rightText="nie"
@@ -375,7 +371,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} czy seksualizuje kontakt?
                 </Text>
-                <SelectFormField
+                <Select
                   name="sexualizing_contact_choice"
                   leftText="tak"
                   rightText="nie"
@@ -392,7 +388,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} czy łatwo się irytuje?
                 </Text>
-                <SelectFormField
+                <Select
                   name="irritated_easily_choice"
                   leftText="tak"
                   rightText="nie"
@@ -409,7 +405,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} czy wzbudza lęk?
                 </Text>
-                <SelectFormField
+                <Select
                   name="fear_cause_choice"
                   leftText="tak"
                   rightText="nie"
@@ -426,11 +422,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} czy wzbudza irytację?
                 </Text>
-                <SelectFormField
-                  name="irritate_choice"
-                  leftText="tak"
-                  rightText="nie"
-                />
+                <Select name="irritate_choice" leftText="tak" rightText="nie" />
                 <FormField
                   name="irritate"
                   onChangeText={handleChange("irritate")}
@@ -444,7 +436,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} zachowana orientacja autopsychiczna
                 </Text>
-                <SelectFormField
+                <Select
                   name="autopsychic_orientation_choice"
                   leftText="tak"
                   rightText="nie"
@@ -461,7 +453,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} zachowana orientacja allopsychiczna
                 </Text>
-                <SelectFormField
+                <Select
                   name="allopsychic_orientation_choice"
                   leftText="tak"
                   rightText="nie"
@@ -478,7 +470,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.subtitleText}>
                   Sposób odpowiadania na pytania
                 </Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="answer_questions_choice"
                   options={[
                     "bez uchwytnych trudności poznawczych",
@@ -500,7 +492,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 />
                 <Text style={styles.subtitleText}>Mowa</Text>
                 <Text style={styles.listItemFieldText}>{"> "} akcent</Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="accent_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -515,7 +507,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.listItemFieldText}>{"> "} dialekt</Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="dialect_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -532,7 +524,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} szybkość mowy
                 </Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="speech_speed_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -547,7 +539,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.listItemFieldText}>{"> "} ton mowy</Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="speech_tone_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -564,7 +556,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} upośledzenia mowy
                 </Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="speech_impairment_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -581,7 +573,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} cechy afazji
                 </Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="aphasia_features_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -598,7 +590,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.subtitleText}>
                   Sposób poruszania się, przyjmowane pozy
                 </Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="moving_way_choice"
                   options={[
                     "manieryzmy",
@@ -634,7 +626,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.subtitleText}>Zaburzenia pamięci</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="memory_impairment_choice"
                   options={[
                     "nie stwierdza się",
@@ -700,7 +692,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.subtitleText}>Afekt</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="affect_choice"
                   options={[
                     "dostosowany",
@@ -723,7 +715,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 />
                 <Text style={styles.subtitleText}>Lęk</Text>
                 <Text style={styles.listItemFieldText}>{"> "} niepokój</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="anxiety_choice"
                   options={[
                     "nie stwierdza się",
@@ -747,7 +739,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   Zaburzenia treści myślenia
                 </Text>
                 <Text style={styles.listItemFieldText}>{"> "} urojenia</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="delusions_choice"
                   options={[
                     "nie stwierdza się",
@@ -788,7 +780,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} halucynacje, pseudohalucyjnacje
                 </Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="hallucinations_choice"
                   options={[
                     "nie stwierdza się",
@@ -820,7 +812,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.listItemFieldText}>{"> "} iluzje</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="illusions_choice"
                   options={[
                     "nie stwierdza się",
@@ -842,7 +834,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.listItemFieldText}>{"> "} inne</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="perception_disorders_choice"
                   options={[
                     "nie stwierdza się",
@@ -863,7 +855,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.subtitleText}>
                   Zaburzenia toku myślenia
                 </Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="abnormal_thinking_choice"
                   options={[
                     "nie stwierdza się",
@@ -897,7 +889,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.subtitleText}>
                   Zaburzenia krytycyzmu i wyglądu
                 </Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="criticism_disturbance_choice"
                   options={[
                     "zachowany wgląd i krytycyzm",
@@ -917,7 +909,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.subtitleText}>Aktywność złożona</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="complex_activity_choice"
                   options={[
                     "natrętne czynności (kompulsje)",
@@ -936,7 +928,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.subtitleText}>Parakinezy katatoniczne</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="catatonic_parakinesis_choice"
                   options={[
                     "zastyganie",
@@ -965,7 +957,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.commentFieldText}>
                   (w wypadku podejrzenia otępienia)
                 </Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="memorizing_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -985,7 +977,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.commentFieldText}>
                   (w wypadku podejrzenia otępienia)
                 </Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="attention_counting_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -1005,7 +997,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.commentFieldText}>
                   (w wypadku podejrzenia otępienia)
                 </Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="reminding_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -1025,7 +1017,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.commentFieldText}>
                   (w wypadku podejrzenia otępienia)
                 </Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="language_skills_difficulties"
                   text="bez uchwytnych trudności"
                   style={styles.choice}
@@ -1045,7 +1037,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} myśli rezygnacyjne
                 </Text>
-                <SelectFormField
+                <Select
                   name="resignation_thoughts_choice"
                   leftText="obecne"
                   rightText="nieobecne"
@@ -1062,7 +1054,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} myśli samobójcze
                 </Text>
-                <SelectFormField
+                <Select
                   name="suicide_thoughts_choice"
                   leftText="obecne"
                   rightText="nieobecne"
@@ -1079,7 +1071,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} plany i tendencje samobójcze
                 </Text>
-                <SelectFormField
+                <Select
                   name="suicidal_plans_choice"
                   leftText="obecne"
                   rightText="nieobecne"
@@ -1096,7 +1088,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} fantazje o zabójstwie
                 </Text>
-                <SelectFormField
+                <Select
                   name="murder_fantasies_choice"
                   leftText="obecne"
                   rightText="nieobecne"
@@ -1113,7 +1105,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} plany zabójstwa
                 </Text>
-                <SelectFormField
+                <Select
                   name="murder_plans_choice"
                   leftText="obecne"
                   rightText="nieobecne"

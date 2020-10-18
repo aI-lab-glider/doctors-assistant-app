@@ -10,13 +10,13 @@ import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { Colors, Typography } from "../../constants/styles";
 import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
-import FormField from "../../components/forms/FormField";
+import FormField from "../../components/forms/fields/FormField";
 import AppButton from "../../components/common/AppButton";
 import physicalExaminationValidationSchema from "../../constants/validationSchemas/physicalExaminationValidationSchema";
-import SelectFormField from "../../components/forms/SelectFormField";
-import MultiChoiceFormField from "../../components/forms/MultiChoiceFormField";
+import Select from "../../components/forms/fields/Select";
+import MultiChoice from "../../components/forms/fields/MultiChoice";
 import RadioButton from "../../components/forms/RadioButton";
-import CheckboxFormField from "../../components/forms/CheckboxFormField";
+import CheckboxForm from "../../components/forms/fields/CheckboxForm";
 
 const PhysicalExamination = ({ route, navigation }) => {
   const { patientId } = route.params;
@@ -277,7 +277,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} obwodowe węzły chłonne
                 </Text>
-                <SelectFormField
+                <Select
                   name="lymphatic_gland_examined"
                   leftText="badalne"
                   rightText="niebadalne"
@@ -285,7 +285,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                 />
                 <Text style={styles.subtitleText}>Głowa</Text>
                 <Text style={styles.listItemFieldText}>{"> "} wygląd</Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="head_appearance_choice"
                   text="wysklepiona symetrycznie, prawidłowo"
                   style={styles.choice}
@@ -360,7 +360,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} błony śluzowe
                 </Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="mucous_membrane_choice"
                   options={["różowe", "wilgotne"]}
                 />
@@ -397,7 +397,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.listItemFieldText}>{"> "} tarczyca</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="neck_thyroid_choice"
                   options={[
                     "powiększona",
@@ -415,7 +415,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                   numberOfLines={2}
                 />
                 <Text style={styles.subtitleText}>Klatka piersiowa</Text>
-                <MultiChoiceFormField
+                <MultiChoice
                   name="chest_choice"
                   options={[
                     "wysklepiona symetrycznie",
@@ -461,7 +461,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} osłuchiwanie
                 </Text>
-                <CheckboxFormField
+                <CheckboxForm
                   name="chest_auscultation_choice"
                   text="nad polami płucnymi osłuchowo szmery oddechowe prawidłowe"
                   style={styles.choice}
@@ -516,7 +516,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                   {"> "} tętno na tt. promieniowych i grzbietowych stopy zgodne
                   z akcją serca
                 </Text>
-                <SelectFormField
+                <Select
                   name="cardiovascular_pulse_choice"
                   leftText="tak"
                   rightText="nie"
@@ -635,7 +635,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} obrysy stawów
                 </Text>
-                <SelectFormField
+                <Select
                   name="locomotor_joint_outline"
                   leftText="prawidłowe"
                   rightText="nieprawidłowe"
@@ -644,7 +644,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} ruchomość bierna i czynna w stawach kończyn
                 </Text>
-                <SelectFormField
+                <Select
                   name="locomotor_limb_mobility"
                   leftText="prawidłowe"
                   rightText="nieprawidłowe"
@@ -653,7 +653,7 @@ const PhysicalExamination = ({ route, navigation }) => {
                 <Text style={styles.listItemFieldText}>
                   {"> "} siła i napięcie mięśniowe
                 </Text>
-                <SelectFormField
+                <Select
                   name="muscle_strength_tension"
                   leftText="prawidłowe"
                   rightText="nieprawidłowe"

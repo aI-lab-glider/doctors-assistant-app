@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormErrorMessage from "./FormErrorMessage";
-import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../common/FontForgeIcon";
+import FormError from "../FormError";
+import { Colors, Typography } from "../../../constants/styles";
+import FontForgeIcon from "../../common/FontForgeIcon";
 
-const MultiChoiceFormField = ({ name, options }) => {
+const MultiChoice = ({ name, options }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
   const [optionsChecked, setOptionsChecked] = useState([]);
   const fieldValue = optionsChecked.join(";");
@@ -55,7 +55,7 @@ const MultiChoiceFormField = ({ name, options }) => {
           );
         })}
       </View>
-      <FormErrorMessage error={errors[name]} visible={touched[name]} />
+      <FormError error={errors[name]} visible={touched[name]} />
     </>
   );
 };
@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
   },
 });
 
-MultiChoiceFormField.propTypes = {
+MultiChoice.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default MultiChoiceFormField;
+export default MultiChoice;

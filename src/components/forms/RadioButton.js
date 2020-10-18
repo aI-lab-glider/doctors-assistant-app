@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormErrorMessage from "./FormErrorMessage";
+import FormError from "./FormError";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../common/FontForgeIcon";
 
@@ -44,7 +44,7 @@ const RadioButton = ({ name, options, defaultOptionIndex }) => {
           );
         })}
       </View>
-      <FormErrorMessage error={errors[name]} visible={touched[name]} />
+      <FormError error={errors[name]} visible={touched[name]} />
     </>
   );
 };

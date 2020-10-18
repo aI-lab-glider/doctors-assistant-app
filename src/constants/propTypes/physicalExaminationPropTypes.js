@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 
 const PatientPhysicalExamination = PropTypes.shape({
-  id: PropTypes.number.isRequired,
   patient_id: PropTypes.number.isRequired,
   general_conditions: PropTypes.string.isRequired,
   blood_pressure: PropTypes.string,
