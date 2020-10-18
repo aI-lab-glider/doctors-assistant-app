@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ViewPropTypes,
+} from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import FormErrorMessage from "./FormErrorMessage";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../common/FontForgeIcon";
 
-const CheckboxFormField = ({ name, text }) => {
+const CheckboxFormField = ({ name, text, style }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
   const [isChecked, setChecked] = useState(false);
   const leftIcon = isChecked ? "checked" : "unchecked";
@@ -15,9 +21,9 @@ const CheckboxFormField = ({ name, text }) => {
     <>
       <View style={styles.container}>
         <TouchableOpacity
-          style={styles.choice}
+          style={style}
           onPress={() => {
-            setFieldValue("guardianship", !isChecked);
+            setFieldValue(name, !isChecked);
             setChecked(!isChecked);
           }}
         >
@@ -44,9 +50,6 @@ const styles = StyleSheet.create({
     right: 30,
     marginTop: 5,
   },
-  choice: {
-    marginRight: 15,
-  },
   icon: {
     alignSelf: "flex-start",
   },
@@ -60,9 +63,14 @@ const styles = StyleSheet.create({
   },
 });
 
+CheckboxFormField.defaultProps = {
+  style: { marginRight: 15 },
+};
+
 CheckboxFormField.propTypes = {
   name: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
+  style: ViewPropTypes.style,
 };
 
 export default CheckboxFormField;

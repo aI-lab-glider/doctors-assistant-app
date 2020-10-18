@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -10,7 +10,6 @@ import PropTypes from "prop-types";
 import { Formik } from "formik";
 import dateFormat from "dateformat";
 import { Colors, Typography } from "../constants/styles";
-import { PatientsContext } from "../modules/context/PatientsContext";
 import FormField from "../components/forms/FormField";
 import SexFormField from "../components/forms/SexFormField";
 import PeselFormField from "../components/forms/PeselFormField";
@@ -18,7 +17,7 @@ import WeightFormField from "../components/forms/WeightFormField";
 import BmiFormField from "../components/forms/BmiFormField";
 import CheckboxFormField from "../components/forms/CheckboxFormField";
 import AppButton from "../components/common/AppButton";
-import validationSchema from "../components/forms/validationSchema";
+import personalDataValidationSchema from "../constants/validationSchemas/personalDataValidationSchema";
 
 const AddPatientScreen = ({ navigation }) => {
   const patient = {
@@ -39,8 +38,6 @@ const AddPatientScreen = ({ navigation }) => {
     guardianship: false,
   };
 
-  const { setPatient } = useContext(PatientsContext);
-
   const onButtonPressed = (values) => {
     patient.name = values.name;
     patient.surname = values.surname;
@@ -56,8 +53,9 @@ const AddPatientScreen = ({ navigation }) => {
     patient.person_authorized = values.person_authorized;
     patient.phone_authorized = values.phone_authorized;
     patient.guardianship = values.guardianship;
-    setPatient(patient);
-    navigation.navigate("PatientsList");
+    navigation.navigate("BasicData", {
+      patient,
+    });
   };
 
   const calculateDateOfBirthValue = (pesel) => {
@@ -97,7 +95,7 @@ const AddPatientScreen = ({ navigation }) => {
           <Formik
             initialValues={patient}
             enableReinitialize
-            validationSchema={validationSchema}
+            validationSchema={personalDataValidationSchema}
             onSubmit={(values) => onButtonPressed(values)}
           >
             {({
@@ -150,7 +148,7 @@ const AddPatientScreen = ({ navigation }) => {
                       : patient.date_of_birth
                   }
                   onBlur={handleBlur("date_of_birth")}
-                  keyboardType="numeric"
+                  keyboardType="phone-pad"
                   value={calculateDateOfBirthValue(values.pesel)}
                   editable
                 />

@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
-import Form from "react-native-basic-form";
-import { ErrorText, Header } from "../../components/authentication/Shared";
+import { Alert, StyleSheet, View, Text, TextInput, Button, ActivityIndicator } from "react-native";
+import { Formik } from "formik";
+import * as yup from "yup";
 import * as api from "../../api/Auth";
-import { Colors } from "../../constants/styles";
+import { Colors, Typography } from "../../constants/styles";
+import AUTH_STYLES from "../../constants/styles/auth";
 
 export default function ForgotPassword(props) {
   const { navigation } = props;
@@ -12,8 +13,6 @@ export default function ForgotPassword(props) {
   // 1 - DECLARE VARIABLES
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const fields = [{ name: "email", label: "Email Address", required: true }];
 
   async function onSubmit(state) {
     setLoading(true);
@@ -33,32 +32,86 @@ export default function ForgotPassword(props) {
       setLoading(false);
     }
   }
+  const forgotPasswordSchema = yup.object({
+    email: yup
+      .string()
+      .email("Podaj poprawny email")
+      .required("Email jest wymagany"),
+  });
 
-  const formProps = { title: "Submit", fields, onSubmit, loading };
   return (
-    <View style={styles.container}>
-      <Header title="Recover Password" />
-      <View style={styles.inputs}>
-        <ErrorText error={error} />
-        <Form
-          title={formProps.title}
-          fields={formProps.fields}
-          onSubmit={formProps.onSubmit}
-          loading={formProps.loading}
-        />
+    <View style={styles.backgroundContainer}>
+      <View style={AUTH_STYLES.container}>
+        <Text style={styles.titleText}>Odzyskiwanie hasła</Text>
+        <View style={styles.inputs}>
+          <Formik
+            initialValues={{
+              email: "",
+            }}
+            validationSchema={forgotPasswordSchema}
+            onSubmit={(values) => {
+              onSubmit(
+                (({ email }) => ({
+                  email,
+                }))(values)
+              );
+            }}
+          >
+            {({
+              handleChange,
+              values,
+              handleBlur,
+              touched,
+              errors,
+              handleSubmit,
+              isValid,
+              isSubmitting,
+            }) => (
+              <View>
+                <TextInput
+                  style={AUTH_STYLES.inputs}
+                  placeholder="Adres e-mail"
+                  onChangeText={handleChange("email")}
+                  value={values.title}
+                  onBlur={handleBlur("email")}
+                />
+                <Text> {touched.email && errors.email}</Text>
+                <Button
+                  style={styles.forgotPasswordButton}
+                  title="Wyślij"
+                  color={Colors.PURPLE}
+                  onPress={handleSubmit}
+                  disabled={!isValid || isSubmitting}
+                />
+                <ActivityIndicator animating={loading}/>
+              </View>
+            )}
+          </Formik>
+        </View>
       </View>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
+  backgroundContainer: {
     flex: 1,
-    paddingHorizontal: 16,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.PURPLE,
+    justifyContent: "center",
+  },
+  forgotPasswordButton: {
+    alignSelf: "center",
+    marginTop: 17,
+    marginRight: 17,
   },
   inputs: {
     flex: 1,
+    marginHorizontal: 50,
+  },
+  titleText: {
+    textAlign: "center",
+    color: Colors.PURPLE,
+    fontSize: Typography.FONT_SIZE_24,
+    fontFamily: Typography.FONT_FAMILY_BOLD,
   },
 });
 

@@ -5,6 +5,8 @@ import { Button } from "react-native";
 import PatientsListScreen from "../../views/PatientsListScreen";
 import PatientCardScreen from "../../views/PatientCardScreen";
 import AddPatientScreen from "../../views/AddPatientScreen";
+import BasicDataScreen from "../../views/BasicDataScreen";
+import PhysicalExaminationScreen from "../../views/PhysicalExaminationScreen";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../../components/common/FontForgeIcon";
 
@@ -103,6 +105,20 @@ const HomeScreen = () => {
         component={AddPatientScreen}
         options={{
           title: "Dane osobowe",
+        }}
+      />
+      <Stack.Screen
+        name="BasicData"
+        component={BasicDataScreen}
+        options={{
+          title: "Informacje podstawowe",
+        }}
+      />
+      <Stack.Screen
+        name="PhysicalExamination"
+        component={PhysicalExaminationScreen}
+        options={{
+          title: "Badanie fizykalne",
         }}
       />
     </Stack.Navigator>

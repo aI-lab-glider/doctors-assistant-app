@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Alert, View, Button, TextInput, Text, StyleSheet } from "react-native";
+import { Alert, View, Button, TextInput, Text, StyleSheet, ActivityIndicator } from "react-native";
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -14,7 +14,7 @@ export default function Register(props) {
 
   // 1 - DECLARE VARIABLES
   const [setError] = useState(null);
-  const [setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function onSubmit(state) {
     setLoading(true);
@@ -38,7 +38,10 @@ export default function Register(props) {
   const registerSchema = yup.object({
     firstName: yup.string().required("Imię jest wymagane"),
     lastName: yup.string().required("Nazwisko jest wymagane"),
-    email: yup.string().email().required("Email jest wymagany"),
+    email: yup
+      .string()
+      .email("Podaj poprawny email")
+      .required("Email jest wymagany"),
     password: yup
       .string()
       .required("Hasło jest wymagane, minimum 8 znaków")
@@ -143,9 +146,10 @@ export default function Register(props) {
                   onPress={handleSubmit}
                   disabled={!isValid || isSubmitting}
                 />
+                <ActivityIndicator animating={loading}/>
                 <CTA
                   title="Masz już konto ?"
-                  ctaText="Login"
+                  ctaText="Zaloguj"
                   onPress={() => navigation.replace("Login")}
                   style={AUTH_STYLES.login}
                 />

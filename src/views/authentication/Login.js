@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, View, Text } from "react-native";
+import { Alert, StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import PropTypes from "prop-types";
 
 import { Formik } from "formik";
@@ -109,20 +109,21 @@ export default function Login(props) {
                   ctaStyle={styles.cta}
                 />
                 <AppButton
-                  fontForgeIconStyle={styles.loginButton}
-                  size={50}
+                  buttonStyle={styles.loginButton}
+                  fontForgeIconStyle={styles.iconButton}
+                  size={150}
                   icon="log_in"
                   onPress={handleSubmit}
-                  disabled={!isValid || isSubmitting}
-                  loading={loading}
+                  disabled={!isValid || isSubmitting}                
                 />
+                <ActivityIndicator animating={loading}/>
               </View>
             )}
           </Formik>
 
           <CTA
-            title={"Don't have an account?"}
-            ctaText="Register"
+            title="Nie masz konta ?"
+            ctaText="Zarejestruj"
             onPress={() => navigation.replace("Register")}
             style={styles.register}
           />
@@ -160,10 +161,18 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 50,
   },
-  loginButton: {
+  loginButton:{
+    justifyContent: "center",
+    alignItems: "center",
+    width: "45%",
+    marginLeft: 85,
+  },
+  iconButton: {
     alignSelf: "center",
-    marginTop: 17,
-    marginRight: 17,
+    marginTop: 0,
+    marginRight: 0,
+    marginVertical: -100
+
   },
   backgroundContainer: {
     flex: 1,

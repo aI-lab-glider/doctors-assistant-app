@@ -15,8 +15,6 @@ const patientsData = [
     phone_authorized: "",
     guardianship: false,
     diagnosis: ["depresja", "nerwica", "nerwica", "nerwica", "nerwica"],
-    medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
   },
   {
@@ -35,8 +33,6 @@ const patientsData = [
     phone_authorized: "",
     guardianship: false,
     diagnosis: ["depresja", "nerwica"],
-    medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
   },
   {
@@ -50,8 +46,6 @@ const patientsData = [
     height: 183,
     bmi: 2,
     diagnosis: ["depresja", "nerwica"],
-    medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
     note: "",
     phone: "2342342342",
@@ -75,8 +69,6 @@ const patientsData = [
     phone_authorized: "",
     guardianship: false,
     diagnosis: ["depresja", "nerwica"],
-    medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
   },
   {
@@ -95,8 +87,6 @@ const patientsData = [
     phone_authorized: "",
     guardianship: false,
     diagnosis: ["depresja", "nerwica"],
-    medicines: ["witamina c", "ibuprom"],
-    hospitalization_times: 3,
     code: "A52.46",
   },
   {
@@ -110,7 +100,6 @@ const patientsData = [
     height: 182,
     bmi: 4,
     diagnosis: ["depresja", "nerwica"],
-    medicines: ["witamina c", "ibuprom"],
     code: "A52.46",
     note:
       "Pacjent zgłosił się na SOR. Został już przewieziony do szpitala uniwersyteckiego. Pacjent zgłosił się na SOR. Został już przewieziony do szpitala uniwersyteckiego. Pacjent zgłosił się na SOR. Został już przewieziony do szpitala uniwersyteckiego. ",
@@ -118,8 +107,6 @@ const patientsData = [
     person_authorized: "Jan Kłapouchy",
     phone_authorized: "999888777",
     guardianship: true,
-    first_hospitalization: "2018",
-    hospitalization_times: 3,
   },
 ];
 
