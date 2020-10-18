@@ -1,26 +1,26 @@
 import React, { useContext, useState } from "react";
 import {
-  StyleSheet,
-  View,
   KeyboardAvoidingView,
-  Text,
   ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
-import { Colors, Typography } from "../constants/styles";
-import FormField from "../components/forms/FormField";
-import AppButton from "../components/common/AppButton";
-import { BasicDataContext } from "../modules/context/BasicDataContext";
-import basicDataValidationSchema from "../constants/validationSchemas/basicDataValidationSchema";
-import SelectFormField from "../components/forms/SelectFormField";
-import PastPsychiatricTreatmentFormField from "../components/forms/PastPsychiatricTreatmentFormField";
-import MultiChoiceFormField from "../components/forms/MultiChoiceFormField";
-import FillFormField from "../components/forms/FillFormField";
-import RadioButton from "../components/forms/RadioButton";
-import Patient from "../constants/propTypes/patientPropTypes";
+import { Colors, Typography } from "../../constants/styles";
+import FormField from "../../components/forms/FormField";
+import AppButton from "../../components/common/AppButton";
+import { BasicDataContext } from "../../modules/context/BasicDataContext";
+import basicDataValidationSchema from "../../constants/validationSchemas/basicDataValidationSchema";
+import SelectFormField from "../../components/forms/SelectFormField";
+import PastPsychiatricTreatmentFormField from "../../components/forms/PastPsychiatricTreatmentFormField";
+import MultiChoiceFormField from "../../components/forms/MultiChoiceFormField";
+import FillFormField from "../../components/forms/FillFormField";
+import RadioButton from "../../components/forms/RadioButton";
+import Patient from "../../constants/propTypes/patientPropTypes";
 
-const BasicDataScreen = ({ route, navigation }) => {
+const BasicData = ({ route, navigation }) => {
   const { patient } = route.params;
   const { setBasicData } = useContext(BasicDataContext);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
@@ -647,7 +647,7 @@ const styles = StyleSheet.create({
   },
 });
 
-BasicDataScreen.propTypes = {
+BasicData.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -658,4 +658,4 @@ BasicDataScreen.propTypes = {
   }).isRequired,
 };
 
-export default BasicDataScreen;
+export default BasicData;
