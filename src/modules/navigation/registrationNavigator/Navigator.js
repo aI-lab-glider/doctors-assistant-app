@@ -1,4 +1,5 @@
 import * as React from "react";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AddPatient from "../../../views/registration/AddPatient";
 import BasicData from "../../../views/registration/BasicData";
@@ -36,8 +37,10 @@ export const Routes = [
 const initialRoute = Routes[0];
 
 export const getHeaderTitle = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+
   const routeObj = Routes.find(({ name }) => {
-    return route === name;
+    return routeName === name;
   });
   if (routeObj) {
     return routeObj.title;
