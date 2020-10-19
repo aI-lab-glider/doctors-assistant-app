@@ -25,3 +25,13 @@ export const calculateBmiValue = (height, weight) => {
   }
   return "0";
 };
+
+export const calculateAge = (dateOfBirth) => {
+  if (dateOfBirth) {
+    const from = dateOfBirth.split(/-| - /);
+    const birthdateTimeStamp = new Date(from[2], from[1] - 1, from[0]);
+    const ageDate = Date.now() - birthdateTimeStamp; // This is the difference in milliseconds
+    return Math.floor(ageDate / 31557600000); // Divide to get difference in years
+  }
+  return "";
+};

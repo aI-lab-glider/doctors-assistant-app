@@ -24,7 +24,7 @@ const BmiForm = ({ name, leftIcon, value }) => {
   };
 
   const getTextStyle = () => {
-    if (values.bmi === 0)
+    if (values.bmi === "0")
       return {
         color: placeholderTextColor,
       };
