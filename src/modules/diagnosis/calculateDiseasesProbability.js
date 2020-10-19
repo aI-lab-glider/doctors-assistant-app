@@ -74,7 +74,10 @@ function calculateSingleDiseaseSideProbability(
   let sideCondsNumbers = 0;
   let trueSideCondsNumbers = 0;
   Object.keys(diagnosisConditions).forEach((cond) => {
-    if (((cond.slice(0,4) === 'side' || cond.slice(0,6) === 'detail') && diagnosisConditions[cond] !== "null") {
+    if (
+      (cond.slice(0, 4) === "side" || cond.slice(0, 6) === "detail") &&
+      diagnosisConditions[cond] !== "null"
+    ) {
       sideCondsNumbers += 1;
       if (getCondValue(diagnosisConditions[cond], allAnswers)) {
         trueSideCondsNumbers += 1;
@@ -95,7 +98,7 @@ function getThisModuleData(thisModuleCode) {
 }
 
 function conditionsAccomplishment(allAnswers, diseaseConditions) {
-  var conditionsAcc = {};
+  const conditionsAcc = {};
 
   conditionsAcc.main = {};
   conditionsAcc.side = {};
@@ -108,9 +111,9 @@ function conditionsAccomplishment(allAnswers, diseaseConditions) {
   conditionsAcc.detail.validAnswers = 0;
   conditionsAcc.detail.allAnswers = 0;
 
-  Object.keys(diseaseConditions).forEach((cond, index) => {
+  Object.keys(diseaseConditions).forEach((cond) => {
     if (diseaseConditions[cond] !== "null") {
-      answer = getCondValue(diseaseConditions[cond], allAnswers);
+      const answer = getCondValue(diseaseConditions[cond], allAnswers);
       switch (cond.slice(0, 4)) {
         case "main":
           conditionsAcc.main.validAnswers += answer;
@@ -137,7 +140,10 @@ function calculateSingleDiseaseProbability(allAnswers, singleDiagnosisData) {
   newRecord.disease_icd10 = singleDiagnosisData.disease_icd10;
   newRecord.disease_name = singleDiagnosisData.disease_name;
   const { diagnosisConditions } = singleDiagnosisData.diagnosis_conditions;
-  newRecord.conditionsAcc = conditionsAccomplishment(allAnswers, singleDiagnosisData);
+  newRecord.conditionsAcc = conditionsAccomplishment(
+    allAnswers,
+    singleDiagnosisData
+  );
 
   if (goOnSideConds(allAnswers, diagnosisConditions)) {
     newRecord.probability = calculateSingleDiseaseSideProbability(
