@@ -2,8 +2,13 @@ import { Alert } from "react-native";
 
 export default ({ navigation }) => ({
   beforeRemove: (e) => {
+    const { action } = e.data;
     const navigationRouteName = "PatientsList";
-    if (e.data.action.payload.name !== navigationRouteName) {
+    if (
+      !action.payload ||
+      !action.payload.name ||
+      action.payload.name !== navigationRouteName
+    ) {
       e.preventDefault();
 
       Alert.alert(
