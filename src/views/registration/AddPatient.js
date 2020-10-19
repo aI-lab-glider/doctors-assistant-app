@@ -31,7 +31,7 @@ const AddPatient = ({ navigation }) => {
     patient.id = await setPatient(patient);
     if (patient.id) {
       navigation.navigate("BasicData", {
-        patient,
+        patientId: patient.id,
       });
     }
   };

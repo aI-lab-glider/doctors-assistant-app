@@ -66,7 +66,7 @@ PhysicalExamination.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      patientId: PropTypes.number,
+      patientId: PropTypes.number.isRequired,
     }),
   }).isRequired,
 };

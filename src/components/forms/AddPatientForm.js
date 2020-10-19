@@ -81,7 +81,11 @@ const AddPatientForm = ({ handleChange, handleBlur, values }) => {
         name="bmi"
         leftIcon="bmi"
         onChangeText={handleChange("bmi")}
-        value={calculateBmiValue(values.height, values.weight)}
+        value={
+          calculateBmiValue(values.height, values.weight) === "0"
+            ? "BMI"
+            : `${values.bmi}`
+        }
       />
       <Text style={styles.subtitleText}>Notatka</Text>
       <FormField
