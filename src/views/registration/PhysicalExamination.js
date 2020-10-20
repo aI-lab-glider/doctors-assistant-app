@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
@@ -6,7 +7,7 @@ import AppButton from "../../components/common/AppButton";
 import physicalExaminationValidationSchema from "../../constants/validationSchemas/physicalExaminationValidationSchema";
 import PhysicalExaminationForm from "../../components/forms/PhysicalExaminationForm";
 import { initialPhysicalExamination } from "../../constants/values/initalFormValues";
-import FormContainer from "./FormContainer";
+import FormContainer from "../../components/forms/FormContainer";
 
 const PhysicalExamination = ({ route, navigation }) => {
   const { patientId } = route.params;
@@ -29,7 +30,7 @@ const PhysicalExamination = ({ route, navigation }) => {
   };
 
   return (
-    <FormContainer>
+    <FormContainer style={styles.container}>
       <Formik
         initialValues={initialValues}
         enableReinitialize
@@ -59,6 +60,13 @@ const PhysicalExamination = ({ route, navigation }) => {
     </FormContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 15,
+    paddingBottom: 22,
+  },
+});
 
 PhysicalExamination.propTypes = {
   navigation: PropTypes.shape({

@@ -5,15 +5,16 @@ import {
   StyleSheet,
   Text,
   View,
+  ViewPropTypes,
 } from "react-native";
 import PropTypes from "prop-types";
 import { Colors, Typography } from "../../constants/styles";
 
-const FormContainer = ({ title, children }) => {
+const FormContainer = ({ title, children, style }) => {
   return (
     <KeyboardAvoidingView style={styles.backgroundContainer}>
       <ScrollView>
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
           {title && <Text style={styles.titleText}>{title}</Text>}
           {children}
         </View>
@@ -44,11 +45,13 @@ const styles = StyleSheet.create({
 
 FormContainer.defaultProps = {
   title: null,
+  style: {},
 };
 
 FormContainer.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
+  style: ViewPropTypes.style,
 };
 
 export default FormContainer;

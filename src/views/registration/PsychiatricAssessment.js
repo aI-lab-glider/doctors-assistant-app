@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
+import { StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
 import AppButton from "../../components/common/AppButton";
 import psychiatricAssessmentValidationSchema from "../../constants/validationSchemas/psychiatricAssessmentValidationSchema";
 import { initialPsychiatricAssessment } from "../../constants/values/initalFormValues";
-import FormContainer from "./FormContainer";
+import FormContainer from "../../components/forms/FormContainer";
 import PsychiatricAssessmentForm from "../../components/forms/PsychiatricAssessmentForm";
 
 const PsychiatricAssessment = ({ route, navigation }) => {
@@ -29,7 +30,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
     // TODO: Show alert with info what is wrong
   };
   return (
-    <FormContainer>
+    <FormContainer style={styles.container}>
       <Formik
         initialValues={initialState}
         enableReinitialize
@@ -60,6 +61,12 @@ const PsychiatricAssessment = ({ route, navigation }) => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 15,
+    paddingBottom: 22,
+  },
+});
 PsychiatricAssessment.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,

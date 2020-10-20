@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
+import { StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import AppButton from "../../components/common/AppButton";
 import { BasicDataContext } from "../../modules/context/BasicDataContext";
 import basicDataValidationSchema from "../../constants/validationSchemas/basicDataValidationSchema";
 import BasicDataForm from "../../components/forms/BasicDataForm";
-import FormContainer from "./FormContainer";
+import FormContainer from "../../components/forms/FormContainer";
 import { parseFormFieldValuesToObject } from "../../modules/utils/Parsers";
 import { initialBasicData } from "../../constants/values/initalFormValues";
 
@@ -38,7 +39,7 @@ const BasicData = ({ route, navigation }) => {
   };
 
   return (
-    <FormContainer title="Wywiad">
+    <FormContainer title="Wywiad" style={styles.container}>
       <Formik
         initialValues={initialState}
         enableReinitialize
@@ -70,6 +71,12 @@ const BasicData = ({ route, navigation }) => {
     </FormContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingBottom: 22,
+  },
+});
 
 BasicData.propTypes = {
   navigation: PropTypes.shape({

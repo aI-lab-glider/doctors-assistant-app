@@ -5,7 +5,7 @@ import personalDataValidationSchema from "../../constants/validationSchemas/pers
 import { PatientsContext } from "../../modules/context/PatientsContext";
 import AddPatientForm from "../../components/forms/AddPatientForm";
 import AppButton from "../../components/common/AppButton";
-import FormContainer from "./FormContainer";
+import FormContainer from "../../components/forms/FormContainer";
 import { parseFormFieldValuesToObject } from "../../modules/utils/Parsers";
 import { initialPatient } from "../../constants/values/initalFormValues";
 
