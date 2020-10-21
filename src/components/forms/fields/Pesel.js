@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import FormField from "./FormField";
 
-const PeselFormField = ({
+const Pesel = ({
   name,
   leftIcon,
   keyboardType,
@@ -29,12 +29,12 @@ const PeselFormField = ({
   );
 };
 
-PeselFormField.defaultProps = {
+Pesel.defaultProps = {
   leftIcon: null,
   calculateDependentValue: null,
 };
 
-PeselFormField.propTypes = {
+Pesel.propTypes = {
   name: PropTypes.string.isRequired,
   leftIcon: PropTypes.string,
   keyboardType: PropTypes.string.isRequired,
@@ -42,4 +42,4 @@ PeselFormField.propTypes = {
   calculateDependentValue: PropTypes.func,
 };
 
-export default PeselFormField;
+export default Pesel;

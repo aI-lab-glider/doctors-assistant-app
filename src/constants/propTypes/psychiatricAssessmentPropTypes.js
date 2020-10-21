@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 
 const PatientPsychiatricAssessment = PropTypes.shape({
-  id: PropTypes.number.isRequired,
   patient_id: PropTypes.number.isRequired,
   general_appearance: PropTypes.string,
   outfit_choice: PropTypes.string,
