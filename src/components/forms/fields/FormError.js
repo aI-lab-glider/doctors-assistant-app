@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
-import { Colors, Typography } from "../../constants/styles";
+import { Colors, Typography } from "../../../constants/styles";
 
 const FormError = ({ error, visible }) => {
   const isVisibleAndHasError = error && visible;

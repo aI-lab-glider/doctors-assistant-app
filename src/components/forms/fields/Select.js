@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormErrorMessage from "./FormErrorMessage";
-import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../common/FontForgeIcon";
+import FormError from "./FormError";
+import { Colors, Typography } from "../../../constants/styles";
+import FontForgeIcon from "../../common/FontForgeIcon";
 
-const SelectFormField = ({
+const Select = ({
   name,
   leftText,
   rightText,
@@ -52,7 +52,7 @@ const SelectFormField = ({
         </TouchableOpacity>
         <Text style={styles.text}>{rightText}</Text>
       </View>
-      <FormErrorMessage error={errors[name]} visible={touched[name]} />
+      <FormError error={errors[name]} visible={touched[name]} />
     </>
   );
 };
@@ -81,12 +81,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
-SelectFormField.defaultProps = {
+Select.defaultProps = {
   defaultOption: null,
   calculateDependentValueWhenFalse: null,
 };
 
-SelectFormField.propTypes = {
+Select.propTypes = {
   name: PropTypes.string.isRequired,
   leftText: PropTypes.string.isRequired,
   rightText: PropTypes.string.isRequired,
@@ -94,4 +94,4 @@ SelectFormField.propTypes = {
   calculateDependentValueWhenFalse: PropTypes.func,
 };
 
-export default SelectFormField;
+export default Select;

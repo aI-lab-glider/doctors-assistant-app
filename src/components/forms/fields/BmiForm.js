@@ -2,15 +2,15 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormErrorMessage from "./FormErrorMessage";
-import { Colors, Typography } from "../../constants/styles";
-import * as Constants from "../../constants/constants";
-import FontForgeIcon from "../common/FontForgeIcon";
+import FormError from "./FormError";
+import { Colors, Typography } from "../../../constants/styles";
+import * as Constants from "../../../constants/values/constants";
+import FontForgeIcon from "../../common/FontForgeIcon";
 
 const regularIconColor = Colors.PINK_MEDIUM;
 const placeholderTextColor = Colors.PURPLE_LIGHT;
 const regularTextColor = Colors.BLACK;
-const BmiFormField = ({ name, leftIcon, value }) => {
+const BmiForm = ({ name, leftIcon, value }) => {
   const { setFieldValue, errors, touched, values } = useFormikContext();
 
   const getIconColorStyle = () => {
@@ -24,7 +24,7 @@ const BmiFormField = ({ name, leftIcon, value }) => {
   };
 
   const getTextStyle = () => {
-    if (values.bmi === 0)
+    if (values.bmi === "0")
       return {
         color: placeholderTextColor,
       };
@@ -62,7 +62,7 @@ const BmiFormField = ({ name, leftIcon, value }) => {
           {value}
         </Text>
       </View>
-      <FormErrorMessage error={errors[name]} visible={touched[name]} />
+      <FormError error={errors[name]} visible={touched[name]} />
     </>
   );
 };
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
   },
 });
 
-BmiFormField.defaultProps = {
+BmiForm.defaultProps = {
   leftIcon: null,
 };
 
-BmiFormField.propTypes = {
+BmiForm.propTypes = {
   name: PropTypes.string.isRequired,
   leftIcon: PropTypes.string,
   value: PropTypes.string.isRequired,
 };
 
-export default BmiFormField;
+export default BmiForm;

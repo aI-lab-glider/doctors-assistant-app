@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { PATIENT_CODE_REGEX } from "../constants";
+import { PATIENT_CODE_REGEX } from "../values/constants";
 
 // eslint-disable-next-line no-unused-vars
 const CodeProp = (props, propName, componentName) => {
@@ -16,9 +16,9 @@ const CodeProp = (props, propName, componentName) => {
   }
   return null;
 };
-
+// TODO: Create service to add new diagnosis to database
+// TODO: Add guardianship to patient table
 const Patient = PropTypes.shape({
-  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   surname: PropTypes.string.isRequired,
   sex: PropTypes.string.isRequired,

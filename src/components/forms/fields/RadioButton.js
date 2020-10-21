@@ -1,34 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormErrorMessage from "./FormErrorMessage";
-import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../common/FontForgeIcon";
+import FormError from "./FormError";
+import { Colors, Typography } from "../../../constants/styles";
+import FontForgeIcon from "../../common/FontForgeIcon";
 
-const MultiChoiceFormField = ({ name, options }) => {
+const RadioButton = ({ name, options, defaultOptionIndex }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [optionsChecked, setOptionsChecked] = useState([]);
-  const fieldValue = optionsChecked.join(";");
-
-  useEffect(() => {
-    setFieldValue(name, fieldValue);
-  }, [fieldValue]);
-
+  const [optionChecked, setOptionChecked] = useState(defaultOptionIndex);
   return (
     <>
       <View style={styles.container}>
-        {options.map((option) => {
+        {options.map((option, key) => {
           return (
             <View key={option} style={styles.choice}>
-              {optionsChecked.includes(option) ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    setOptionsChecked(
-                      optionsChecked.filter((e) => e !== option)
-                    );
-                  }}
-                >
+              {optionChecked === key ? (
+                <TouchableOpacity>
                   <FontForgeIcon
                     name="checked"
                     size={38}
@@ -39,7 +27,8 @@ const MultiChoiceFormField = ({ name, options }) => {
               ) : (
                 <TouchableOpacity
                   onPress={() => {
-                    setOptionsChecked([...optionsChecked, option]);
+                    setOptionChecked(key);
+                    setFieldValue(name, option);
                   }}
                 >
                   <FontForgeIcon
@@ -55,7 +44,7 @@ const MultiChoiceFormField = ({ name, options }) => {
           );
         })}
       </View>
-      <FormErrorMessage error={errors[name]} visible={touched[name]} />
+      <FormError error={errors[name]} visible={touched[name]} />
     </>
   );
 };
@@ -86,12 +75,17 @@ const styles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     color: Colors.BLACK,
     alignSelf: "center",
+    marginRight: 30,
   },
 });
-
-MultiChoiceFormField.propTypes = {
-  name: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+RadioButton.defaultProps = {
+  defaultOptionIndex: null,
 };
 
-export default MultiChoiceFormField;
+RadioButton.propTypes = {
+  name: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  defaultOptionIndex: PropTypes.number,
+};
+
+export default RadioButton;

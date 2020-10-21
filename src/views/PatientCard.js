@@ -8,24 +8,17 @@ import SubtitleLabel from "../components/patientCard/SubtitleLabel";
 import BottomMenu from "../components/patientCard/bottomMenu";
 import Patient from "../constants/propTypes/patientPropTypes";
 import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
+import { calculateAge } from "../modules/utils/Calculators";
 
 const PatientCard = ({ route }) => {
   const { patient, patientBasicData } = route.params;
-  const calculateAge = (dateOfBirth) => {
-    if (dateOfBirth) {
-      const from = dateOfBirth.split(/-| - /);
-      const birthdateTimeStamp = new Date(from[2], from[1] - 1, from[0]);
-      const ageDate = Date.now() - birthdateTimeStamp; // This is the difference in milliseconds
-      return Math.floor(ageDate / 31557600000); // Divide to get difference in years
-    }
-    return "";
-  };
-  const onAdd = () => {};
   const patientNote = patient.note ? patient.note : "";
+
   const [textNote, setTextNote] = useState(
     patientNote > 50 ? `${patientNote.substring(0, 20)}...` : `${patientNote}`
   );
   const [lengthMore, setLengthMore] = useState(false);
+
   const noteTextSize = () => {
     return {
       flex: lengthMore ? patientNote.numberOfLines : 1,
@@ -38,6 +31,8 @@ const PatientCard = ({ route }) => {
       setLengthMore(!lengthMore);
     }
   };
+
+  const onAdd = () => {};
 
   return (
     <View style={{ flex: 1 }}>

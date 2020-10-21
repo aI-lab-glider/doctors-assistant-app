@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import FormField from "./FormField";
 
-const WeightFormField = ({
+const Weight = ({
   name,
   leftIcon,
   keyboardType,
@@ -32,12 +32,12 @@ const WeightFormField = ({
   );
 };
 
-WeightFormField.defaultProps = {
+Weight.defaultProps = {
   leftIcon: null,
   calculateDependentValue: null,
 };
 
-WeightFormField.propTypes = {
+Weight.propTypes = {
   name: PropTypes.string.isRequired,
   leftIcon: PropTypes.string,
   keyboardType: PropTypes.string.isRequired,
@@ -45,4 +45,4 @@ WeightFormField.propTypes = {
   calculateDependentValue: PropTypes.func,
 };
 
-export default WeightFormField;
+export default Weight;

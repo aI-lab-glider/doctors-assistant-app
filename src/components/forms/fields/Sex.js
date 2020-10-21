@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import { Colors } from "../../constants/styles";
-import FontForgeIcon from "../common/FontForgeIcon";
+import { Colors } from "../../../constants/styles";
+import FontForgeIcon from "../../common/FontForgeIcon";
 
-const SexFormField = ({ name }) => {
+const Sex = ({ name }) => {
   const { setFieldValue } = useFormikContext();
   const [isMenChosen, setMenChoice] = useState(true);
   const [isWomenChosen, setWomenChoice] = useState(false);
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
   },
 });
 
-SexFormField.propTypes = {
+Sex.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-export default SexFormField;
+export default Sex;
