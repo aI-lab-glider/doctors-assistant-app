@@ -1,5 +1,5 @@
-import { Text } from "react-native";
 import React from "react";
+import { Text } from "react-native";
 import PropTypes from "prop-types";
 import FormField from "./fields/FormField";
 import Select from "./fields/Select";

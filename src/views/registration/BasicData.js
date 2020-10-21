@@ -5,7 +5,7 @@ import AppButton from "../../components/common/AppButton";
 import { BasicDataContext } from "../../modules/context/BasicDataContext";
 import basicDataValidationSchema from "../../constants/validationSchemas/basicDataValidationSchema";
 import BasicDataForm from "../../components/forms/BasicDataForm";
-import FormContainer from "./FormContainer";
+import FormContainer from "../../components/forms/FormContainer";
 import { parseFormFieldValuesToObject } from "../../modules/utils/Parsers";
 import { initialBasicData } from "../../constants/values/initalFormValues";
 

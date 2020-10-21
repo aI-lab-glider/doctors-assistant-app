@@ -13,6 +13,7 @@ import {
   calculateDateOfBirthValue,
 } from "../../modules/utils/Calculators";
 import formStyles from "../../constants/styles/formStyles";
+import * as Typography from "../../constants/styles/typography";
 
 const AddPatientForm = ({ handleChange, handleBlur, values }) => {
   return (
@@ -128,7 +129,14 @@ const AddPatientForm = ({ handleChange, handleBlur, values }) => {
   );
 };
 
-const styles = formStyles;
+const styles = {
+  ...formStyles,
+  subtitleText: {
+    ...formStyles.subtitleText,
+    paddingTop: 10,
+    fontSize: Typography.FONT_SIZE_13,
+  },
+};
 
 AddPatientForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
