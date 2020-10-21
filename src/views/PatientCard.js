@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import PropTypes from "prop-types";
-import { NavigationContext } from "@react-navigation/native";
 import { Colors, Typography } from "../constants/styles";
 import FontForgeIcon from "../components/common/FontForgeIcon";
 import SubtitleLabelWithButton from "../components/patientCard/SubtitleLabelWithButton";
@@ -9,43 +8,36 @@ import SubtitleLabel from "../components/patientCard/SubtitleLabel";
 import BottomMenu from "../components/patientCard/bottomMenu";
 import Patient from "../constants/propTypes/patientPropTypes";
 import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
+import { calculateAge } from "../modules/utils/Calculators";
 
-const PatientCardScreen = ({ route }) => {
+const PatientCard = ({ navigation, route }) => {
   const { patient, patientBasicData } = route.params;
-  const navigation = useContext(NavigationContext);
+  const patientNote = patient.note ? patient.note : "";
 
-  const calculateAge = (dateOfBirth) => {
-    if (dateOfBirth) {
-      const from = dateOfBirth.split(/-| - /);
-      const birthdateTimeStamp = new Date(from[2], from[1] - 1, from[0]);
-      const ageDate = Date.now() - birthdateTimeStamp; // This is the difference in milliseconds
-      return Math.floor(ageDate / 31557600000); // Divide to get difference in years
-    }
-    return "";
+  const [textNote, setTextNote] = useState(
+    patientNote > 50 ? `${patientNote.substring(0, 20)}...` : `${patientNote}`
+  );
+  const [lengthMore, setLengthMore] = useState(false);
+
+  const noteTextSize = () => {
+    return {
+      flex: lengthMore ? patientNote.numberOfLines : 1,
+    };
   };
+
+  const expandNoteText = () => {
+    if (patientNote.length > 0) {
+      setTextNote(`${patientNote}`);
+      setLengthMore(!lengthMore);
+    }
+  };
+
   const onAdd = () => {};
   const onDiagnosisAdd = () => {
     // TODO: Change to navigation to diagnosis form
     navigation.navigate("Diagnosis");
   };
-  const [textNote, setTextNote] = useState(
-    patient.note.length > 50
-      ? `> ${patient.note.substring(0, 20)}...`
-      : `> ${patient.note}`
-  );
-  const [lengthMore, setLengthMore] = useState(false);
-  const noteTextSize = () => {
-    return {
-      flex: lengthMore ? patient.note.numberOfLines : 1,
-    };
-  };
 
-  const expandNoteText = () => {
-    if (patient.note.length > 0) {
-      setTextNote(`> ${patient.note}`);
-      setLengthMore(!lengthMore);
-    }
-  };
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 0.9 }}>
@@ -81,11 +73,16 @@ const PatientCardScreen = ({ route }) => {
               </Text>
               <Text style={styles.fieldText}>Hospitalizacja</Text>
               <Text style={styles.listItemFieldText}>
-                {">"} Pierwszy raz w {patientBasicData.first_hospitalization}
+                {">"} Pierwszy raz w{" "}
+                {patientBasicData.first_hospitalization
+                  ? patientBasicData.first_hospitalization
+                  : ""}
               </Text>
               <Text style={styles.listItemFieldText}>
                 {">"} Liczba hospitalizacji:{" "}
-                {patientBasicData.hospitalization_times}
+                {patientBasicData.hospitalization_times
+                  ? patientBasicData.hospitalization_times
+                  : "0"}
               </Text>
               <Text style={styles.fieldText}>
                 Inne:{" "}
@@ -98,31 +95,31 @@ const PatientCardScreen = ({ route }) => {
                 iconName="diagnosis"
                 onAdd={onDiagnosisAdd}
               />
-              <Text style={styles.fieldText}>14.08.2020</Text>
+              {/* TODO: Revert date in diagnosis after MVP */}
+              {/* <Text style={styles.fieldText}>14.08.2020</Text> */}
               <Text style={styles.listItemFieldText}>
-                {">"} {patient.code}
+                {patient.code ? ">" : ""} {patient.code}
               </Text>
               <SubtitleLabelWithButton
                 subtitle="Notatka"
                 iconName="pen"
                 onAdd={onAdd}
               />
-              <Text style={styles.fieldText}>14.08.2020</Text>
               <Text
                 style={[styles.noteListItemFieldText, noteTextSize()]}
-                numberOfLines={lengthMore ? patient.note.numberOfLines : 1}
+                numberOfLines={lengthMore ? patientNote.numberOfLines : 1}
                 scrollEnabled
                 multiLine
                 onPress={expandNoteText}
               >
-                {textNote}
+                {patientNote ? ">" : ""} {textNote}
               </Text>
               <SubtitleLabel subtitle="Dane kontaktowe" iconName="phone" />
               <Text style={styles.fieldText}>Tel: {patient.phone}</Text>
               <Text style={styles.fieldText}>Osoba upoważniona:</Text>
               <Text style={styles.listItemFieldText}>
-                {">"} {patient.person_authorized} tel.{" "}
-                {patient.phone_authorized}
+                {patient.person_guard ? `> ${patient.person_guard} ` : ""}
+                {patient.phone_guard ? `tel. ${patient.phone_guard}` : ""}
               </Text>
             </View>
           </View>
@@ -200,7 +197,7 @@ const styles = StyleSheet.create({
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     alignSelf: "flex-start",
-    marginLeft: 70,
+    marginLeft: 50,
     width: "75%",
   },
   bottomMenu: {
@@ -210,7 +207,7 @@ const styles = StyleSheet.create({
   },
 });
 
-PatientCardScreen.propTypes = {
+PatientCard.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -218,8 +215,8 @@ PatientCardScreen.propTypes = {
     params: PropTypes.shape({
       patient: Patient.isRequired,
       patientBasicData: PatientBasicData.isRequired,
-    }),
+    }).isRequired,
   }).isRequired,
 };
 
-export default PatientCardScreen;
+export default PatientCard;

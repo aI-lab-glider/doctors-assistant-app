@@ -1,16 +1,15 @@
 import PropTypes from "prop-types";
 
 const PatientBasicData = PropTypes.shape({
-  id: PropTypes.number.isRequired,
   patient_id: PropTypes.number.isRequired,
   reason_of_report: PropTypes.string,
   major_ailments: PropTypes.string,
-  suicidal_thoughts_choice: PropTypes.bool,
+  suicidal_thoughts_choice: PropTypes.number,
   suicidal_thoughts: PropTypes.string,
   other_ailments: PropTypes.string,
   past_diseases_choice: PropTypes.string,
   past_diseases: PropTypes.string,
-  past_psychiatric_treatment: PropTypes.bool,
+  past_psychiatric_treatment: PropTypes.number,
   first_hospitalization: PropTypes.string,
   hospitalization_times: PropTypes.number,
   pharmacotherapy: PropTypes.string,
@@ -23,7 +22,7 @@ const PatientBasicData = PropTypes.shape({
   education: PropTypes.string,
   professional_status: PropTypes.string,
   social_conditions: PropTypes.string,
-  social_assistance_choice: PropTypes.bool,
+  social_assistance_choice: PropTypes.number,
   social_assistance: PropTypes.string,
   social_level_changes: PropTypes.string,
   development_data: PropTypes.string,

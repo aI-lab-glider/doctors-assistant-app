@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ViewPropTypes,
+} from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormErrorMessage from "./FormErrorMessage";
-import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../common/FontForgeIcon";
+import FormError from "./FormError";
+import { Colors, Typography } from "../../../constants/styles";
+import FontForgeIcon from "../../common/FontForgeIcon";
 
-const CheckboxFormField = ({ name, text }) => {
+const CheckboxForm = ({ name, text, style }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
   const [isChecked, setChecked] = useState(false);
   const leftIcon = isChecked ? "checked" : "unchecked";
@@ -15,7 +21,7 @@ const CheckboxFormField = ({ name, text }) => {
     <>
       <View style={styles.container}>
         <TouchableOpacity
-          style={styles.choice}
+          style={style}
           onPress={() => {
             setFieldValue(name, !isChecked);
             setChecked(!isChecked);
@@ -30,7 +36,7 @@ const CheckboxFormField = ({ name, text }) => {
         </TouchableOpacity>
         <Text style={styles.text}>{text}</Text>
       </View>
-      <FormErrorMessage error={errors[name]} visible={touched[name]} />
+      <FormError error={errors[name]} visible={touched[name]} />
     </>
   );
 };
@@ -43,9 +49,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     right: 30,
     marginTop: 5,
-  },
-  choice: {
-    marginRight: 15,
   },
   icon: {
     alignSelf: "flex-start",
@@ -60,9 +63,14 @@ const styles = StyleSheet.create({
   },
 });
 
-CheckboxFormField.propTypes = {
-  name: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+CheckboxForm.defaultProps = {
+  style: { marginRight: 15 },
 };
 
-export default CheckboxFormField;
+CheckboxForm.propTypes = {
+  name: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  style: ViewPropTypes.style,
+};
+
+export default CheckboxForm;

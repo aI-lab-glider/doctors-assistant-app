@@ -2,24 +2,28 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import FormErrorMessage from "./FormErrorMessage";
-import { Colors, Typography } from "../../constants/styles";
-import FontForgeIcon from "../common/FontForgeIcon";
+import FormError from "./FormError";
+import { Colors, Typography } from "../../../constants/styles";
+import FontForgeIcon from "../../common/FontForgeIcon";
 
-const SelectFormField = ({ name, leftText, rightText }) => {
+const Select = ({
+  name,
+  leftText,
+  rightText,
+  defaultOption,
+  calculateDependentValueWhenFalse,
+}) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [isLeftChecked, setLeftChecked] = useState(false);
-  const [isRightChecked, setRightChecked] = useState(false);
-
+  const [isChecked, setChecked] = useState(defaultOption);
   const pressLeft = () => {
-    setLeftChecked(true);
-    setRightChecked(false);
+    setChecked(true);
     setFieldValue(name, true);
   };
   const pressRight = () => {
-    setLeftChecked(false);
-    setRightChecked(true);
+    setChecked(false);
     setFieldValue(name, false);
+    if (calculateDependentValueWhenFalse != null)
+      calculateDependentValueWhenFalse();
   };
 
   return (
@@ -27,7 +31,9 @@ const SelectFormField = ({ name, leftText, rightText }) => {
       <View style={styles.container}>
         <TouchableOpacity onPress={pressLeft}>
           <FontForgeIcon
-            name={isLeftChecked ? "checked" : "unchecked"}
+            name={
+              isChecked === false || isChecked == null ? "unchecked" : "checked"
+            }
             size={38}
             color={Colors.PINK_MEDIUM}
             style={styles.icon}
@@ -36,7 +42,9 @@ const SelectFormField = ({ name, leftText, rightText }) => {
         <Text style={styles.text}>{leftText}</Text>
         <TouchableOpacity onPress={pressRight}>
           <FontForgeIcon
-            name={isRightChecked ? "checked" : "unchecked"}
+            name={
+              isChecked === true || isChecked == null ? "unchecked" : "checked"
+            }
             size={38}
             color={Colors.PINK_MEDIUM}
             style={styles.icon}
@@ -44,7 +52,7 @@ const SelectFormField = ({ name, leftText, rightText }) => {
         </TouchableOpacity>
         <Text style={styles.text}>{rightText}</Text>
       </View>
-      <FormErrorMessage error={errors[name]} visible={touched[name]} />
+      <FormError error={errors[name]} visible={touched[name]} />
     </>
   );
 };
@@ -57,8 +65,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 10,
-    marginLeft: 80,
-    marginRight: 60,
+    marginLeft: 60,
+    marginRight: 30,
   },
   icon: {
     flex: 1,
@@ -73,11 +81,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
+Select.defaultProps = {
+  defaultOption: null,
+  calculateDependentValueWhenFalse: null,
+};
 
-SelectFormField.propTypes = {
+Select.propTypes = {
   name: PropTypes.string.isRequired,
   leftText: PropTypes.string.isRequired,
   rightText: PropTypes.string.isRequired,
+  defaultOption: PropTypes.bool,
+  calculateDependentValueWhenFalse: PropTypes.func,
 };
 
-export default SelectFormField;
+export default Select;

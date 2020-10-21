@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { PATIENT_CODE_REGEX } from "../constants";
+import { PATIENT_CODE_REGEX } from "../values/constants";
 
 export const CodeProp = (props, propName, componentName) => {
   if (
@@ -15,9 +15,9 @@ export const CodeProp = (props, propName, componentName) => {
   }
   return null;
 };
-
+// TODO: Create service to add new diagnosis to database
+// TODO: Add guardianship to patient table
 const Patient = PropTypes.shape({
-  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   surname: PropTypes.string.isRequired,
   sex: PropTypes.string.isRequired,
@@ -25,15 +25,11 @@ const Patient = PropTypes.shape({
   weight: PropTypes.number,
   height: PropTypes.number,
   bmi: PropTypes.number,
-  diagnosis: PropTypes.arrayOf(PropTypes.string),
-  medicines: PropTypes.arrayOf(PropTypes.string),
   pesel: PropTypes.string,
   date_of_birth: PropTypes.string.isRequired,
   note: PropTypes.string,
-  person_authorized: PropTypes.string,
-  phone_authorized: PropTypes.string,
-  guardianship: PropTypes.bool,
-  code: CodeProp,
+  person_guard: PropTypes.string,
+  phone_guard: PropTypes.string,
 });
 
 export default Patient;

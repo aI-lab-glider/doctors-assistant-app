@@ -4,7 +4,7 @@ import {
   PATIENT_CODE_REGEX,
   PESEL_REGEX,
   PHONE_REGEX,
-} from "../constants";
+} from "../values/constants";
 
 const personalDataValidationSchema = Yup.object().shape({
   name: Yup.string().required("Imię jest wymaganym polem").label("Imię"),
@@ -35,8 +35,8 @@ const personalDataValidationSchema = Yup.object().shape({
   phone: Yup.string()
     .matches(PHONE_REGEX, "Nieprawidłowy nr telefonu")
     .label("Telefon"),
-  person_authorized: Yup.string().label("Osoba upoważniona"),
-  phone_authorized: Yup.string()
+  person_guard: Yup.string().label("Osoba upoważniona"),
+  phone_guard: Yup.string()
     .matches(PHONE_REGEX, "Nieprawidłowy nr telefonu")
     .label("Telefon do osoby upoważnionej"),
   guardianship: Yup.boolean(),

@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
-import { Colors, Typography } from "../../constants/styles";
+import { Colors, Typography } from "../../../constants/styles";
 
-const FormErrorMessage = ({ error, visible }) => {
+const FormError = ({ error, visible }) => {
   const isVisibleAndHasError = error && visible;
 
   return isVisibleAndHasError ? (
@@ -21,14 +21,14 @@ const styles = StyleSheet.create({
   },
 });
 
-FormErrorMessage.defaultProps = {
+FormError.defaultProps = {
   error: "",
   visible: false,
 };
 
-FormErrorMessage.propTypes = {
+FormError.propTypes = {
   error: PropTypes.string,
   visible: PropTypes.bool,
 };
 
-export default FormErrorMessage;
+export default FormError;
