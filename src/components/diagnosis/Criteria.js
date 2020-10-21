@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
 });
 
 Criteria.propTypes = {
-  name: PropTypes.func.isRequired,
-  allAnswersNumber: PropTypes.string.isRequired,
-  validAnswersNumber: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  allAnswersNumber: PropTypes.number.isRequired,
+  validAnswersNumber: PropTypes.number.isRequired,
 };
 export default Criteria;

@@ -97,7 +97,7 @@ function getThisModuleData(thisModuleCode) {
   return thisModuleData;
 }
 
-function conditionsAccomplishment(allAnswers, diseaseConditions) {
+function conditionsAccomplishment(allAnswers, diagnosisConditions) {
   const conditionsAcc = {};
 
   conditionsAcc.main = {};
@@ -111,9 +111,9 @@ function conditionsAccomplishment(allAnswers, diseaseConditions) {
   conditionsAcc.detail.validAnswers = 0;
   conditionsAcc.detail.allAnswers = 0;
 
-  Object.keys(diseaseConditions).forEach((cond) => {
-    if (diseaseConditions[cond] !== "null") {
-      const answer = getCondValue(diseaseConditions[cond], allAnswers);
+  Object.keys(diagnosisConditions).forEach((cond) => {
+    if (diagnosisConditions[cond] !== "null") {
+      const answer = getCondValue(diagnosisConditions[cond], allAnswers);
       switch (cond.slice(0, 4)) {
         case "main":
           conditionsAcc.main.validAnswers += answer;
@@ -139,10 +139,10 @@ function calculateSingleDiseaseProbability(allAnswers, singleDiagnosisData) {
   const newRecord = {};
   newRecord.disease_icd10 = singleDiagnosisData.disease_icd10;
   newRecord.disease_name = singleDiagnosisData.disease_name;
-  const { diagnosisConditions } = singleDiagnosisData.diagnosis_conditions;
+  const diagnosisConditions = singleDiagnosisData.diagnosis_conditions;
   newRecord.conditionsAcc = conditionsAccomplishment(
     allAnswers,
-    singleDiagnosisData
+    diagnosisConditions
   );
 
   if (goOnSideConds(allAnswers, diagnosisConditions)) {
