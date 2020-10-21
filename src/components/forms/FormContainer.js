@@ -13,7 +13,7 @@ import { Colors, Typography } from "../../constants/styles";
 const FormContainer = ({ title, children, style }) => {
   return (
     <KeyboardAvoidingView style={styles.backgroundContainer}>
-      <ScrollView>
+      <ScrollView style={[styles.container, style]}>
         <View style={[styles.container, style]}>
           {title && <Text style={styles.titleText}>{title}</Text>}
           {children}
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GRAY_VERY_LIGHT,
     borderTopRightRadius: 50,
     paddingTop: 22,
+    paddingBottom: 22,
   },
   titleText: {
     marginLeft: 30,

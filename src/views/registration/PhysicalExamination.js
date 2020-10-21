@@ -64,7 +64,6 @@ const PhysicalExamination = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 15,
-    paddingBottom: 22,
   },
 });
 

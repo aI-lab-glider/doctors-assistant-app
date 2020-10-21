@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import AppButton from "../../components/common/AppButton";
@@ -39,7 +38,7 @@ const BasicData = ({ route, navigation }) => {
   };
 
   return (
-    <FormContainer title="Wywiad" style={styles.container}>
+    <FormContainer title="Wywiad">
       <Formik
         initialValues={initialState}
         enableReinitialize
@@ -71,12 +70,6 @@ const BasicData = ({ route, navigation }) => {
     </FormContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 22,
-  },
-});
 
 BasicData.propTypes = {
   navigation: PropTypes.shape({
