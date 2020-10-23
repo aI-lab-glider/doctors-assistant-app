@@ -5,6 +5,7 @@ import PatientsList from "../../views/PatientsList";
 import PatientCard from "../../views/PatientCard";
 import HeaderOptions from "./HeaderOptions";
 import Navigator, { getHeaderTitle } from "./registrationNavigator/Navigator";
+import DiagnosisScreen from "../../views/DiagnosisScreen";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,13 @@ const MainNavigator = () => {
           options={({ route }) => ({
             headerTitle: getHeaderTitle(route),
           })}
+        />
+        <Stack.Screen
+          name="Diagnosis"
+          component={DiagnosisScreen}
+          options={{
+            title: "Diagnoza",
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

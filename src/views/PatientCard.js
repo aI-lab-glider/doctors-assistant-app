@@ -10,7 +10,7 @@ import Patient from "../constants/propTypes/patientPropTypes";
 import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
 import { calculateAge } from "../modules/utils/Calculators";
 
-const PatientCard = ({ route }) => {
+const PatientCard = ({ navigation, route }) => {
   const { patient, patientBasicData } = route.params;
   const patientNote = patient.note ? patient.note : "";
 
@@ -33,6 +33,10 @@ const PatientCard = ({ route }) => {
   };
 
   const onAdd = () => {};
+  const onDiagnosisAdd = () => {
+    // TODO: Change to navigation to diagnosis form
+    navigation.navigate("Diagnosis");
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -89,7 +93,7 @@ const PatientCard = ({ route }) => {
               <SubtitleLabelWithButton
                 subtitle="Diagnoza"
                 iconName="diagnosis"
-                onAdd={onAdd}
+                onAdd={onDiagnosisAdd}
               />
               {/* TODO: Revert date in diagnosis after MVP */}
               {/* <Text style={styles.fieldText}>14.08.2020</Text> */}

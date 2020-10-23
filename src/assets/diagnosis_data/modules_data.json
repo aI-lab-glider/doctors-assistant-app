@@ -1,0 +1,77 @@
+[
+  {
+    "module_name": "Modu\u0142 Agorafobii",
+    "module_code": "agorafobia",
+    "min_major_true": 1.0
+  },
+  {
+    "module_name": "Modu\u0142 Anoreksji",
+    "module_code": "anoreksja",
+    "min_major_true": 2.0
+  },
+  {
+    "module_name": "Modu\u0142 Antyspo\u0142ecznych Zaburze\u0144 Osobowo\u015bci",
+    "module_code": "zaburzenia_osobowosci",
+    "min_major_true": 1.0
+  },
+  {
+    "module_name": "Modu\u0142 Bulimii",
+    "module_code": "bulimia",
+    "min_major_true": "null"
+  },
+  {
+    "module_name": "Modu\u0142 Du\u017cej Depresji",
+    "module_code": "duza_depresja",
+    "min_major_true": 1.0
+  },
+  {
+    "module_name": "Modu\u0142 L\u0119ku Uog\u00f3lnionego",
+    "module_code": "lek_uogolniony",
+    "min_major_true": 1.0
+  },
+  {
+    "module_name": "Modu\u0142 Manii",
+    "module_code": "mania",
+    "min_major_true": 2.0
+  },
+  {
+    "module_name": "Modu\u0142 Napadowych L\u0119k\u00f3w Panicznych",
+    "module_code": "napadowe_leki_paniczne",
+    "min_major_true": 1.0
+  },
+  {
+    "module_name": "Modu\u0142 Przyczyn Medycznych, Organicznych lub Zwi\u0105zanych z Za\u017cywaniem Lek\u00f3w lub Innych \u015arodk\u00f3w",
+    "module_code": "przyczyny_medyczne",
+    "min_major_true": 4.0
+  },
+  {
+    "module_name": "Modu\u0142 Stresu Pourazowego",
+    "module_code": "stres_pourazowy",
+    "min_major_true": 2.0
+  },
+  {
+    "module_name": "Modu\u0142 Substancji Psychoaktywnych",
+    "module_code": "substancje_psychoaktywne",
+    "min_major_true": 1.0
+  },
+  {
+    "module_name": "Modu\u0142 Uzale\u017cnie\u0144 Alkoholowych",
+    "module_code": "uzaleznienia_alkoholowe",
+    "min_major_true": 2.0
+  },
+  {
+    "module_name": "Modu\u0142 Zaburze\u0144 Obsesyjno-Kompulsyjnych",
+    "module_code": "zaburzenia_obsesyjno_kompulsyjne",
+    "min_major_true": 3.0
+  },
+  {
+    "module_name": "Modu\u0142 Zaburze\u0144 Psychotycznych",
+    "module_code": "zaburzenia_psychotyczne",
+    "min_major_true": 1.0
+  },
+  {
+    "module_name": "Modu\u0142 Zachowa\u0144 Samob\u00f3jczych",
+    "module_code": "zachowania_samobojcze",
+    "min_major_true": 1.0
+  }
+]
