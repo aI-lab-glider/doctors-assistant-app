@@ -16,12 +16,20 @@ const Result = ({ item, onPress }) => {
         <Checkbox onPress={onPress} />
       </View>
       <Text style={styles.name}>Kryteria</Text>
-      <Criteria name="ogólne" allAnswersNumber={2} validAnswersNumber={2} />
-      <Criteria name="dodatkowe" allAnswersNumber={2} validAnswersNumber={2} />
+      <Criteria
+        name="ogólne"
+        allAnswersNumber={item.conditionsAcc.main.allAnswers}
+        validAnswersNumber={item.conditionsAcc.main.validAnswers}
+      />
+      <Criteria
+        name="dodatkowe"
+        allAnswersNumber={item.conditionsAcc.side.allAnswers}
+        validAnswersNumber={item.conditionsAcc.side.validAnswers}
+      />
       <Criteria
         name="uszczegóławiające"
-        allAnswersNumber={2}
-        validAnswersNumber={1}
+        allAnswersNumber={item.conditionsAcc.detail.allAnswers}
+        validAnswersNumber={item.conditionsAcc.detail.validAnswers}
       />
     </View>
   );
@@ -45,6 +53,20 @@ Result.propTypes = {
     disease_icd10: CodeProp.isRequired,
     disease_name: PropTypes.string.isRequired,
     probability: PropTypes.number.isRequired,
+    conditionsAcc: PropTypes.shape({
+      main: PropTypes.shape({
+        allAnswers: PropTypes.number,
+        validAnswers: PropTypes.number,
+      }),
+      side: PropTypes.shape({
+        allAnswers: PropTypes.number,
+        validAnswers: PropTypes.number,
+      }),
+      detail: PropTypes.shape({
+        allAnswers: PropTypes.number,
+        validAnswers: PropTypes.number,
+      }),
+    }),
   }).isRequired,
   onPress: PropTypes.func.isRequired,
 };

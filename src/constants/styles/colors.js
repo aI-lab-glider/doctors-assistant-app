@@ -11,7 +11,7 @@ export const PURPLE = "#482358";
 export const PINK_MEDIUM = "#CE8CA1";
 export const PINK = "#CA7B95";
 export const GREEN = "#67a797";
-export const RED = "red";
+export const RED = "#cc4b37";
 
 // ACTIONS
 export const SUCCESS = "#3adb76";
