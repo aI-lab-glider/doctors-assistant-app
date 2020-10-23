@@ -1,14 +1,10 @@
 import pandas as pd
 import json
 
-path_to_csv = r"/Users/akrzemin/MyStuff/doctors-assistant-app/assets/scripts/data/diagnosis_data.csv"
+path_to_csv = r"../data/diagnosis_data.csv"
 df = pd.read_csv(path_to_csv)
 
 data = []
-# data_set = {
-# 'module_code':'duza_depresja',
-# 'data':[]
-# }
 modules_codes = df.module_code.unique()
 
 for column in df.columns:
