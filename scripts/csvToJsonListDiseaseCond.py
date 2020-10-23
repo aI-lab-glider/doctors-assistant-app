@@ -23,7 +23,7 @@ for module_code in modules_codes:
             'side_cond_4': row.side_cond_4,
             'side_cond_5': row.side_cond_5,
             'side_cond_6': row.side_cond_6,
-            'side_cond_7': row.side_cond_7
+            'detail_cond': row.detail_cond
         }
     }
         for (index, row) in df.iterrows()]
