@@ -37,7 +37,6 @@ export const Routes = [
 const initialRoute = Routes[0];
 
 export const getHeaderTitle = (route) => {
-  console.log(route);
   const routeName = getFocusedRouteNameFromRoute(route);
 
   const routeObj = Routes.find(({ name }) => {

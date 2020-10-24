@@ -3,10 +3,16 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HeaderOptions from "../HeaderOptions";
 import DiagnosisResults from "../../../views/diagnosis/DiagnosisResults";
+import ModulesList from "../../../views/diagnosis/ModulesList";
 
 const Stack = createStackNavigator();
 
 export const Routes = [
+  {
+    name: "ModulesList",
+    component: ModulesList,
+    title: "Lista modułów",
+  },
   {
     name: "Results",
     component: DiagnosisResults,
@@ -17,7 +23,6 @@ export const Routes = [
 const initialRoute = Routes[0];
 
 export const getDiagnosisHeaderTitle = (route) => {
-  console.log(route);
   const routeName = getFocusedRouteNameFromRoute(route);
 
   const routeObj = Routes.find(({ name }) => {
