@@ -21,24 +21,23 @@ export default function Register(props) {
   const { navigation } = props;
 
   // 1 - DECLARE VARIABLES
-  const [setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(state) {
     setLoading(true);
 
     try {
-      const response = await api.register(state);
+      await api.register(state);
       setLoading(false);
       Alert.alert(
-        "Registration Successful",
-        response.message,
+        "Sukces",
+        "Rejestracja przebiegła pomyślnie",
         [{ text: "OK", onPress: () => navigation.replace("Login") }],
         { cancelable: false }
       );
     } catch (err) {
-      Alert.alert("Registration Unsuccessful", err.message);
-      setError(err.message);
+      Alert.alert("Błąd", "Coś poszło nie tak :(");
+      console.warn(`Register errror + ${err.message}`);
       setLoading(false);
     }
   }
@@ -156,7 +155,7 @@ export default function Register(props) {
                 />
                 <ActivityIndicator animating={loading} />
                 <CTA
-                  title="Masz już konto ?"
+                  title="Masz już konto?"
                   ctaText="Zaloguj"
                   onPress={() => navigation.replace("Login")}
                   style={AUTH_STYLES.login}

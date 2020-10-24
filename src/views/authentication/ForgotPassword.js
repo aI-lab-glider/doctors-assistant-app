@@ -19,24 +19,29 @@ export default function ForgotPassword(props) {
   const { navigation } = props;
 
   // 1 - DECLARE VARIABLES
-  const [setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(state) {
     setLoading(true);
 
     try {
-      const response = await api.forgotPassword(state);
+      await api.forgotPassword(state);
       setLoading(false);
 
       Alert.alert(
-        "Recover Password",
-        response.message,
+        "Sukces",
+        "Hasło zostało zresetowane",
         [{ text: "OK", onPress: () => navigation.goBack() }],
         { cancelable: false }
       );
     } catch (err) {
-      setError(err.message);
+      Alert.alert(
+        "Błąd",
+        "Wystąpił błąd w trakcie przywracania hasła"[
+          { text: "OK", onPress: () => navigation.goBack() }
+        ],
+        { cancelable: false }
+      );
       setLoading(false);
     }
   }

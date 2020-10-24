@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, View, Text, ActivityIndicator } from "react-native";
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { Formik } from "formik";
 import * as yup from "yup";
-// import Form from "react-native-basic-form";
 import { TextInput } from "react-native-gesture-handler";
 import * as api from "../../api/Auth";
 import { useAuth } from "../../modules/context/Auth";
 
 import CTA from "../../components/authentication/CTA";
-import { ErrorText } from "../../components/authentication/Shared";
 import { Colors, Typography } from "../../constants/styles";
 import { AUTH_STYLES } from "../../constants/styles/auth";
 import AppButton from "../../components/common/AppButton";
@@ -19,7 +17,6 @@ export default function Login(props) {
   const { navigation } = props;
 
   // 1 - DECLARE VARIABLES
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { handleLogin } = useAuth();
 
@@ -32,13 +29,10 @@ export default function Login(props) {
 
       setLoading(false);
 
-      // check if username is null
-      const username = response.user.username !== null;
-      if (username);
-      else navigation.replace("Username");
+      navigation.replace("Home");
     } catch (err) {
-      Alert.alert("Login Unsuccessful", err.message);
-      setError(err.message);
+      Alert.alert("Błąd", "Nie udało się zalgować", err.message);
+      console.warn(err.message);
       setLoading(false);
     }
   }
@@ -57,7 +51,6 @@ export default function Login(props) {
       <View style={styles.container}>
         <Text style={styles.titleText}>Logowanie</Text>
         <View style={styles.inputs}>
-          <ErrorText error={error} />
           <Formik
             initialValues={{
               email: "",
@@ -160,6 +153,9 @@ const styles = StyleSheet.create({
   inputs: {
     flex: 1,
     marginHorizontal: 50,
+  },
+  alertFields: {
+    color: "red",
   },
   loginButton: {
     justifyContent: "center",
