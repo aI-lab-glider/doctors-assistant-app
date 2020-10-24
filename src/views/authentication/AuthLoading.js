@@ -1,4 +1,3 @@
-import { StackActions } from "@react-navigation/native";
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
@@ -14,12 +13,7 @@ export default function AuthLoading({ navigation }) {
       const { user } = await getAuthState();
 
       if (user) {
-        // check if username exist
-        const username = !!user.username;
-
-        if (username) navigate("Home");
-        else
-          navigate("Auth", {}, StackActions.replace({ routeName: "Username" }));
+        navigate("Home");
       } else navigate("Auth");
     } catch (e) {
       navigate("Auth");
