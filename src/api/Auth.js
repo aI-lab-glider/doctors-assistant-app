@@ -7,6 +7,7 @@ export function handler(err) {
 
   if (
     err.response &&
+    err.response.data &&
     Object.prototype.hasOwnProperty.call(err.response.data, "message")
   )
     error = err.response.data;
