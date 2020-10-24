@@ -42,8 +42,9 @@ CTA.propTypes = {
   onPress: PropTypes.func,
   style: ViewPropTypes.style,
   titleStyle: ViewPropTypes.style,
-  ctaStyle: ViewPropTypes.style.Text,
+  ctaStyle: Text.propTypes.style,
 };
+
 CTA.defaultProps = {
   title: null,
   ctaText: null,
