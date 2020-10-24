@@ -26,6 +26,4 @@ export const GRAY_MEDIUM = "#cacaca";
 export const GRAY_DARK = "#8a8a8a";
 
 // AUTH
-export const AUTH_VIOLET = "#733AC2";
 export const AUTH_GRAY = "#636466";
-export const AUTH_VIOLET_DARK = "362068";
