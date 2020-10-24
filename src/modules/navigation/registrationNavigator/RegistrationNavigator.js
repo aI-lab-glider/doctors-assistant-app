@@ -37,6 +37,7 @@ export const Routes = [
 const initialRoute = Routes[0];
 
 export const getHeaderTitle = (route) => {
+  console.log(route);
   const routeName = getFocusedRouteNameFromRoute(route);
 
   const routeObj = Routes.find(({ name }) => {
@@ -48,7 +49,7 @@ export const getHeaderTitle = (route) => {
   return initialRoute.title;
 };
 
-const Navigator = () => {
+const RegistrationNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={initialRoute.name}
@@ -69,4 +70,4 @@ const Navigator = () => {
   );
 };
 
-export default Navigator;
+export default RegistrationNavigator;
