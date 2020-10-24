@@ -13,12 +13,12 @@ const AppButton = ({
   buttonStyle,
 }) => {
   return (
-    <TouchableOpacity style={buttonStyle || styles.button} onPress={onPress}>
+    <TouchableOpacity style={[buttonStyle, styles.button]} onPress={onPress}>
       <FontForgeIcon
         name={icon}
-        size={size || 80}
+        size={size}
         color={Colors.PURPLE}
-        style={fontForgeIconStyle || styles.icon}
+        style={[fontForgeIconStyle, styles.icon]}
       />
     </TouchableOpacity>
   );
@@ -46,8 +46,8 @@ AppButton.propTypes = {
 };
 
 AppButton.defaultProps = {
-  fontForgeIconStyle: null,
-  buttonStyle: null,
-  size: null,
+  fontForgeIconStyle: {},
+  buttonStyle: {},
+  size: 80,
 };
 export default AppButton;
