@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, View } from "react-native";
-import { Colors } from "../../constants/styles";
 import DiagnosisForm from "../../components/diagnosisForm/DiagnosisForm";
 import calculateDiseasesProbability from "../../modules/diagnosis/calculateDiseasesProbability";
+import DiagnosisContainer from "./DiagnosisContainer";
+import { modulePropTypes } from "../../constants/propTypes/diagnosis";
 
 const MinorQuestionsForm = ({ navigation, route }) => {
-  const { moduleCode, majorAnswers } = route.params;
-
+  const { module, majorAnswers } = route.params;
+  const { code: moduleCode } = module;
   // TODO: Fetch questions from database
   const questions = [
     {
@@ -25,7 +25,7 @@ const MinorQuestionsForm = ({ navigation, route }) => {
   let minorAnswers = Array(questions.length).fill(undefined);
 
   const onSubmit = () => {
-    // TODO: Remove displaying right questions
+    // TODO: Remove after displaying right questions
     minorAnswers = [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0];
 
     const diseasesProbability = calculateDiseasesProbability(
@@ -33,40 +33,19 @@ const MinorQuestionsForm = ({ navigation, route }) => {
       minorAnswers,
       moduleCode
     );
-    console.log(diseasesProbability);
-    navigation.navigate("Results", { diseasesProbability });
+    navigation.navigate("Results", { diseasesProbability, module });
   };
 
-  // TODO: ADD form validation - Maybe formik would be better here
   return (
-    <View style={styles.backgroundContainer}>
-      <View style={styles.container}>
-        <DiagnosisForm
-          onSubmit={onSubmit}
-          answers={majorAnswers}
-          questions={questions}
-        />
-      </View>
-    </View>
+    <DiagnosisContainer module={module}>
+      <DiagnosisForm
+        onSubmit={onSubmit}
+        answers={majorAnswers}
+        questions={questions}
+      />
+    </DiagnosisContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  backgroundContainer: {
-    flex: 1,
-    backgroundColor: Colors.PURPLE,
-    justifyContent: "center",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: Colors.GRAY_VERY_LIGHT,
-    borderTopRightRadius: 50,
-    paddingTop: 16,
-    justifyContent: "center",
-    padding: 20,
-  },
-  questionText: { marginTop: 20 },
-});
 
 MinorQuestionsForm.propTypes = {
   navigation: PropTypes.shape({
@@ -75,7 +54,7 @@ MinorQuestionsForm.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      moduleCode: PropTypes.string.isRequired,
+      module: modulePropTypes.isRequired,
       majorAnswers: PropTypes.arrayOf(PropTypes.bool).isRequired,
     }).isRequired,
   }).isRequired,

@@ -4,6 +4,7 @@ import { FlatList } from "react-native";
 import DiagnosisQuestionItem from "./QuestionItem";
 import TextButton from "../common/TextButton";
 
+// TODO: ADD form validation - Maybe formik would be better here
 const DiagnosisForm = ({ questions, answers, onSubmit }) => {
   return (
     <FlatList
@@ -13,6 +14,7 @@ const DiagnosisForm = ({ questions, answers, onSubmit }) => {
         <DiagnosisQuestionItem
           question={item}
           setAnswer={(answer) => {
+            // TODO: Repair this
             // eslint-disable-next-line no-param-reassign
             answers[index] = answer;
           }}

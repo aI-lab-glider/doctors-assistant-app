@@ -7,10 +7,11 @@ import ModuleItem from "./Item";
 import TextButton from "../common/TextButton";
 
 const ModulesList = ({ navigation }) => {
+  // TODO: ADD this to database after experts provide data
   const modulesData = [
     {
       name: "Najwieksza depresja na swiecied",
-      module_code: "duza_depresja",
+      code: "duza_depresja",
     },
     {
       name: "Mała depresja",
@@ -22,8 +23,8 @@ const ModulesList = ({ navigation }) => {
     },
   ];
 
-  const onItemPress = (moduleCode) => {
-    navigation.navigate("Major", { moduleCode });
+  const onItemPress = (module) => {
+    navigation.navigate("Major", { module });
   };
 
   return (
@@ -31,10 +32,7 @@ const ModulesList = ({ navigation }) => {
       data={modulesData}
       keyExtractor={(module) => module.name}
       renderItem={({ item }) => (
-        <ModuleItem
-          module={item}
-          onPress={() => onItemPress(item.module_code)}
-        />
+        <ModuleItem module={item} onPress={() => onItemPress(item)} />
       )}
       ItemSeparatorComponent={({ highlighted }) => (
         <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
