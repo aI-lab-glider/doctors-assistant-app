@@ -1,24 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, TouchableOpacity, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import FontForgeIcon from "./FontForgeIcon";
 
 import { Colors } from "../../constants/styles";
 
-const Checkbox = ({ onPress, style, disabled }) => {
-  const [isChecked, setChecked] = useState(false);
-  const leftIcon = isChecked ? "checked" : "unchecked";
+const Checkbox = ({ isChecked, onPress, style, disabled }) => {
+  const icon = isChecked ? "checked" : "unchecked";
 
   return (
     <TouchableOpacity
       style={[styles.choice, style]}
+      disabled={disabled}
       onPress={() => {
         onPress(!isChecked);
-        setChecked(!isChecked);
       }}
-      disabled={disabled}
     >
-      <FontForgeIcon name={leftIcon} size={38} color={Colors.PINK_MEDIUM} />
+      <FontForgeIcon name={icon} size={38} color={Colors.PINK_MEDIUM} />
     </TouchableOpacity>
   );
 };
@@ -32,10 +30,13 @@ const styles = StyleSheet.create({
 Checkbox.defaultProps = {
   style: {},
   disabled: false,
+  isChecked: false,
+  onPress: () => {},
 };
 
 Checkbox.propTypes = {
-  onPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func,
+  isChecked: PropTypes.bool,
   style: ViewPropTypes.style,
   disabled: PropTypes.bool,
 };

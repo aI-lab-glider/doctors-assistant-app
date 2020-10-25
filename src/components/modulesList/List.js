@@ -4,23 +4,26 @@ import { FlatList, StyleSheet, View } from "react-native";
 import { Colors } from "../../constants/styles";
 
 import ModuleItem from "./Item";
-import FinishButton from "./FinishButton";
+import TextButton from "./TextButton";
 
 const ModulesList = ({ navigation }) => {
   const modulesData = [
     {
       name: "Najwieksza depresja na swiecied",
+      module_code: "duza_depresja",
     },
     {
       name: "Mała depresja",
+      module_code: "duza_depresja",
     },
     {
       name: "Średnia depresja",
+      module_code: "duza_depresja",
     },
   ];
 
-  const onItemPress = () => {
-    navigation.navigate("Results");
+  const onItemPress = (moduleCode) => {
+    navigation.navigate("Minor", { moduleCode });
   };
 
   return (
@@ -28,18 +31,22 @@ const ModulesList = ({ navigation }) => {
       data={modulesData}
       keyExtractor={(module) => module.name}
       renderItem={({ item }) => (
-        <ModuleItem module={item} onPress={onItemPress} />
+        <ModuleItem
+          module={item}
+          onPress={() => onItemPress(item.module_code)}
+        />
       )}
       ItemSeparatorComponent={({ highlighted }) => (
         <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
       )}
       ListFooterComponentStyle={styles.listFooterComponentStyle}
       ListFooterComponent={
-        <FinishButton
+        <TextButton
           onPress={() => {
             // TODO Refactor to navigation to Patient Card
             navigation.goBack();
           }}
+          text="Zakończ diagnozę"
         />
       }
     />

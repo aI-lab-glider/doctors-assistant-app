@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HeaderOptions from "../HeaderOptions";
 import DiagnosisResults from "../../../views/diagnosis/DiagnosisResults";
 import ModulesListScreen from "../../../views/diagnosis/ModulesListScreen";
+import MinorQuestionsForm from "../../../views/diagnosis/MinorQuestionsForm";
 
 const Stack = createStackNavigator();
 
@@ -18,10 +19,16 @@ export const Routes = [
     component: DiagnosisResults,
     title: "Wyniki diagnozy",
   },
+  {
+    name: "Minor",
+    component: MinorQuestionsForm,
+    title: "Pytania bazowe",
+  },
 ];
 
 const initialRoute = Routes[0];
 
+// TODO: Refactor repeatings
 export const getDiagnosisHeaderTitle = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
