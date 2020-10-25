@@ -3,14 +3,14 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HeaderOptions from "../HeaderOptions";
 import DiagnosisResults from "../../../views/diagnosis/DiagnosisResults";
-import ModulesList from "../../../views/diagnosis/ModulesList";
+import ModulesListScreen from "../../../views/diagnosis/ModulesListScreen";
 
 const Stack = createStackNavigator();
 
 export const Routes = [
   {
     name: "ModulesList",
-    component: ModulesList,
+    component: ModulesListScreen,
     title: "Lista modułów",
   },
   {
