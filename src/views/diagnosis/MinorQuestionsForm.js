@@ -1,5 +1,4 @@
 import React from "react";
-import { Alert } from "react-native";
 import PropTypes from "prop-types";
 import DiagnosisForm from "../../components/diagnosisForm/DiagnosisForm";
 import calculateDiseasesProbability from "../../modules/diagnosis/calculateDiseasesProbability";
@@ -13,26 +12,12 @@ const MinorQuestionsForm = ({ navigation, route }) => {
   const [questions, answers, setAnswerByIndex] = useDiagnosisForm(module, 1);
 
   const onSubmit = () => {
-    const checkedAnswers = answers.filter((answer) => answer !== undefined);
-
-    const allCheckboxChecked = checkedAnswers.length === answers.length;
-    if (allCheckboxChecked === true) {
-      const diseasesProbability = calculateDiseasesProbability(
-        majorAnswers,
-        answers,
-        moduleCode
-      );
-      navigation.navigate("Results", { diseasesProbability, module });
-    } else {
-      // TODO: Set all empty questions labels to red and add some error message near them
-      Alert.alert("Błąd", "Wykryto brakujące odpowiedzi", [
-        {
-          text: "Popraw",
-          style: "cancel",
-          onPress: () => {},
-        },
-      ]);
-    }
+    const diseasesProbability = calculateDiseasesProbability(
+      majorAnswers,
+      answers,
+      moduleCode
+    );
+    navigation.navigate("Results", { diseasesProbability, module });
   };
 
   return (
@@ -41,6 +26,7 @@ const MinorQuestionsForm = ({ navigation, route }) => {
         onSubmit={onSubmit}
         setAnswerByIndex={setAnswerByIndex}
         questions={questions}
+        answers={answers}
       />
     </DiagnosisContainer>
   );

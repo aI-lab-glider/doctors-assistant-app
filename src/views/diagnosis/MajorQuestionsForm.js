@@ -14,35 +14,22 @@ const MajorQuestionsForm = ({ navigation, route }) => {
   const [questions, answers, setAnswerByIndex] = useDiagnosisForm(module, 0);
 
   const onSubmit = () => {
-    const checkedAnswers = answers.filter((answer) => answer !== undefined);
-
-    const allCheckboxChecked = checkedAnswers.length === answers.length;
-    if (allCheckboxChecked === true) {
-      if (goOnDetailsQuestions(moduleCode, answers)) {
-        navigation.navigate("Minor", { module, majorAnswers: answers });
-      } else {
-        Alert.alert(
-          "Informacja",
-          "Pacjent nie spełnia warunków podstawowych modułu",
-          [
-            {
-              text: "Ok",
-              style: "cancel",
-              onPress: () => {
-                navigation.goBack();
-              },
-            },
-          ]
-        );
-      }
+    if (goOnDetailsQuestions(moduleCode, answers)) {
+      navigation.navigate("Minor", { module, majorAnswers: answers });
     } else {
-      Alert.alert("Błąd", "Wykryto brakujące odpowiedzi", [
-        {
-          text: "Popraw",
-          style: "cancel",
-          onPress: () => {},
-        },
-      ]);
+      Alert.alert(
+        "Informacja",
+        "Pacjent nie spełnia warunków podstawowych modułu",
+        [
+          {
+            text: "Ok",
+            style: "cancel",
+            onPress: () => {
+              navigation.goBack();
+            },
+          },
+        ]
+      );
     }
   };
 
@@ -52,6 +39,7 @@ const MajorQuestionsForm = ({ navigation, route }) => {
         onSubmit={onSubmit}
         setAnswerByIndex={setAnswerByIndex}
         questions={questions}
+        answers={answers}
       />
     </DiagnosisContainer>
   );
