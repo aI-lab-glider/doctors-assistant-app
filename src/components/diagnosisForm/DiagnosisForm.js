@@ -5,7 +5,7 @@ import DiagnosisQuestionItem from "./QuestionItem";
 import TextButton from "../common/TextButton";
 
 // TODO: ADD form validation - Maybe formik would be better here
-const DiagnosisForm = ({ questions, answers, onSubmit }) => {
+const DiagnosisForm = ({ questions, setAnswerByIndex, onSubmit }) => {
   return (
     <FlatList
       data={questions}
@@ -14,9 +14,7 @@ const DiagnosisForm = ({ questions, answers, onSubmit }) => {
         <DiagnosisQuestionItem
           question={item}
           setAnswer={(answer) => {
-            // TODO: Repair this
-            // eslint-disable-next-line no-param-reassign
-            answers[index] = answer;
+            setAnswerByIndex(index, answer);
           }}
         />
       )}
@@ -34,7 +32,7 @@ DiagnosisForm.propTypes = {
       content: PropTypes.string.isRequired,
     })
   ).isRequired,
-  answers: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  setAnswerByIndex: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

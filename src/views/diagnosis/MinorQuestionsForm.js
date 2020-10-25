@@ -12,6 +12,21 @@ const MinorQuestionsForm = ({ navigation, route }) => {
   const { module, majorAnswers } = route.params;
   const { code: moduleCode } = module;
   const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
+
+  const setDefaultAnswers = () => {
+    setAnswers(Array(questions.length).fill(undefined));
+  };
+
+  const setAnswerByIndex = (index, answer) => {
+    if (index > answer.length) {
+      console.warn("Anwer array out of bounds");
+    } else {
+      const newAnswers = answers;
+      newAnswers[index] = answer;
+      setAnswers(newAnswers);
+    }
+  };
 
   useEffect(() => {
     const fetchQuestionFromDb = async () => {
@@ -21,22 +36,19 @@ const MinorQuestionsForm = ({ navigation, route }) => {
         .where("minor", 1)
         .get();
       setQuestions(moduleMinorQuestions);
+      setDefaultAnswers();
     };
     fetchQuestionFromDb();
   }, [module]);
 
-  const minorAnswers = Array(questions.length).fill(undefined);
-
   const onSubmit = () => {
-    const checkedAnswers = minorAnswers.filter(
-      (answer) => answer !== undefined
-    );
+    const checkedAnswers = answers.filter((answer) => answer !== undefined);
 
-    const allCheckboxChecked = checkedAnswers.length === minorAnswers.length;
+    const allCheckboxChecked = checkedAnswers.length === answers.length;
     if (allCheckboxChecked === true) {
       const diseasesProbability = calculateDiseasesProbability(
         majorAnswers,
-        minorAnswers,
+        answers,
         moduleCode
       );
       navigation.navigate("Results", { diseasesProbability, module });
@@ -56,7 +68,7 @@ const MinorQuestionsForm = ({ navigation, route }) => {
     <DiagnosisContainer module={module}>
       <DiagnosisForm
         onSubmit={onSubmit}
-        answers={majorAnswers}
+        setAnswerByIndex={setAnswerByIndex}
         questions={questions}
       />
     </DiagnosisContainer>

@@ -13,6 +13,21 @@ const MajorQuestionsForm = ({ navigation, route }) => {
   const { code: moduleCode } = module;
 
   const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
+
+  const setDefaultAnswers = () => {
+    setAnswers(Array(questions.length).fill(undefined));
+  };
+
+  const setAnswerByIndex = (index, answer) => {
+    if (index > answer.length) {
+      console.warn("Anwer array out of bounds");
+    } else {
+      const newAnswers = answers;
+      newAnswers[index] = answer;
+      setAnswers(newAnswers);
+    }
+  };
 
   useEffect(() => {
     const fetchQuestionFromDb = async () => {
@@ -22,21 +37,18 @@ const MajorQuestionsForm = ({ navigation, route }) => {
         .where("minor", 0)
         .get();
       setQuestions(moduleMinorQuestions);
+      setDefaultAnswers();
     };
     fetchQuestionFromDb();
   }, [module]);
 
-  const majorAnswers = Array(questions.length).fill(undefined);
-
   const onSubmit = () => {
-    const checkedAnswers = majorAnswers.filter(
-      (answer) => answer !== undefined
-    );
+    const checkedAnswers = answers.filter((answer) => answer !== undefined);
 
-    const allCheckboxChecked = checkedAnswers.length === majorAnswers.length;
+    const allCheckboxChecked = checkedAnswers.length === answers.length;
     if (allCheckboxChecked === true) {
-      if (goOnDetailsQuestions(moduleCode, majorAnswers)) {
-        navigation.navigate("Minor", { module, majorAnswers });
+      if (goOnDetailsQuestions(moduleCode, answers)) {
+        navigation.navigate("Minor", { module, majorAnswers: answers });
       } else {
         Alert.alert(
           "Informacja",
@@ -67,7 +79,7 @@ const MajorQuestionsForm = ({ navigation, route }) => {
     <DiagnosisContainer module={module}>
       <DiagnosisForm
         onSubmit={onSubmit}
-        answers={majorAnswers}
+        setAnswerByIndex={setAnswerByIndex}
         questions={questions}
       />
     </DiagnosisContainer>
