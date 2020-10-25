@@ -13,7 +13,7 @@ const DiagnosisQuestionItem = ({ question, setAnswer }) => {
 
   return (
     <View>
-      <Text style={styles.questionText}>{question.description}</Text>
+      <Text style={styles.questionText}>{question.content}</Text>
       <View style={styles.answersContainer}>
         <View style={styles.singleAnswerContainer}>
           <Checkbox
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
 DiagnosisQuestionItem.propTypes = {
   question: PropTypes.shape({
-    description: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
   }).isRequired,
   setAnswer: PropTypes.func.isRequired,
 };

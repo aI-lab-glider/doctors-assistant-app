@@ -1,39 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Alert } from "react-native";
+import Builder from "crane-query-builder";
 import PropTypes from "prop-types";
 import DiagnosisForm from "../../components/diagnosisForm/DiagnosisForm";
 import calculateDiseasesProbability from "../../modules/diagnosis/calculateDiseasesProbability";
 import DiagnosisContainer from "./DiagnosisContainer";
 import { modulePropTypes } from "../../constants/propTypes/diagnosis";
+import { TABLES } from "../../modules/database/database";
 
 const MinorQuestionsForm = ({ navigation, route }) => {
   const { module, majorAnswers } = route.params;
   const { code: moduleCode } = module;
-  // TODO: Fetch questions from database
-  const questions = [
-    {
-      description: "Czy pacjent jest chory na chorobę?",
-    },
-    { description: "Czy pacjent NIE jest chory na chorobę?" },
-    {
-      description: "Czy pacjent mógłby być chory na chorobę?",
-    },
-    {
-      description: "Czy pacjent mógłby być chory na chorobęaaa?",
-    },
-  ];
+  const [questions, setQuestions] = useState([]);
 
-  let minorAnswers = Array(questions.length).fill(undefined);
+  useEffect(() => {
+    const fetchQuestionFromDb = async () => {
+      const moduleMinorQuestions = await Builder()
+        .table(TABLES.questions)
+        .where("module_code", module.code)
+        .where("minor", 1)
+        .get();
+      setQuestions(moduleMinorQuestions);
+    };
+    fetchQuestionFromDb();
+  }, [module]);
+
+  const minorAnswers = Array(questions.length).fill(undefined);
 
   const onSubmit = () => {
-    // TODO: Remove after displaying right questions
-    minorAnswers = [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0];
-
-    const diseasesProbability = calculateDiseasesProbability(
-      majorAnswers,
-      minorAnswers,
-      moduleCode
+    const checkedAnswers = minorAnswers.filter(
+      (answer) => answer !== undefined
     );
-    navigation.navigate("Results", { diseasesProbability, module });
+
+    const allCheckboxChecked = checkedAnswers.length === minorAnswers.length;
+    if (allCheckboxChecked === true) {
+      const diseasesProbability = calculateDiseasesProbability(
+        majorAnswers,
+        minorAnswers,
+        moduleCode
+      );
+      navigation.navigate("Results", { diseasesProbability, module });
+    } else {
+      // TODO: Set all empty questions labels to red and add some error message near them
+      Alert.alert("Błąd", "Wykryto brakujące odpowiedzi", [
+        {
+          text: "Popraw",
+          style: "cancel",
+          onPress: () => {},
+        },
+      ]);
+    }
   };
 
   return (

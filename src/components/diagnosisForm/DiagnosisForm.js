@@ -9,7 +9,7 @@ const DiagnosisForm = ({ questions, answers, onSubmit }) => {
   return (
     <FlatList
       data={questions}
-      keyExtractor={(question) => question.description}
+      keyExtractor={(question) => question.content}
       renderItem={({ item, index }) => (
         <DiagnosisQuestionItem
           question={item}
@@ -31,7 +31,7 @@ const DiagnosisForm = ({ questions, answers, onSubmit }) => {
 DiagnosisForm.propTypes = {
   questions: PropTypes.arrayOf(
     PropTypes.shape({
-      description: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
     })
   ).isRequired,
   answers: PropTypes.arrayOf(PropTypes.bool).isRequired,

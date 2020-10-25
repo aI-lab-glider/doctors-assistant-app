@@ -1,48 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert } from "react-native";
+import Builder from "crane-query-builder";
 import goOnDetailsQuestions from "../../modules/diagnosis/goOnDetailsQuestions";
 import DiagnosisForm from "../../components/diagnosisForm/DiagnosisForm";
 import DiagnosisContainer from "./DiagnosisContainer";
 import { modulePropTypes } from "../../constants/propTypes/diagnosis";
+import { TABLES } from "../../modules/database/database";
 
 const MajorQuestionsForm = ({ navigation, route }) => {
   const { module } = route.params;
   const { code: moduleCode } = module;
 
-  // TODO: Fetch questions from database
-  const questions = [
-    {
-      description: "Czy pacjent jest chory na chorobę?",
-    },
-    { description: "Czy pacjent NIE jest chory na chorobę?" },
-    {
-      description: "Czy pacjent mógłby być chory na chorobę?",
-    },
-    {
-      description: "Czy pacjent mógłby być chory na chorobęaaa?",
-    },
-  ];
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    const fetchQuestionFromDb = async () => {
+      const moduleMinorQuestions = await Builder()
+        .table(TABLES.questions)
+        .where("module_code", module.code)
+        .where("minor", 0)
+        .get();
+      setQuestions(moduleMinorQuestions);
+    };
+    fetchQuestionFromDb();
+  }, [module]);
 
   const majorAnswers = Array(questions.length).fill(undefined);
 
   const onSubmit = () => {
-    if (goOnDetailsQuestions(moduleCode, majorAnswers)) {
-      navigation.navigate("Minor", { module, majorAnswers });
-    } else {
-      Alert.alert(
-        "Informacja",
-        "Pacjent nie spełnia warunków podstawowych modułu",
-        [
-          {
-            text: "Ok",
-            style: "cancel",
-            onPress: () => {
-              navigation.goBack();
+    const checkedAnswers = majorAnswers.filter(
+      (answer) => answer !== undefined
+    );
+
+    const allCheckboxChecked = checkedAnswers.length === majorAnswers.length;
+    if (allCheckboxChecked === true) {
+      if (goOnDetailsQuestions(moduleCode, majorAnswers)) {
+        navigation.navigate("Minor", { module, majorAnswers });
+      } else {
+        Alert.alert(
+          "Informacja",
+          "Pacjent nie spełnia warunków podstawowych modułu",
+          [
+            {
+              text: "Ok",
+              style: "cancel",
+              onPress: () => {
+                navigation.goBack();
+              },
             },
-          },
-        ]
-      );
+          ]
+        );
+      }
+    } else {
+      Alert.alert("Błąd", "Wykryto brakujące odpowiedzi", [
+        {
+          text: "Popraw",
+          style: "cancel",
+          onPress: () => {},
+        },
+      ]);
     }
   };
 
