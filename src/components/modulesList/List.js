@@ -1,35 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FlatList, StyleSheet, View } from "react-native";
-import { Colors } from "../../constants/styles";
 
+import { Colors } from "../../constants/styles";
 import ModuleItem from "./Item";
 import TextButton from "../common/TextButton";
+import { modulePropTypes } from "../../constants/propTypes/diagnosis";
 
-const ModulesList = ({ navigation }) => {
-  // TODO: ADD this to database after experts provide data
-  const modulesData = [
-    {
-      name: "Najwieksza depresja na swiecied",
-      code: "duza_depresja",
-    },
-    {
-      name: "Mała depresja",
-      module_code: "duza_depresja",
-    },
-    {
-      name: "Średnia depresja",
-      module_code: "duza_depresja",
-    },
-  ];
-
-  const onItemPress = (module) => {
-    navigation.navigate("Major", { module });
-  };
-
+const ModulesList = ({ onItemPress, modules, onFinishPress }) => {
   return (
     <FlatList
-      data={modulesData}
+      data={modules}
       keyExtractor={(module) => module.name}
       renderItem={({ item }) => (
         <ModuleItem module={item} onPress={() => onItemPress(item)} />
@@ -39,13 +20,7 @@ const ModulesList = ({ navigation }) => {
       )}
       ListFooterComponentStyle={styles.listFooterComponentStyle}
       ListFooterComponent={
-        <TextButton
-          onPress={() => {
-            // TODO Refactor to navigation to Patient Card
-            navigation.goBack();
-          }}
-          text="Zakończ diagnozę"
-        />
+        <TextButton onPress={onFinishPress} text="Zakończ diagnozę" />
       }
     />
   );
@@ -60,9 +35,8 @@ const styles = StyleSheet.create({
 });
 
 ModulesList.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-    goBack: PropTypes.func.isRequired,
-  }).isRequired,
+  onItemPress: PropTypes.func.isRequired,
+  onFinishPress: PropTypes.func.isRequired,
+  modules: PropTypes.arrayOf(modulePropTypes).isRequired,
 };
 export default ModulesList;
