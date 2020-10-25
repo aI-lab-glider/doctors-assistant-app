@@ -9,7 +9,7 @@ import FinishButton from "./FinishButton";
 const ModulesList = ({ navigation }) => {
   const modulesData = [
     {
-      name: "Duża depresja",
+      name: "Najwieksza depresja na swiecied",
     },
     {
       name: "Mała depresja",
@@ -18,11 +18,18 @@ const ModulesList = ({ navigation }) => {
       name: "Średnia depresja",
     },
   ];
+
+  const onItemPress = () => {
+    navigation.navigate("Results");
+  };
+
   return (
     <FlatList
       data={modulesData}
       keyExtractor={(module) => module.name}
-      renderItem={({ item }) => <ModuleItem module={item} />}
+      renderItem={({ item }) => (
+        <ModuleItem module={item} onPress={onItemPress} />
+      )}
       ItemSeparatorComponent={({ highlighted }) => (
         <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
       )}
