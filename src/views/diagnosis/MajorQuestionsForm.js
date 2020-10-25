@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { Colors } from "../../constants/styles";
-import TextButton from "../../components/modulesList/TextButton";
+import TextButton from "../../components/common/TextButton";
 import DiagnosisQuestionItem from "../../components/diagnosisForm/QuestionItem";
 import goOnDetailsQuestions from "../../modules/diagnosis/goOnDetailsQuestions";
 

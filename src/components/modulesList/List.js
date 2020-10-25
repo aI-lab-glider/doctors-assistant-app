@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, View } from "react-native";
 import { Colors } from "../../constants/styles";
 
 import ModuleItem from "./Item";
-import TextButton from "./TextButton";
+import TextButton from "../common/TextButton";
 
 const ModulesList = ({ navigation }) => {
   const modulesData = [
