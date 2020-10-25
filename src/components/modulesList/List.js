@@ -23,7 +23,7 @@ const ModulesList = ({ navigation }) => {
   ];
 
   const onItemPress = (moduleCode) => {
-    navigation.navigate("Minor", { moduleCode });
+    navigation.navigate("Major", { moduleCode });
   };
 
   return (

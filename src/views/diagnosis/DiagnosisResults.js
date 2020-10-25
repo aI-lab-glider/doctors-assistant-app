@@ -1,33 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import PropTypes from "prop-types";
+import { FlatList, StyleSheet, View } from "react-native";
 import { Colors, Typography } from "../../constants/styles";
-import goOnDetailsQuestions from "../../modules/diagnosis/goOnDetailsQuestions";
-import calculateDiseasesProbability from "../../modules/diagnosis/calculateDiseasesProbability";
 import Result from "../../components/diagnosis/Result";
+import { CodeProp } from "../../constants/propTypes/patientPropTypes";
 
-const DiagnosisResults = () => {
-  const moduleCode = "duza_depresja";
-  const majorAnswers = [1, 0, 0, 1];
-  const minorAnswers = [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0];
-
-  const [diseaseProbability, setDiseaseProbability] = useState([]);
-
-  useEffect(() => {
-    if (goOnDetailsQuestions(moduleCode, majorAnswers)) {
-      setDiseaseProbability(
-        calculateDiseasesProbability(majorAnswers, minorAnswers, moduleCode)
-      );
-    }
-  }, []);
-
+const DiagnosisResults = ({ route }) => {
+  const { diseasesProbability } = route.params;
   return (
     <View style={styles.backgroundContainer}>
       <View style={styles.container}>
-        <Text>Kod modułu: {moduleCode}</Text>
-        <Text>Odpowiedzi na pytania podstawowe: {majorAnswers}</Text>
-        <Text>Odpowiedzi na pytania szczegółowe: {minorAnswers}</Text>
         <FlatList
-          data={diseaseProbability}
+          data={diseasesProbability}
           renderItem={({ item }) => <Result onPress={() => {}} item={item} />}
           keyExtractor={(item, index) => index.toString()}
         />
@@ -61,5 +45,34 @@ const styles = StyleSheet.create({
     color: Colors.PURPLE,
   },
 });
+
+// TODO: Extract Disease Probability Prop
+DiagnosisResults.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      diseasesProbability: PropTypes.arrayOf(
+        PropTypes.shape({
+          disease_icd10: CodeProp.isRequired,
+          disease_name: PropTypes.string.isRequired,
+          probability: PropTypes.number.isRequired,
+          conditionsAcc: PropTypes.shape({
+            main: PropTypes.shape({
+              allAnswers: PropTypes.number,
+              validAnswers: PropTypes.number,
+            }).isRequired,
+            side: PropTypes.shape({
+              allAnswers: PropTypes.number,
+              validAnswers: PropTypes.number,
+            }).isRequired,
+            detail: PropTypes.shape({
+              allAnswers: PropTypes.number,
+              validAnswers: PropTypes.number,
+            }).isRequired,
+          }),
+        })
+      ).isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default DiagnosisResults;

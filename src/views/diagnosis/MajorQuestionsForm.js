@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { Colors } from "../../constants/styles";
-import TextButton from "../../components/common/TextButton";
-import DiagnosisQuestionItem from "../../components/diagnosisForm/QuestionItem";
 import goOnDetailsQuestions from "../../modules/diagnosis/goOnDetailsQuestions";
+import DiagnosisForm from "../../components/diagnosisForm/DiagnosisForm";
 
-const MinorQuestionsForm = ({ navigation, route }) => {
+const MajorQuestionsForm = ({ navigation, route }) => {
   const { moduleCode } = route.params;
+
+  // TODO: Fetch questions from database
   const questions = [
     {
       description: "Czy pacjent jest chory na chorobę?",
@@ -17,7 +18,7 @@ const MinorQuestionsForm = ({ navigation, route }) => {
       description: "Czy pacjent mógłby być chory na chorobę?",
     },
     {
-      description: "Czy pacjent mógłby być chory na chorobę?",
+      description: "Czy pacjent mógłby być chory na chorobęaaa?",
     },
   ];
 
@@ -25,7 +26,7 @@ const MinorQuestionsForm = ({ navigation, route }) => {
 
   const onSubmit = () => {
     if (goOnDetailsQuestions(moduleCode, majorAnswers)) {
-      navigation.navigate("Results");
+      navigation.navigate("Minor", { moduleCode, majorAnswers });
     } else {
       Alert.alert(
         "Informacja",
@@ -47,22 +48,10 @@ const MinorQuestionsForm = ({ navigation, route }) => {
   return (
     <View style={styles.backgroundContainer}>
       <View style={styles.container}>
-        <Text>{moduleCode}</Text>
-        <FlatList
-          data={questions}
-          keyExtractor={(question) => question.description}
-          renderItem={({ item, index }) => (
-            <DiagnosisQuestionItem
-              question={item}
-              setAnswer={(answer) => {
-                majorAnswers[index] = answer;
-              }}
-            />
-          )}
-          ListFooterComponentStyle={{ marginTop: 20 }}
-          ListFooterComponent={
-            <TextButton onPress={onSubmit} text="Sprawdź odpowiedzi" />
-          }
+        <DiagnosisForm
+          onSubmit={onSubmit}
+          answers={majorAnswers}
+          questions={questions}
         />
       </View>
     </View>
@@ -86,7 +75,7 @@ const styles = StyleSheet.create({
   questionText: { marginTop: 20 },
 });
 
-MinorQuestionsForm.propTypes = {
+MajorQuestionsForm.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
     goBack: PropTypes.func.isRequired,
@@ -97,4 +86,4 @@ MinorQuestionsForm.propTypes = {
     }).isRequired,
   }).isRequired,
 };
-export default MinorQuestionsForm;
+export default MajorQuestionsForm;

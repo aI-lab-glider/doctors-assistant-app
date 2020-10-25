@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Colors } from "../../constants/styles";
-import TextButton from "../../components/modulesList/TextButton";
-import DiagnosisQuestionItem from "../../components/diagnosisForm/QuestionItem";
-import goOnDetailsQuestions from "../../modules/diagnosis/goOnDetailsQuestions";
+import DiagnosisForm from "../../components/diagnosisForm/DiagnosisForm";
+import calculateDiseasesProbability from "../../modules/diagnosis/calculateDiseasesProbability";
 
 const MinorQuestionsForm = ({ navigation, route }) => {
-  const { moduleCode } = route.params;
+  const { moduleCode, majorAnswers } = route.params;
+
+  // TODO: Fetch questions from database
   const questions = [
     {
       description: "Czy pacjent jest chory na chorobę?",
@@ -17,52 +18,33 @@ const MinorQuestionsForm = ({ navigation, route }) => {
       description: "Czy pacjent mógłby być chory na chorobę?",
     },
     {
-      description: "Czy pacjent mógłby być chory na chorobę?",
+      description: "Czy pacjent mógłby być chory na chorobęaaa?",
     },
   ];
 
-  const majorAnswers = Array(questions.length).fill(undefined);
+  let minorAnswers = Array(questions.length).fill(undefined);
 
   const onSubmit = () => {
-    if (goOnDetailsQuestions(moduleCode, majorAnswers)) {
-      navigation.navigate("Results");
-    } else {
-      Alert.alert(
-        "Informacja",
-        "Pacjent nie spełnia warunków podstawowych modułu",
-        [
-          {
-            text: "Ok",
-            style: "cancel",
-            onPress: () => {
-              navigation.goBack();
-            },
-          },
-        ]
-      );
-    }
+    // TODO: Remove displaying right questions
+    minorAnswers = [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0];
+
+    const diseasesProbability = calculateDiseasesProbability(
+      majorAnswers,
+      minorAnswers,
+      moduleCode
+    );
+    console.log(diseasesProbability);
+    navigation.navigate("Results", { diseasesProbability });
   };
 
   // TODO: ADD form validation - Maybe formik would be better here
   return (
     <View style={styles.backgroundContainer}>
       <View style={styles.container}>
-        <Text>{moduleCode}</Text>
-        <FlatList
-          data={questions}
-          keyExtractor={(question) => question.description}
-          renderItem={({ item, index }) => (
-            <DiagnosisQuestionItem
-              question={item}
-              setAnswer={(answer) => {
-                majorAnswers[index] = answer;
-              }}
-            />
-          )}
-          ListFooterComponentStyle={{ marginTop: 20 }}
-          ListFooterComponent={
-            <TextButton onPress={onSubmit} text="Sprawdź odpowiedzi" />
-          }
+        <DiagnosisForm
+          onSubmit={onSubmit}
+          answers={majorAnswers}
+          questions={questions}
         />
       </View>
     </View>
@@ -94,6 +76,7 @@ MinorQuestionsForm.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       moduleCode: PropTypes.string.isRequired,
+      majorAnswers: PropTypes.arrayOf(PropTypes.bool).isRequired,
     }).isRequired,
   }).isRequired,
 };

@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HeaderOptions from "../HeaderOptions";
 import DiagnosisResults from "../../../views/diagnosis/DiagnosisResults";
 import ModulesListScreen from "../../../views/diagnosis/ModulesListScreen";
+import MajorQuestionsForm from "../../../views/diagnosis/MajorQuestionsForm";
 import MinorQuestionsForm from "../../../views/diagnosis/MinorQuestionsForm";
 
 const Stack = createStackNavigator();
@@ -17,28 +18,30 @@ export const Routes = [
   {
     name: "Results",
     component: DiagnosisResults,
-    title: "Wyniki diagnozy",
+    title: "Lista modułów",
+  },
+  {
+    name: "Major",
+    component: MajorQuestionsForm,
   },
   {
     name: "Minor",
     component: MinorQuestionsForm,
-    title: "Pytania bazowe",
   },
 ];
 
 const initialRoute = Routes[0];
 
-// TODO: Refactor repeatings
+const routeWithCustomTitle = Routes[0];
+const defaultTitle = "Diagnoza";
+
 export const getDiagnosisHeaderTitle = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
-  const routeObj = Routes.find(({ name }) => {
-    return routeName === name;
-  });
-  if (routeObj) {
-    return routeObj.title;
+  if (routeName === routeWithCustomTitle.name) {
+    return routeWithCustomTitle.title;
   }
-  return initialRoute.title;
+  return defaultTitle;
 };
 
 const DiagnosisNavigator = () => {
