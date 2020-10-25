@@ -1,45 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Alert } from "react-native";
-import Builder from "crane-query-builder";
 import PropTypes from "prop-types";
 import DiagnosisForm from "../../components/diagnosisForm/DiagnosisForm";
 import calculateDiseasesProbability from "../../modules/diagnosis/calculateDiseasesProbability";
 import DiagnosisContainer from "./DiagnosisContainer";
 import { modulePropTypes } from "../../constants/propTypes/diagnosis";
-import { TABLES } from "../../modules/database/database";
+import useDiagnosisForm from "../../modules/hooks/useDiagnosisForm";
 
 const MinorQuestionsForm = ({ navigation, route }) => {
   const { module, majorAnswers } = route.params;
   const { code: moduleCode } = module;
-  const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState([]);
-
-  const setDefaultAnswers = () => {
-    setAnswers(Array(questions.length).fill(undefined));
-  };
-
-  const setAnswerByIndex = (index, answer) => {
-    if (index > answer.length) {
-      console.warn("Anwer array out of bounds");
-    } else {
-      const newAnswers = answers;
-      newAnswers[index] = answer;
-      setAnswers(newAnswers);
-    }
-  };
-
-  useEffect(() => {
-    const fetchQuestionFromDb = async () => {
-      const moduleMinorQuestions = await Builder()
-        .table(TABLES.questions)
-        .where("module_code", module.code)
-        .where("minor", 1)
-        .get();
-      setQuestions(moduleMinorQuestions);
-      setDefaultAnswers();
-    };
-    fetchQuestionFromDb();
-  }, [module]);
+  const [questions, answers, setAnswerByIndex] = useDiagnosisForm(module, 1);
 
   const onSubmit = () => {
     const checkedAnswers = answers.filter((answer) => answer !== undefined);
