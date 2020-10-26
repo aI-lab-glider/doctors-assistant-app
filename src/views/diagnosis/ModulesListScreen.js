@@ -1,38 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Builder from "crane-query-builder";
 import PropTypes from "prop-types";
-import { StyleSheet, View } from "react-native";
-import { Colors } from "../../constants/styles";
 import ModulesList from "../../components/modulesList/List";
+import DiagnosisContainer from "./DiagnosisContainer";
+import { TABLES } from "../../modules/database/database";
 
 const ModulesListScreen = ({ navigation }) => {
+  const [modules, setModules] = useState([]);
+  useEffect(() => {
+    const fetchModulesFromDb = async () => {
+      const fetchedModules = await Builder().table(TABLES.modules).get();
+      setModules(fetchedModules);
+    };
+    fetchModulesFromDb();
+  }, []);
+
+  const onItemPress = (module) => {
+    navigation.navigate("Major", { module });
+  };
+
+  const onFinishPress = () => {
+    navigation.goBack();
+  };
+
   return (
-    <View style={styles.backgroundContainer}>
-      <View style={styles.container}>
-        <ModulesList navigation={navigation} />
-      </View>
-    </View>
+    <DiagnosisContainer>
+      <ModulesList
+        onItemPress={onItemPress}
+        modules={modules}
+        onFinishPress={onFinishPress}
+      />
+    </DiagnosisContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  backgroundContainer: {
-    flex: 1,
-    backgroundColor: Colors.PURPLE,
-    justifyContent: "center",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: Colors.GRAY_VERY_LIGHT,
-    borderTopRightRadius: 50,
-    paddingTop: 16,
-    justifyContent: "center",
-    padding: 20,
-  },
-});
 
 ModulesListScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired,
   }).isRequired,
 };
 

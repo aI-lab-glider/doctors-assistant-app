@@ -10,12 +10,7 @@ const ModuleItem = ({ module, onPress }) => {
       <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.text}>{module.name}</Text>
       </TouchableOpacity>
-      <Checkbox
-        onPress={() => {
-          console.log("Disabled");
-        }}
-        disabled
-      />
+      <Checkbox disabled />
     </View>
   );
 };

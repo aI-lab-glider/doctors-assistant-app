@@ -56,6 +56,7 @@ export const TABLES = {
   psychiatric_assessment: "psychiatric_assessment",
   questions: "questions",
   users: "users",
+  modules: "modules",
   users_patients: "users_patients",
 };
 
