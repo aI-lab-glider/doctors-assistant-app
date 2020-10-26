@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { Colors, Typography } from "../constants/styles";
-import goOnDetailsQuestions from "../modules/diagnosis/goOnDetailsQuestions";
-import calculateDiseasesProbability from "../modules/diagnosis/calculateDiseasesProbability";
-import Result from "../components/diagnosis/Result";
+import { Colors, Typography } from "../../constants/styles";
+import goOnDetailsQuestions from "../../modules/diagnosis/goOnDetailsQuestions";
+import calculateDiseasesProbability from "../../modules/diagnosis/calculateDiseasesProbability";
+import Result from "../../components/diagnosis/Result";
 
-const DiagnosisScreen = () => {
+const DiagnosisResults = () => {
   const moduleCode = "duza_depresja";
   const majorAnswers = [1, 0, 0, 1];
   const minorAnswers = [0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0];
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DiagnosisScreen;
+export default DiagnosisResults;

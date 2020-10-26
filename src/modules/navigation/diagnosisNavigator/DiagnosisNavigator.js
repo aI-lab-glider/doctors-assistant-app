@@ -1,42 +1,28 @@
 import * as React from "react";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import AddPatient from "../../../views/registration/AddPatient";
-import BasicData from "../../../views/registration/BasicData";
-import PhysicalExamination from "../../../views/registration/PhysicalExamination";
-import PsychiatricAssessment from "../../../views/registration/PsychiatricAssessment";
 import HeaderOptions from "../HeaderOptions";
-import listeners from "./Listeners";
+import DiagnosisResults from "../../../views/diagnosis/DiagnosisResults";
+import ModulesListScreen from "../../../views/diagnosis/ModulesListScreen";
 
 const Stack = createStackNavigator();
 
 export const Routes = [
   {
-    name: "AddPatient",
-    component: AddPatient,
-    title: "Dane Osobowe",
+    name: "ModulesList",
+    component: ModulesListScreen,
+    title: "Lista modułów",
   },
   {
-    name: "BasicData",
-    component: BasicData,
-    title: "Informacje podstawowe",
-  },
-  {
-    name: "PhysicalExamination",
-    component: PhysicalExamination,
-    title: "Badanie fizykalne",
-  },
-
-  {
-    name: "PsychiatricAssessment",
-    component: PsychiatricAssessment,
-    title: "Badanie psychiatryczne",
+    name: "Results",
+    component: DiagnosisResults,
+    title: "Wyniki diagnozy",
   },
 ];
 
 const initialRoute = Routes[0];
 
-export const getHeaderTitle = (route) => {
+export const getDiagnosisHeaderTitle = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
   const routeObj = Routes.find(({ name }) => {
@@ -48,7 +34,7 @@ export const getHeaderTitle = (route) => {
   return initialRoute.title;
 };
 
-const Navigator = () => {
+const DiagnosisNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={initialRoute.name}
@@ -62,11 +48,10 @@ const Navigator = () => {
           options={{
             title,
           }}
-          listeners={listeners}
         />
       ))}
     </Stack.Navigator>
   );
 };
 
-export default Navigator;
+export default DiagnosisNavigator;

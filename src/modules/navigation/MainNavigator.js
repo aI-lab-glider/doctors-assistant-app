@@ -4,8 +4,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import PatientsList from "../../views/PatientsList";
 import PatientCard from "../../views/PatientCard";
 import HeaderOptions from "./HeaderOptions";
-import Navigator, { getHeaderTitle } from "./registrationNavigator/Navigator";
-import DiagnosisScreen from "../../views/DiagnosisScreen";
+import RegistrationNavigator, {
+  getHeaderTitle,
+} from "./registrationNavigator/RegistrationNavigator";
+import DiagnosisNavigator, {
+  getDiagnosisHeaderTitle,
+} from "./diagnosisNavigator/DiagnosisNavigator";
 
 const Stack = createStackNavigator();
 
@@ -30,17 +34,17 @@ const MainNavigator = () => {
         />
         <Stack.Screen
           name="Registration"
-          component={Navigator}
+          component={RegistrationNavigator}
           options={({ route }) => ({
             headerTitle: getHeaderTitle(route),
           })}
         />
         <Stack.Screen
           name="Diagnosis"
-          component={DiagnosisScreen}
-          options={{
-            title: "Diagnoza",
-          }}
+          component={DiagnosisNavigator}
+          options={({ route }) => ({
+            headerTitle: getDiagnosisHeaderTitle(route),
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
