@@ -21,7 +21,6 @@ const DiagnosisResults = ({ route }) => {
   );
 };
 
-// TODO: Extract Disease Probability Prop
 DiagnosisResults.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
