@@ -13,6 +13,14 @@ import {
 import PatientBasicData from "../../../constants/propTypes/basicDataPropTypes";
 
 const Item = ({ onPress, patient, patientsBasicData }) => {
+  const mapDiagnosisToString = (diagnosis) => {
+    return diagnosis
+      .map((diagnose) => {
+        return diagnose.disease_name;
+      })
+      .join(", ");
+  };
+
   return (
     <View style={styles.item}>
       <TouchableOpacity onPress={onPress}>
@@ -20,7 +28,9 @@ const Item = ({ onPress, patient, patientsBasicData }) => {
         <InterviewInfo
           icon="diagnosis"
           name="Diagnoza"
-          value={patient.diagnosis ? patient.diagnosis.join(", ") : ""}
+          value={
+            patient.diagnosis ? mapDiagnosisToString(patient.diagnosis) : ""
+          }
         />
         <InterviewInfo
           icon="medicines"
