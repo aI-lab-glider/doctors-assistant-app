@@ -90,10 +90,12 @@ const updateObjectFromTable = async (object, table) => {
       .table(table)
       .where("id", "=", object.id)
       .update(object);
-    console.log(`Successfully update object to ${table} with id ${object.id}`);
+    console.log(
+      `Successfully update object from ${table} with id ${object.id}`
+    );
     return result;
   } catch (e) {
-    console.log(`DB error update object to ${table} ${e.message}`);
+    console.log(`DB error update object from ${table} ${e.message}`);
     return null;
   }
 };
