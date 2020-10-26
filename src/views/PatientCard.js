@@ -101,7 +101,7 @@ const PatientCard = ({ navigation, route }) => {
                 {patient.code ? ">" : ""} {patient.code}
               </Text>
               {patient.diagnosis.map((diagnose) => (
-                <Text style={styles.listItemFieldText}>
+                <Text style={styles.listItemFieldText} key={diagnose.id}>
                   {"> "} {diagnose.disease_name}
                 </Text>
               ))}
