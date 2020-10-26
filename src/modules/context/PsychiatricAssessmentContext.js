@@ -48,9 +48,24 @@ function PsychiatricAssessmentProvider({ children }) {
     return id;
   };
 
+  const updatePsychiatricAssessment = async (psychiatricAssessment) => {
+    const result = await database.updateObjectFromTable(
+      psychiatricAssessment,
+      TABLES.psychiatric_assessment
+    );
+    if (result) {
+      dispatch({
+        type: PSYCHIATRIC_ASSESSMENT_ACTIONS.INSERT_OR_UPDATE,
+        payload: { psychiatricAssessment },
+      });
+    }
+    return result;
+  };
+
   const value = {
     ...state,
     setPsychiatricAssessment,
+    updatePsychiatricAssessment,
   };
 
   return (

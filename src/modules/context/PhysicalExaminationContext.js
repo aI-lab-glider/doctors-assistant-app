@@ -48,9 +48,24 @@ function PhysicalExaminationProvider({ children }) {
     return id;
   };
 
+  const updatePhysicalExamination = async (physicalExamination) => {
+    const result = await database.updateObjectFromTable(
+      physicalExamination,
+      TABLES.physical_examination
+    );
+    if (result) {
+      dispatch({
+        type: PHYSICAL_EXAMINATION_ACTIONS.INSERT_OR_UPDATE,
+        payload: { physicalExamination },
+      });
+    }
+    return result;
+  };
+
   const value = {
     ...state,
     setPhysicalExamination,
+    updatePhysicalExamination,
   };
 
   return (

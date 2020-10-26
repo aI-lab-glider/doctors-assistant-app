@@ -6,24 +6,26 @@ import { PhysicalExaminationContext } from "../../modules/context/PhysicalExamin
 import AppButton from "../../components/common/AppButton";
 import physicalExaminationValidationSchema from "../../constants/validationSchemas/physicalExaminationValidationSchema";
 import PhysicalExaminationForm from "../../components/forms/PhysicalExaminationForm";
-import { initialPhysicalExamination } from "../../constants/values/initalFormValues";
 import FormContainer from "../../components/forms/FormContainer";
 
 const PhysicalExamination = ({ route, navigation }) => {
-  const { patientId } = route.params;
-  const { setPhysicalExamination } = useContext(PhysicalExaminationContext);
+  const { physicalExaminationId, psychiatricAssessmentId } = route.params;
+  const { patientsPhysicalExamination, updatePhysicalExamination } = useContext(
+    PhysicalExaminationContext
+  );
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-  const initialValues = initialPhysicalExamination;
-  initialValues.patient_id = patientId;
+  const initialState = patientsPhysicalExamination.find(
+    (physicalExamination) => physicalExamination.id === physicalExaminationId
+  );
 
   const onButtonPressed = async (values) => {
     setNextButtonDisabled(true);
     const physicalExamination = values;
-    physicalExamination.id = await setPhysicalExamination(physicalExamination);
-    if (physicalExamination.id) {
+    const result = await updatePhysicalExamination(physicalExamination);
+    if (result) {
       navigation.navigate("PsychiatricAssessment", {
-        patientId,
+        psychiatricAssessmentId,
       });
     }
     // TODO: Show alert with info what is wrong
@@ -32,7 +34,7 @@ const PhysicalExamination = ({ route, navigation }) => {
   return (
     <FormContainer style={styles.container}>
       <Formik
-        initialValues={initialValues}
+        initialValues={initialState}
         enableReinitialize
         validationSchema={physicalExaminationValidationSchema}
         onSubmit={(values) => onButtonPressed(values)}
@@ -73,7 +75,8 @@ PhysicalExamination.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      patientId: PropTypes.number.isRequired,
+      physicalExaminationId: PropTypes.number.isRequired,
+      psychiatricAssessmentId: PropTypes.number.isRequired,
     }),
   }).isRequired,
 };

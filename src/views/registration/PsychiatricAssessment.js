@@ -5,26 +5,27 @@ import { Formik } from "formik";
 import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
 import AppButton from "../../components/common/AppButton";
 import psychiatricAssessmentValidationSchema from "../../constants/validationSchemas/psychiatricAssessmentValidationSchema";
-import { initialPsychiatricAssessment } from "../../constants/values/initalFormValues";
 import FormContainer from "../../components/forms/FormContainer";
 import PsychiatricAssessmentForm from "../../components/forms/PsychiatricAssessmentForm";
 
 const PsychiatricAssessment = ({ route, navigation }) => {
-  const { patientId } = route.params;
-  const { setPsychiatricAssessment } = useContext(PsychiatricAssessmentContext);
+  const { psychiatricAssessmentId } = route.params;
+  const {
+    patientsPsychiatricAssessment,
+    updatePsychiatricAssessment,
+  } = useContext(PsychiatricAssessmentContext);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-  const initialState = initialPsychiatricAssessment;
-  initialState.patient_id = patientId;
+  const initialState = patientsPsychiatricAssessment.find(
+    (psychiatricAssessment) =>
+      psychiatricAssessment.id === psychiatricAssessmentId
+  );
 
   const onButtonPressed = async (values) => {
     setNextButtonDisabled(true);
     const psychiatricAssessment = values;
-
-    psychiatricAssessment.id = await setPsychiatricAssessment(
-      psychiatricAssessment
-    );
-    if (psychiatricAssessment.id) {
+    const result = await updatePsychiatricAssessment(psychiatricAssessment);
+    if (result) {
       navigation.navigate("PatientsList");
     }
     // TODO: Show alert with info what is wrong
@@ -72,7 +73,7 @@ PsychiatricAssessment.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      patientId: PropTypes.number.isRequired,
+      psychiatricAssessmentId: PropTypes.number.isRequired,
     }),
   }).isRequired,
 };
