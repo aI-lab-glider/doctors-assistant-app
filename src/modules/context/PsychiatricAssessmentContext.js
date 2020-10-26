@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
-import psychiatricAssessmentReducer from "./PsychiatricAssessmentReducer";
+import psychiatricAssessmentReducer, {
+  PSYCHIATRIC_ASSESSMENT_ACTIONS,
+} from "./PsychiatricAssessmentReducer";
 import patientsPsychiatricAssessment from "../../constants/data/patientsPsychiatricAssessment";
 import { database, TABLES } from "../database/database";
 
@@ -21,7 +23,10 @@ function PsychiatricAssessmentProvider({ children }) {
       const psychiatricAssessment = await database.getAllFromTable(
         TABLES.psychiatric_assessment
       );
-      dispatch({ type: "REFRESH", payload: { psychiatricAssessment } });
+      dispatch({
+        type: PSYCHIATRIC_ASSESSMENT_ACTIONS.REFRESH,
+        payload: { psychiatricAssessment },
+      });
     };
 
     refreshPsychiatricAssessment();
@@ -36,7 +41,7 @@ function PsychiatricAssessmentProvider({ children }) {
       const assessmentWithId = psychiatricAssessment;
       assessmentWithId.id = id;
       dispatch({
-        type: "SET_PSYCHIATRIC_ASSESSMENT",
+        type: PSYCHIATRIC_ASSESSMENT_ACTIONS.INSERT_OR_UPDATE,
         payload: { psychiatricAssessment: assessmentWithId },
       });
     }

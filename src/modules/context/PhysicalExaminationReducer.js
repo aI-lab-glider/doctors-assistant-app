@@ -1,6 +1,11 @@
+export const PHYSICAL_EXAMINATION_ACTIONS = {
+  INSERT_OR_UPDATE: "INSERT_OR_UPDATE",
+  REFRESH: "REFRESH",
+};
+
 const physicalExaminationReducer = (state, action) => {
   switch (action.type) {
-    case "SET_PHYSICAL_EXAMINATION": {
+    case PHYSICAL_EXAMINATION_ACTIONS.INSERT_OR_UPDATE: {
       const { physicalExamination: setPhysicalExamination } = action.payload;
       const { patientsPhysicalExamination } = state;
 
@@ -22,7 +27,7 @@ const physicalExaminationReducer = (state, action) => {
         patientsPhysicalExamination,
       };
     }
-    case "REFRESH": {
+    case PHYSICAL_EXAMINATION_ACTIONS.REFRESH: {
       const { physicalExamination } = action.payload;
       return {
         ...state,

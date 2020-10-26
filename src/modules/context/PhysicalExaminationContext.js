@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
-import physicalExaminationReducer from "./PhysicalExaminationReducer";
+import physicalExaminationReducer, {
+  PHYSICAL_EXAMINATION_ACTIONS,
+} from "./PhysicalExaminationReducer";
 import patientsPhysicalExamination from "../../constants/data/patientsPhysicalExamination";
 import { database, TABLES } from "../database/database";
 
@@ -21,7 +23,10 @@ function PhysicalExaminationProvider({ children }) {
       const physicalExaminations = await database.getAllFromTable(
         TABLES.physical_examination
       );
-      dispatch({ type: "REFRESH", payload: { physicalExaminations } });
+      dispatch({
+        type: PHYSICAL_EXAMINATION_ACTIONS.REFRESH,
+        payload: { physicalExaminations },
+      });
     };
 
     refreshPhysicalExamination();
@@ -36,7 +41,7 @@ function PhysicalExaminationProvider({ children }) {
       const examinationWithId = physicalExamination;
       examinationWithId.id = id;
       dispatch({
-        type: "SET_PHYSICAL_EXAMINATION",
+        type: PHYSICAL_EXAMINATION_ACTIONS.INSERT_OR_UPDATE,
         payload: { physicalExamination: examinationWithId },
       });
     }

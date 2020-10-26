@@ -1,6 +1,11 @@
+export const PATIENT_ACTIONS = {
+  INSERT_OR_UPDATE: "INSERT_OR_UPDATE",
+  REFRESH: "REFRESH",
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
-    case "INSERT_OR_UPDATE_PATIENT": {
+    case PATIENT_ACTIONS.INSERT_OR_UPDATE: {
       const { patient: setPatient } = action.payload;
       const { patients } = state;
 
@@ -18,7 +23,7 @@ const reducer = (state, action) => {
         patients,
       };
     }
-    case "REFRESH_PATIENTS": {
+    case PATIENT_ACTIONS.REFRESH: {
       const { patients } = action.payload;
       return {
         ...state,

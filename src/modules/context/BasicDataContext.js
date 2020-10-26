@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
-import basicDataReducer from "./BasicDataContextReducer";
+import basicDataReducer, {
+  BASIC_DATA_ACTIONS,
+} from "./BasicDataContextReducer";
 import { database, TABLES } from "../database/database";
 
 export const BasicDataContext = createContext({
@@ -17,7 +19,10 @@ function BasicDataContextProvider({ children }) {
       const patientsBasicData = await database.getAllFromTable(
         TABLES.patients_basic_data
       );
-      dispatch({ type: "REFRESH_BASIC_DATA", payload: { patientsBasicData } });
+      dispatch({
+        type: BASIC_DATA_ACTIONS.REFRESH,
+        payload: { patientsBasicData },
+      });
     };
 
     refreshBasicData();
@@ -32,7 +37,7 @@ function BasicDataContextProvider({ children }) {
       const basicDataWithId = basicData;
       basicDataWithId.id = id;
       dispatch({
-        type: "SET_BASIC_DATA",
+        type: BASIC_DATA_ACTIONS.INSERT_OR_UPDATE,
         payload: { basicData: basicDataWithId },
       });
     }
