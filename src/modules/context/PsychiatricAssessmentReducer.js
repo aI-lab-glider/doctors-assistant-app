@@ -1,6 +1,11 @@
+export const PSYCHIATRIC_ASSESSMENT_ACTIONS = {
+  INSERT_OR_UPDATE: "INSERT_OR_UPDATE",
+  REFRESH: "REFRESH",
+};
+
 const psychiatricAssessmentReducer = (state, action) => {
   switch (action.type) {
-    case "SET_PSYCHIATRIC_ASSESSMENT": {
+    case PSYCHIATRIC_ASSESSMENT_ACTIONS.INSERT_OR_UPDATE: {
       const {
         psychiatricAssessment: setPsychiatricAssessment,
       } = action.payload;
@@ -24,7 +29,7 @@ const psychiatricAssessmentReducer = (state, action) => {
         patientsPsychiatricAssessment,
       };
     }
-    case "REFRESH": {
+    case PSYCHIATRIC_ASSESSMENT_ACTIONS.REFRESH: {
       const { psychiatricAssessment } = action.payload;
       return {
         ...state,

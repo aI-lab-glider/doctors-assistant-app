@@ -7,10 +7,22 @@ import AddPatientForm from "../../components/forms/AddPatientForm";
 import AppButton from "../../components/common/AppButton";
 import FormContainer from "../../components/forms/FormContainer";
 import { parseFormFieldValuesToObject } from "../../modules/utils/Parsers";
-import { initialPatient } from "../../constants/values/initalFormValues";
+import {
+  initialBasicData,
+  initialPatient,
+  initialPhysicalExamination,
+  initialPsychiatricAssessment,
+} from "../../constants/values/initalFormValues";
+import { BasicDataContext } from "../../modules/context/BasicDataContext";
+import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
+import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
 
 const AddPatient = ({ navigation }) => {
-  const { setPatient } = useContext(PatientsContext);
+  const { addPatient } = useContext(PatientsContext);
+  const { setBasicData } = useContext(BasicDataContext);
+  const { setPsychiatricAssessment } = useContext(PsychiatricAssessmentContext);
+  const { setPhysicalExamination } = useContext(PhysicalExaminationContext);
+
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
   const initialState = initialPatient;
@@ -28,11 +40,31 @@ const AddPatient = ({ navigation }) => {
       keysWithParserFunctions
     );
 
-    patient.id = await setPatient(patient);
+    patient.id = await addPatient(patient);
     if (patient.id) {
-      navigation.navigate("BasicData", {
-        patientId: patient.id,
-      });
+      const basicData = initialBasicData;
+      basicData.patient_id = patient.id;
+      basicData.id = await setBasicData(basicData);
+
+      const physicalExamination = initialPhysicalExamination;
+      physicalExamination.patient_id = patient.id;
+      physicalExamination.id = await setPhysicalExamination(
+        physicalExamination
+      );
+
+      const psychiatricAssessment = initialPsychiatricAssessment;
+      psychiatricAssessment.patient_id = patient.id;
+      psychiatricAssessment.id = await setPsychiatricAssessment(
+        psychiatricAssessment
+      );
+
+      if (basicData.id && physicalExamination.id && psychiatricAssessment.id) {
+        navigation.navigate("BasicData", {
+          basicDataId: basicData.id,
+          physicalExaminationId: physicalExamination.id,
+          psychiatricAssessmentId: psychiatricAssessment.id,
+        });
+      }
     }
   };
 
