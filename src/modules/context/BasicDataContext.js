@@ -44,9 +44,24 @@ function BasicDataContextProvider({ children }) {
     return id;
   };
 
+  const updateBasicData = async (basicData) => {
+    const result = await database.updateObjectFromTable(
+      basicData,
+      TABLES.patients_basic_data
+    );
+    if (result) {
+      dispatch({
+        type: BASIC_DATA_ACTIONS.INSERT_OR_UPDATE,
+        payload: { basicData },
+      });
+    }
+    return result;
+  };
+
   const value = {
     ...state,
     setBasicData,
+    updateBasicData,
   };
 
   return (

@@ -60,7 +60,6 @@ const AddPatient = ({ navigation }) => {
 
       if (basicData.id && physicalExamination.id && psychiatricAssessment.id) {
         navigation.navigate("BasicData", {
-          patientId: patient.id,
           basicDataId: basicData.id,
           physicalExaminationId: physicalExamination.id,
           psychiatricAssessmentId: psychiatricAssessment.id,

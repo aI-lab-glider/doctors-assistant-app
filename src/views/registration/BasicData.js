@@ -7,15 +7,19 @@ import basicDataValidationSchema from "../../constants/validationSchemas/basicDa
 import BasicDataForm from "../../components/forms/BasicDataForm";
 import FormContainer from "../../components/forms/FormContainer";
 import { parseFormFieldValuesToObject } from "../../modules/utils/Parsers";
-import { initialBasicData } from "../../constants/values/initalFormValues";
 
 const BasicData = ({ route, navigation }) => {
-  const { patientId } = route.params;
-  const { setBasicData } = useContext(BasicDataContext);
+  const {
+    basicDataId,
+    physicalExaminationId,
+    psychiatricAssessmentId,
+  } = route.params;
+  const { patientsBasicData, updateBasicData } = useContext(BasicDataContext);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-  const initialState = initialBasicData;
-  initialState.patient_id = patientId;
+  const initialState = patientsBasicData.find(
+    (basicData) => basicData.id === basicDataId
+  );
 
   const keysWithParserFunctions = {
     hospitalization_times: (val) => parseInt(val, 10),
@@ -27,11 +31,12 @@ const BasicData = ({ route, navigation }) => {
       values,
       keysWithParserFunctions
     );
-    basicData.id = await setBasicData(basicData);
+    const result = await updateBasicData(basicData);
 
-    if (basicData.id) {
+    if (result) {
       navigation.navigate("PhysicalExamination", {
-        patientId,
+        physicalExaminationId,
+        psychiatricAssessmentId,
       });
     }
     // TODO: Show alert with info what is wrong
@@ -77,10 +82,9 @@ BasicData.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      patientId: PropTypes.number.isRequired,
       basicDataId: PropTypes.number.isRequired,
-      physicalExaminationId: PropTypes.number.isRequired.id,
-      psychiatricAssessmentId: PropTypes.number.isRequired.id,
+      physicalExaminationId: PropTypes.number.isRequired,
+      psychiatricAssessmentId: PropTypes.number.isRequired,
     }),
   }).isRequired,
 };

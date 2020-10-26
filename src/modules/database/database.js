@@ -76,10 +76,24 @@ const insertObjectToTable = async (object, table) => {
     const objectWithoutId = object;
     objectWithoutId.id = null;
     const id = await Builder().table(table).insertGetId(objectWithoutId);
-    console.log(`Successfully insert object to ${table} with ${id}`);
+    console.log(`Successfully insert object to ${table} with id ${id}`);
     return id;
   } catch (e) {
     console.log(`DB error insert object to ${table} ${e[0]}`);
+    return null;
+  }
+};
+
+const updateObjectFromTable = async (object, table) => {
+  try {
+    const result = await Builder()
+      .table(table)
+      .where("id", "=", object.id)
+      .update(object);
+    console.log(`Successfully update object to ${table} with id ${object.id}`);
+    return result;
+  } catch (e) {
+    console.log(`DB error update object to ${table} ${e[0].message}`);
     return null;
   }
 };
@@ -89,4 +103,5 @@ export const database = {
   initDB,
   getAllFromTable,
   insertObjectToTable,
+  updateObjectFromTable,
 };
