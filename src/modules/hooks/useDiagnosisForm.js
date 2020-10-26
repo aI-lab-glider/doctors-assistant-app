@@ -6,8 +6,8 @@ const useDiagnosisForm = (module, minor) => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
 
-  const setDefaultAnswers = () => {
-    setAnswers(Array(questions.length).fill(undefined));
+  const setDefaultAnswers = (moduleQuestions) => {
+    setAnswers(Array(moduleQuestions.length).fill(undefined));
   };
 
   const setAnswerByIndex = (index, answer) => {
@@ -22,13 +22,13 @@ const useDiagnosisForm = (module, minor) => {
 
   useEffect(() => {
     const fetchQuestionFromDb = async () => {
-      const moduleMinorQuestions = await Builder()
+      const moduleQuestions = await Builder()
         .table(TABLES.questions)
         .where("module_code", module.code)
         .where("minor", minor)
         .get();
-      setQuestions(moduleMinorQuestions);
-      setDefaultAnswers();
+      setQuestions(moduleQuestions);
+      setDefaultAnswers(moduleQuestions);
     };
     fetchQuestionFromDb();
   }, [module]);
