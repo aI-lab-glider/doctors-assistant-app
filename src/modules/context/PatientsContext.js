@@ -24,7 +24,7 @@ function PatientsContextProvider({ children }) {
     refreshPatients();
   }, []);
 
-  const setPatient = async (patient) => {
+  const addPatient = async (patient) => {
     const id = await database.insertObjectToTable(patient, TABLES.patients);
     if (id) {
       const patientWithId = patient;
@@ -39,7 +39,7 @@ function PatientsContextProvider({ children }) {
 
   const value = {
     ...state,
-    setPatient,
+    addPatient,
   };
 
   return (

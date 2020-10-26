@@ -78,6 +78,9 @@ BasicData.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       patientId: PropTypes.number.isRequired,
+      basicDataId: PropTypes.number.isRequired,
+      physicalExaminationId: PropTypes.number.isRequired.id,
+      psychiatricAssessmentId: PropTypes.number.isRequired.id,
     }),
   }).isRequired,
 };
