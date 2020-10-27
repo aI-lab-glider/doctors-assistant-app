@@ -100,6 +100,11 @@ const PatientCard = ({ navigation, route }) => {
               <Text style={styles.listItemFieldText}>
                 {patient.code ? ">" : ""} {patient.code}
               </Text>
+              {patient.diagnosis.map((diagnose) => (
+                <Text style={styles.listItemFieldText} key={diagnose.id}>
+                  {"> "} {diagnose.disease_name}
+                </Text>
+              ))}
               <SubtitleLabelWithButton
                 subtitle="Notatka"
                 iconName="pen"
@@ -191,6 +196,7 @@ const styles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     alignSelf: "flex-start",
     marginLeft: 70,
+    marginRight: 15,
   },
   noteListItemFieldText: {
     color: Colors.PURPLE,

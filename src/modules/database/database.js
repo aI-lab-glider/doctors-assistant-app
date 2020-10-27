@@ -66,7 +66,7 @@ const getAllFromTable = async (table) => {
     console.log(`Successfully get ${records.length} from ${table} `);
     return records;
   } catch (e) {
-    console.log(`db error load patients ${e}`);
+    console.log(`db error load objects from ${table} ${e.message}`);
     return null;
   }
 };
@@ -79,7 +79,7 @@ const insertObjectToTable = async (object, table) => {
     console.log(`Successfully insert object to ${table} with id ${id}`);
     return id;
   } catch (e) {
-    console.log(`DB error insert object to ${table} ${e[0]}`);
+    console.log(`DB error insert object to ${table} ${e.message}`);
     return null;
   }
 };
@@ -90,10 +90,12 @@ const updateObjectFromTable = async (object, table) => {
       .table(table)
       .where("id", "=", object.id)
       .update(object);
-    console.log(`Successfully update object to ${table} with id ${object.id}`);
+    console.log(
+      `Successfully update object from ${table} with id ${object.id}`
+    );
     return result;
   } catch (e) {
-    console.log(`DB error update object to ${table} ${e[0].message}`);
+    console.log(`DB error update object from ${table} ${e.message}`);
     return null;
   }
 };
