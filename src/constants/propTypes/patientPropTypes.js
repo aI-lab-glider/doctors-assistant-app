@@ -15,7 +15,15 @@ export const CodeProp = (props, propName, componentName) => {
   }
   return null;
 };
-// TODO: Create service to add new diagnosis to database
+export const DiagnosisProptypes = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  disease_code: CodeProp.isRequired,
+  disease_name: PropTypes.string.isRequired,
+  module_code: PropTypes.string.isRequired,
+  module_name: PropTypes.string.isRequired,
+  timestamp: PropTypes.string.isRequired,
+});
+
 // TODO: Add guardianship to patient table
 const Patient = PropTypes.shape({
   name: PropTypes.string.isRequired,
@@ -30,6 +38,7 @@ const Patient = PropTypes.shape({
   note: PropTypes.string,
   person_guard: PropTypes.string,
   phone_guard: PropTypes.string,
+  diagnosis: PropTypes.arrayOf(DiagnosisProptypes),
 });
 
 export default Patient;

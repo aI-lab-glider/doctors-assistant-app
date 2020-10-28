@@ -1,3 +1,4 @@
+import Builder from "crane-query-builder";
 import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import reducer, { PATIENT_ACTIONS } from "./PatientsContextReducer";
@@ -15,10 +16,39 @@ function PatientsContextProvider({ children }) {
   useEffect(() => {
     const refreshPatients = async () => {
       const patients = await database.getAllFromTable(TABLES.patients);
-      dispatch({
-        type: PATIENT_ACTIONS.REFRESH,
-        payload: { patients },
-      });
+      try {
+        // Get all diagnosis
+        const builder = Builder()
+          .table(TABLES.patients_diagnosis)
+          .join(
+            TABLES.diagnosis,
+            `${TABLES.patients_diagnosis}.diagnosis_id`,
+            "=",
+            `${TABLES.diagnosis}.id`
+          );
+        const allDiagnosis = await builder.get();
+        const diagnosisByPatientId = {};
+
+        // Divide diagnosis per patient
+        allDiagnosis.forEach((diagnosis) => {
+          const singlePatientDiagnosis =
+            diagnosisByPatientId[diagnosis.patient_id] || [];
+          singlePatientDiagnosis.push(diagnosis);
+          diagnosisByPatientId[diagnosis.patient_id] = singlePatientDiagnosis;
+        });
+
+        // Assign diagnosis to each patient
+        patients.forEach((patient, index) => {
+          patients[index].diagnosis = diagnosisByPatientId[patient.id];
+        }, patients);
+
+        dispatch({
+          type: PATIENT_ACTIONS.REFRESH,
+          payload: { patients },
+        });
+      } catch (e) {
+        console.log(`DB error get diagnosis ${e.message}`);
+      }
     };
 
     refreshPatients();
