@@ -11,7 +11,7 @@ import {
 const DiagnosisResults = ({ route }) => {
   const { diseasesProbability, module } = route.params;
   return (
-    <DiagnosisContainer module={module}>
+    <DiagnosisContainer module={module} subTitle="Podsumowanie">
       <FlatList
         data={diseasesProbability}
         renderItem={({ item }) => <Result onPress={() => {}} item={item} />}

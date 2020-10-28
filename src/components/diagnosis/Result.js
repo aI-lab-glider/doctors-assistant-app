@@ -5,17 +5,20 @@ import { CodeProp } from "../../constants/propTypes/patientPropTypes";
 import Criteria from "./Criteria";
 import Checkbox from "../common/Checkbox";
 import { Colors, Typography } from "../../constants/styles";
+import cardStyles from "../../constants/styles/cardStyles";
 
 const Result = ({ item, onPress }) => {
   return (
-    <View>
-      <Text style={styles.name}>{item.disease_name}</Text>
+    <View style={styles.item}>
       <View style={styles.container}>
-        <Text style={styles.code}>ICD 10: {item.disease_icd10}</Text>
-        <Text style={styles.code}>Prawdopodobieństwo: {item.probability}%</Text>
-        <Checkbox onPress={onPress} />
+        <Text style={styles.name}>{item.disease_name}</Text>
+        <Checkbox style={styles.checkbox} onPress={onPress} />
       </View>
-      <Text style={styles.name}>Kryteria</Text>
+      <View style={styles.container}>
+        <Text style={styles.criteria}>Kryteria</Text>
+        <Text style={styles.code}>{item.probability}</Text>
+      </View>
+
       <Criteria
         name="ogólne"
         allAnswersNumber={item.conditionsAcc.main.allAnswers}
@@ -37,14 +40,37 @@ const Result = ({ item, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   name: {
-    fontSize: Typography.FONT_SIZE_16,
-    fontFamily: Typography.FONT_FAMILY_BOLD,
+    fontSize: Typography.FONT_SIZE_14,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
     color: Colors.PURPLE,
+    padding: 5,
+    flex: 0.85,
+  },
+  checkbox: {
+    flex: 0.15,
+  },
+  criteria: {
+    fontSize: Typography.FONT_SIZE_14,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    color: Colors.PURPLE,
+    padding: 5,
+  },
+  code: {
+    fontSize: Typography.FONT_SIZE_14,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    color: Colors.PURPLE,
+    paddingRight: 5,
+    marginRight: 10,
+  },
+  item: {
+    ...cardStyles.cardItem,
+    marginHorizontal: 6,
   },
 });
 
