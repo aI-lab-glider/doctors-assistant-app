@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { CodeProp } from "../../constants/propTypes/patientPropTypes";
 import Criteria from "./Criteria";
 import Checkbox from "../common/Checkbox";
@@ -12,11 +13,23 @@ const Result = ({ item, onPress }) => {
     <View style={styles.item}>
       <View style={styles.container}>
         <Text style={styles.name}>{item.disease_name}</Text>
-        <Checkbox style={styles.checkbox} onPress={onPress} />
+        <Checkbox
+          style={styles.checkbox}
+          color={Colors.PURPLE_MEDIUM}
+          onPress={onPress}
+        />
       </View>
       <View style={styles.container}>
         <Text style={styles.criteria}>Kryteria</Text>
-        <Text style={styles.code}>{item.probability}</Text>
+        <MaterialCommunityIcons
+          name="dice-multiple"
+          style={styles.dice}
+          size={24}
+          color={Colors.PURPLE_MEDIUM}
+        />
+        <Text style={styles.probability}>
+          {Math.round(item.probability * 100)}%
+        </Text>
       </View>
 
       <Criteria
@@ -54,19 +67,24 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     flex: 0.15,
+    alignSelf: "flex-start",
   },
   criteria: {
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     color: Colors.PURPLE,
     padding: 5,
+    flex: 0.8,
   },
-  code: {
+  dice: {
+    flex: 0.1,
+    alignSelf: "flex-start",
+  },
+  probability: {
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     color: Colors.PURPLE,
-    paddingRight: 5,
-    marginRight: 10,
+    flex: 0.1,
   },
   item: {
     ...cardStyles.cardItem,
