@@ -55,9 +55,7 @@ MinorQuestionsForm.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       module: modulePropTypes.isRequired,
-      majorAnswers: PropTypes.arrayOf(
-        PropTypes.oneOfType(PropTypes.bool || undefined)
-      ).isRequired,
+      majorAnswers: PropTypes.arrayOf(PropTypes.number).isRequired,
     }).isRequired,
   }).isRequired,
 };

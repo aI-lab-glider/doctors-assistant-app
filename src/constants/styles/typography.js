@@ -31,6 +31,7 @@ export const BOX_SHADOW = boxShadow();
 
 // CORNERS
 export const BORDER_RADIUS = 20;
+export const BORDER_RADIUS_SLIGHT = 10;
 
 // FONT STYLE
 export const FONT_REGULAR = {

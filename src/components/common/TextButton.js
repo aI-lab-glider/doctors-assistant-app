@@ -7,7 +7,7 @@ import {
   View,
   ViewPropTypes,
 } from "react-native";
-import { BORDER_RADIUS } from "../../constants/styles/typography";
+import { BORDER_RADIUS_SLIGHT } from "../../constants/styles/typography";
 import { Colors, Typography } from "../../constants/styles";
 
 const TextButton = ({
@@ -34,11 +34,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
-    borderRadius: BORDER_RADIUS,
+    borderRadius: BORDER_RADIUS_SLIGHT,
     backgroundColor: Colors.PURPLE,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: 15,
+    marginBottom: 20,
+    shadowColor: Colors.BLACK,
+    shadowOpacity: 1.5,
+    elevation: 6,
+    shadowRadius: 10,
+    shadowOffset: { width: 1, height: 13 },
   },
   text: {
     color: Colors.PURPLE_VERY_LIGHT,
