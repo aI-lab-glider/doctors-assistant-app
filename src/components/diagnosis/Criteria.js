@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 5,
-    marginLeft: 40,
+    marginLeft: 20,
   },
   name: {
     fontSize: Typography.FONT_SIZE_14,
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   conditions: {
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
+    marginRight: 10,
   },
 });
 

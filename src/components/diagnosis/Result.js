@@ -1,21 +1,37 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { CodeProp } from "../../constants/propTypes/patientPropTypes";
 import Criteria from "./Criteria";
 import Checkbox from "../common/Checkbox";
 import { Colors, Typography } from "../../constants/styles";
+import cardStyles from "../../constants/styles/cardStyles";
 
 const Result = ({ item, onPress }) => {
   return (
-    <View>
-      <Text style={styles.name}>{item.disease_name}</Text>
+    <View style={styles.item}>
       <View style={styles.container}>
-        <Text style={styles.code}>ICD 10: {item.disease_icd10}</Text>
-        <Text style={styles.code}>Prawdopodobieństwo: {item.probability}%</Text>
-        <Checkbox onPress={onPress} />
+        <Text style={styles.name}>{item.disease_name}</Text>
+        <Checkbox
+          style={styles.checkbox}
+          color={Colors.PURPLE_MEDIUM}
+          onPress={onPress}
+        />
       </View>
-      <Text style={styles.name}>Kryteria</Text>
+      <View style={styles.container}>
+        <Text style={styles.criteria}>Kryteria</Text>
+        <MaterialCommunityIcons
+          name="dice-multiple"
+          style={styles.dice}
+          size={24}
+          color={Colors.PURPLE_MEDIUM}
+        />
+        <Text style={styles.probability}>
+          {Math.round(item.probability * 100)}%
+        </Text>
+      </View>
+
       <Criteria
         name="ogólne"
         allAnswersNumber={item.conditionsAcc.main.allAnswers}
@@ -37,14 +53,42 @@ const Result = ({ item, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   name: {
-    fontSize: Typography.FONT_SIZE_16,
-    fontFamily: Typography.FONT_FAMILY_BOLD,
+    fontSize: Typography.FONT_SIZE_14,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
     color: Colors.PURPLE,
+    padding: 5,
+    flex: 0.85,
+  },
+  checkbox: {
+    flex: 0.15,
+    alignSelf: "flex-start",
+  },
+  criteria: {
+    fontSize: Typography.FONT_SIZE_14,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    color: Colors.PURPLE,
+    padding: 5,
+    flex: 0.8,
+  },
+  dice: {
+    flex: 0.1,
+    alignSelf: "flex-start",
+  },
+  probability: {
+    fontSize: Typography.FONT_SIZE_14,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    color: Colors.PURPLE,
+    flex: 0.1,
+  },
+  item: {
+    ...cardStyles.cardItem,
+    marginHorizontal: 6,
   },
 });
 

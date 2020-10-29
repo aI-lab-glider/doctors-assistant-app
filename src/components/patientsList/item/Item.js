@@ -6,11 +6,8 @@ import Header from "./Header";
 import InterviewInfo from "./InterviewInfo";
 import Patient from "../../../constants/propTypes/patientPropTypes";
 import CircleButton from "../../common/CircleButton";
-import {
-  BORDER_RADIUS,
-  BOX_SHADOW,
-} from "../../../constants/styles/typography";
 import PatientBasicData from "../../../constants/propTypes/basicDataPropTypes";
+import cardStyles from "../../../constants/styles/cardStyles";
 
 const Item = ({ onPress, patient, patientsBasicData }) => {
   const mapDiagnosisToString = (diagnosis) => {
@@ -62,12 +59,7 @@ const Item = ({ onPress, patient, patientsBasicData }) => {
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: Colors.GRAY_VERY_LIGHT,
-    padding: 6,
-    marginVertical: 6,
-    marginHorizontal: 16,
-    borderRadius: BORDER_RADIUS,
-    ...BOX_SHADOW,
+    ...cardStyles.cardItem,
   },
   addButton: {
     position: "absolute",

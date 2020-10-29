@@ -5,7 +5,7 @@ import FontForgeIcon from "./FontForgeIcon";
 
 import { Colors } from "../../constants/styles";
 
-const Checkbox = ({ isChecked, onPress, style, disabled }) => {
+const Checkbox = ({ isChecked, onPress, style, color, disabled }) => {
   const icon = isChecked ? "checked" : "unchecked";
 
   return (
@@ -16,7 +16,7 @@ const Checkbox = ({ isChecked, onPress, style, disabled }) => {
         onPress(!isChecked);
       }}
     >
-      <FontForgeIcon name={icon} size={38} color={Colors.PINK_MEDIUM} />
+      <FontForgeIcon name={icon} size={38} color={color} />
     </TouchableOpacity>
   );
 };
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
 
 Checkbox.defaultProps = {
   style: {},
+  color: Colors.PINK_MEDIUM,
   disabled: false,
   isChecked: false,
   onPress: () => {},
@@ -38,6 +39,7 @@ Checkbox.propTypes = {
   onPress: PropTypes.func,
   isChecked: PropTypes.bool,
   style: ViewPropTypes.style,
+  color: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
