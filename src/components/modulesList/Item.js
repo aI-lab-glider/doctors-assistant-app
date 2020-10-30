@@ -6,20 +6,19 @@ import { Colors, Typography } from "../../constants/styles";
 
 const ModuleItem = ({ module, onPress, conditionMet }) => {
   const iconName = conditionMet === 1 ? "check" : "close";
+  const iconColor = conditionMet === 1 ? Colors.GREEN : Colors.RED;
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.text}>{module.name}</Text>
       </TouchableOpacity>
       {conditionMet != null && (
-        <>
-          <AntDesign
-            style={styles.icon}
-            name={iconName}
-            size={24}
-            color={Colors.PURPLE_MEDIUM}
-          />
-        </>
+        <AntDesign
+          style={styles.icon}
+          name={iconName}
+          size={24}
+          color={iconColor}
+        />
       )}
     </View>
   );
