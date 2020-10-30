@@ -8,12 +8,33 @@ import TextButton from "../common/TextButton";
 import { modulePropTypes } from "../../constants/propTypes/diagnosis";
 
 const ModulesList = ({ onItemPress, modules, onFinishPress }) => {
+  const conditionsMet = [
+    0,
+    1,
+    null,
+    null,
+    null,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    0,
+    null,
+    1,
+    null,
+  ];
   return (
     <FlatList
       data={modules}
       keyExtractor={(module) => module.name}
-      renderItem={({ item }) => (
-        <ModuleItem module={item} onPress={() => onItemPress(item)} />
+      renderItem={({ item, index }) => (
+        <ModuleItem
+          module={item}
+          onPress={() => onItemPress(item)}
+          conditionMet={conditionsMet[index]}
+        />
       )}
       ItemSeparatorComponent={({ highlighted }) => (
         <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
@@ -28,8 +49,10 @@ const ModulesList = ({ onItemPress, modules, onFinishPress }) => {
 
 const styles = StyleSheet.create({
   separator: {
-    height: 2,
+    height: 1,
     backgroundColor: Colors.PURPLE_LIGHT,
+    width: "90%",
+    marginLeft: 20,
   },
   listFooterComponentStyle: { marginTop: 20 },
 });
