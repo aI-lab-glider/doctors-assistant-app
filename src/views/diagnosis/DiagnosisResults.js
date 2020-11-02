@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, FlatList, StyleSheet, Text } from "react-native";
 import Result from "../../components/diagnosis/Result";
@@ -7,8 +7,8 @@ import {
   diseasesProbabilityPropTypes,
   modulePropTypes,
 } from "../../constants/propTypes/diagnosis";
-import AppButton from "../../components/common/AppButton";
 import { Colors, Typography } from "../../constants/styles";
+import TextButton from "../../components/common/TextButton";
 
 const DiagnosisResults = ({ navigation, route }) => {
   const threshold = 0.33;
@@ -19,25 +19,44 @@ const DiagnosisResults = ({ navigation, route }) => {
     })
     .sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
 
+  const [submitDiagnosis, setDiagnosis] = useState([]);
+
+  const toggleDiagnosis = (diagnosis) => {
+    const newSubmitDiagnosis = submitDiagnosis;
+    const diagnosisIndex = submitDiagnosis.findIndex((diag) => {
+      return diag.disease_icd10 === diagnosis.disease_icd10;
+    });
+    if (diagnosisIndex === -1) {
+      newSubmitDiagnosis.push(diagnosis);
+    } else {
+      newSubmitDiagnosis.splice(diagnosisIndex);
+    }
+    setDiagnosis(newSubmitDiagnosis);
+  };
+
   const onSubmit = () => {
-    Alert.alert(
-      "",
-      "Nie zatwierdzono żadnej diagnozy. Czy na pewno chcesz zakończyć i powrócić do listy modułów?",
-      [
-        {
-          text: "Kontynuuj",
-          style: "cancel",
-          onPress: () => {},
-        },
-        {
-          text: "Zakończ",
-          style: "destructive",
-          onPress: () => {
-            navigation.navigate("ModulesList");
+    if (submitDiagnosis.length > 0) {
+      navigation.navigate("ModulesList");
+    } else {
+      Alert.alert(
+        "",
+        "Nie zatwierdzono żadnej diagnozy. Czy na pewno chcesz zakończyć i powrócić do listy modułów?",
+        [
+          {
+            text: "Kontynuuj",
+            style: "cancel",
+            onPress: () => {},
           },
-        },
-      ]
-    );
+          {
+            text: "Zakończ",
+            style: "destructive",
+            onPress: () => {
+              navigation.navigate("ModulesList");
+            },
+          },
+        ]
+      );
+    }
   };
 
   return (
@@ -45,19 +64,17 @@ const DiagnosisResults = ({ navigation, route }) => {
       {filteredDiseasesProbability.length > 0 && (
         <FlatList
           data={filteredDiseasesProbability}
-          renderItem={({ item }) => <Result onPress={() => {}} item={item} />}
+          renderItem={({ item }) => (
+            <Result onCheckboxPress={() => toggleDiagnosis(item)} item={item} />
+          )}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={
-            <AppButton
-              icon="next_btn"
-              onPress={onSubmit}
-              iconStyle={styles.submitButtonStyle}
-            />
+            <TextButton onPress={onSubmit} text="Dodaj rozpoznanie" />
           }
+          ListFooterComponentStyle={styles.submitButtonStyle}
           ListHeaderComponent={
             <Text style={styles.infoText}>
-              Zaznacz pola wyboru ze zdiagnozowanymi chorobami i zatwierdź je
-              przyciskiem na dole
+              Zaznacz pola, które Twoim zdaniem odpowiadają trafnej diagnozie
             </Text>
           }
         />
@@ -85,7 +102,7 @@ DiagnosisResults.propTypes = {
 
 const styles = StyleSheet.create({
   submitButtonStyle: {
-    marginTop: 0,
+    marginTop: 20,
   },
   infoText: {
     marginBottom: 20,
