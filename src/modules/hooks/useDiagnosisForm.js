@@ -10,16 +10,6 @@ const useDiagnosisForm = (module, minor) => {
     setAnswers(Array(moduleQuestions.length).fill(undefined));
   };
 
-  const setAnswerByIndex = (index, answer) => {
-    if (index > answer.length) {
-      console.warn("Anwer array out of bounds");
-    } else {
-      const newAnswers = answers;
-      newAnswers[index] = answer;
-      setAnswers(newAnswers);
-    }
-  };
-
   useEffect(() => {
     const fetchQuestionFromDb = async () => {
       const moduleQuestions = await Builder()
@@ -33,7 +23,7 @@ const useDiagnosisForm = (module, minor) => {
     fetchQuestionFromDb();
   }, [module]);
 
-  return [questions, answers, setAnswerByIndex];
+  return [questions, answers];
 };
 
 export default useDiagnosisForm;

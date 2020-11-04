@@ -12,11 +12,11 @@ const MajorQuestionsForm = ({ navigation, route }) => {
   const { module } = route.params;
   const { code: moduleCode } = module;
 
-  const [questions, answers, setAnswerByIndex] = useDiagnosisForm(module, 0);
+  const [questions, answers] = useDiagnosisForm(module, 0);
 
-  const onSubmit = () => {
-    if (goOnDetailsQuestions(moduleCode, answers)) {
-      navigation.navigate("Minor", { module, majorAnswers: answers });
+  const onSubmit = (answersValues) => {
+    if (goOnDetailsQuestions(moduleCode, answersValues)) {
+      navigation.navigate("Minor", { module, majorAnswers: answersValues });
     } else {
       Alert.alert(
         "Informacja",
@@ -38,11 +38,10 @@ const MajorQuestionsForm = ({ navigation, route }) => {
     <DiagnosisContainer module={module}>
       <DiagnosisForm
         onSubmit={onSubmit}
-        setAnswerByIndex={setAnswerByIndex}
         questions={questions}
         answers={answers}
         footerComponent={
-          <TextButton onPress={onSubmit} text="Sprawdź odpowiedzi" />
+          <TextButton onPress={onSubmit} text="Sprawdź warunki podstawowe" />
         }
         footerComponentStyle={styles.footerComponentStyle}
       />

@@ -1,56 +1,65 @@
 import React, { cloneElement } from "react";
 import PropTypes from "prop-types";
-import { Alert, FlatList, ViewPropTypes } from "react-native";
+import { FlatList, ViewPropTypes } from "react-native";
+import { Formik, FieldArray } from "formik";
 import DiagnosisQuestionItem from "./QuestionItem";
 
 const DiagnosisForm = ({
   questions,
-  setAnswerByIndex,
   answers,
   footerComponent,
   footerComponentStyle,
 }) => {
-  const onPressWithValidation = (onPress) => {
-    const checkedAnswers = answers.filter((answer) => answer !== undefined);
+  const validate = (values) => {
+    const errors = { answers: [] };
 
-    const allCheckboxChecked = checkedAnswers.length === answers.length;
-    if (allCheckboxChecked === true) {
-      onPress();
-    } else {
-      // TODO: Set all empty questions labels color to red and add some error message near them
-      Alert.alert("Błąd", "Wykryto brakujące odpowiedzi", [
-        {
-          text: "Popraw",
-          style: "cancel",
-          onPress: () => {},
-        },
-      ]);
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < questions.length; i++) {
+      if (values.answers[i] == null)
+        errors.answers[i] = "Wykryto brakującą odpowiedź";
     }
-  };
-
-  const addValidationToFooterComponent = () => {
-    const { onPress } = footerComponent.props;
-    return cloneElement(footerComponent, {
-      ...footerComponent.props,
-      onPress: () => onPressWithValidation(onPress),
-    });
+    return errors;
   };
 
   return (
-    <FlatList
-      data={questions}
-      keyExtractor={(question) => question.content}
-      renderItem={({ item, index }) => (
-        <DiagnosisQuestionItem
-          question={item}
-          setAnswer={(answer) => {
-            setAnswerByIndex(index, answer);
+    <Formik initialValues={{ answers }} validate={validate} onSubmit={() => {}}>
+      {({ setFieldValue, values, handleSubmit, errors }) => (
+        <FieldArray name="answers">
+          {() => {
+            return (
+              <FlatList
+                data={questions}
+                keyExtractor={(question) => question.content}
+                renderItem={({ item, index }) => (
+                  <>
+                    <DiagnosisQuestionItem
+                      name={`answers[${index}]`}
+                      question={item}
+                      setAnswer={(answer) => {
+                        setFieldValue(`answers[${index}]`, answer);
+                      }}
+                    />
+                  </>
+                )}
+                ListFooterComponentStyle={footerComponentStyle}
+                ListFooterComponent={() => {
+                  const { onPress } = footerComponent.props;
+                  return cloneElement(footerComponent, {
+                    ...footerComponent.props,
+                    onPress: () => {
+                      handleSubmit(values);
+                      if (errors.answers.length === 0) {
+                        onPress(values.answers);
+                      }
+                    },
+                  });
+                }}
+              />
+            );
           }}
-        />
+        </FieldArray>
       )}
-      ListFooterComponentStyle={footerComponentStyle}
-      ListFooterComponent={addValidationToFooterComponent()}
-    />
+    </Formik>
   );
 };
 
@@ -63,8 +72,10 @@ DiagnosisForm.propTypes = {
       content: PropTypes.string.isRequired,
     })
   ).isRequired,
-  setAnswerByIndex: PropTypes.func.isRequired,
-  answers: PropTypes.arrayOf(PropTypes.bool.isRequired).isRequired,
+  answers: PropTypes.oneOfType([
+    PropTypes.arrayOf(undefined),
+    PropTypes.arrayOf(PropTypes.number),
+  ]).isRequired,
   footerComponent: PropTypes.element.isRequired,
   footerComponentStyle: ViewPropTypes.style,
 };
