@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -8,7 +8,14 @@ import Checkbox from "../common/Checkbox";
 import { Colors, Typography } from "../../constants/styles";
 import cardStyles from "../../constants/styles/cardStyles";
 
-const Result = ({ item, onPress }) => {
+const Result = ({ item, onCheckboxPress }) => {
+  const [isChecked, setCheck] = useState(false);
+
+  const onPress = () => {
+    setCheck(!isChecked);
+    onCheckboxPress();
+  };
+
   return (
     <View style={styles.item}>
       <View style={styles.container}>
@@ -17,6 +24,7 @@ const Result = ({ item, onPress }) => {
           style={styles.checkbox}
           color={Colors.PURPLE_MEDIUM}
           onPress={onPress}
+          isChecked={isChecked}
         />
       </View>
       <View style={styles.container}>
@@ -112,7 +120,7 @@ Result.propTypes = {
       }),
     }),
   }).isRequired,
-  onPress: PropTypes.func.isRequired,
+  onCheckboxPress: PropTypes.func.isRequired,
 };
 
 export default Result;
