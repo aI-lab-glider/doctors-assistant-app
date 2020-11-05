@@ -13,10 +13,10 @@ const MinorQuestionsForm = ({ navigation, route }) => {
   const { code: moduleCode } = module;
   const [questions, answers] = useDiagnosisForm(module, 1);
 
-  const onSubmit = () => {
+  const onSubmit = (answersValues) => {
     const diseasesProbability = calculateDiseasesProbability(
       majorAnswers,
-      answers,
+      answersValues,
       moduleCode
     );
     navigation.navigate("Results", { diseasesProbability, module });

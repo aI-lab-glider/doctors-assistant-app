@@ -22,8 +22,16 @@ const DiagnosisForm = ({
   };
 
   return (
-    <Formik initialValues={{ answers }} validate={validate} onSubmit={() => {}}>
-      {({ setFieldValue, values, handleSubmit, errors }) => (
+    <Formik
+      initialValues={{ answers }}
+      validate={validate}
+      validateOnChange
+      validateOnBlur={false}
+      onSubmit={(values) => {
+        validate(values);
+      }}
+    >
+      {({ values, handleSubmit, errors }) => (
         <FieldArray name="answers">
           {() => {
             return (
@@ -35,9 +43,6 @@ const DiagnosisForm = ({
                     <DiagnosisQuestionItem
                       name={`answers[${index}]`}
                       question={item}
-                      setAnswer={(answer) => {
-                        setFieldValue(`answers[${index}]`, answer);
-                      }}
                     />
                   </>
                 )}

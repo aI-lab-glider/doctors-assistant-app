@@ -7,47 +7,52 @@ import FormError from "../forms/fields/FormError";
 import formStyles from "../../constants/styles/formStyles";
 import { Colors, Typography } from "../../constants/styles";
 
-const DiagnosisQuestionItem = ({ question, setAnswer }) => {
-  const [answer, setLocalAnswer] = useState(undefined);
-  const { errors, touched } = useFormikContext();
+const DiagnosisQuestionItem = React.memo(
+  ({ name, question }) => {
+    const [answer, setLocalAnswer] = useState(undefined);
+    const { errors, touched, setFieldValue } = useFormikContext();
 
-  const setNewAnswer = (newAnswer) => {
-    setLocalAnswer(newAnswer);
-    setAnswer(newAnswer);
-  };
+    const setNewAnswer = (newAnswer) => {
+      setLocalAnswer(newAnswer);
+      setFieldValue(name, newAnswer);
+    };
 
-  return (
-    <View>
-      <Text style={styles.subtitleText}>{question.content}</Text>
-      <View style={styles.answersContainer}>
-        <View style={styles.singleAnswerContainer}>
-          <Checkbox
-            isChecked={answer === 1}
-            onPress={() => setNewAnswer(1)}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>Tak</Text>
+    return (
+      <View>
+        <Text style={styles.subtitleText}>{question.content}</Text>
+        <View style={styles.answersContainer}>
+          <View style={styles.singleAnswerContainer}>
+            <Checkbox
+              isChecked={answer === 1}
+              onPress={() => setNewAnswer(1)}
+              style={styles.icon}
+            />
+            <Text style={styles.text}>Tak</Text>
+          </View>
+          <View style={styles.singleAnswerContainer}>
+            <Checkbox
+              isChecked={answer === 0}
+              onPress={() => setNewAnswer(0)}
+              style={styles.icon}
+            />
+            <Text style={styles.text}>Nie</Text>
+          </View>
         </View>
-        <View style={styles.singleAnswerContainer}>
-          <Checkbox
-            isChecked={answer === 0}
-            onPress={() => setNewAnswer(0)}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>Nie</Text>
-        </View>
+        <FormError
+          error={
+            !!errors.answers && !!errors.answers[question.id]
+              ? errors.answers[question.id]
+              : null
+          }
+          visible={!!touched.answers}
+        />
       </View>
-      <FormError
-        error={
-          !!errors.answers && !!errors.answers[question.id]
-            ? errors.answers[question.id]
-            : null
-        }
-        visible={!!touched.answers}
-      />
-    </View>
-  );
-};
+    );
+  },
+  (prevProps, nextProps) =>
+    prevProps.name === nextProps.name ||
+    prevProps.question.id === nextProps.question.id
+);
 
 const styles = StyleSheet.create({
   answersContainer: {
@@ -84,6 +89,6 @@ DiagnosisQuestionItem.propTypes = {
     id: PropTypes.number,
     content: PropTypes.string.isRequired,
   }).isRequired,
-  setAnswer: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
 };
 export default DiagnosisQuestionItem;
