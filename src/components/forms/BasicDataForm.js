@@ -421,6 +421,6 @@ BasicDataForm.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   values: PropTypes.shape({
     past_psychiatric_treatment: PropTypes.bool.isRequired,
-  }).isRequired, //
+  }).isRequired,
 };
 export default BasicDataForm;

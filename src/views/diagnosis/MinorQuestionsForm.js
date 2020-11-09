@@ -11,12 +11,12 @@ import AppButton from "../../components/common/AppButton";
 const MinorQuestionsForm = ({ navigation, route }) => {
   const { module, majorAnswers } = route.params;
   const { code: moduleCode } = module;
-  const [questions, answers, setAnswerByIndex] = useDiagnosisForm(module, 1);
+  const [questions, answers] = useDiagnosisForm(module, 1);
 
-  const onSubmit = () => {
+  const onSubmit = (answersValues) => {
     const diseasesProbability = calculateDiseasesProbability(
       majorAnswers,
-      answers,
+      answersValues,
       moduleCode
     );
     navigation.navigate("Results", { diseasesProbability, module });
@@ -26,7 +26,6 @@ const MinorQuestionsForm = ({ navigation, route }) => {
     <DiagnosisContainer module={module}>
       <DiagnosisForm
         onSubmit={onSubmit}
-        setAnswerByIndex={setAnswerByIndex}
         questions={questions}
         answers={answers}
         footerComponent={
@@ -44,6 +43,7 @@ const MinorQuestionsForm = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   submitButtonStyle: {
     marginTop: 0,
+    marginRight: 0,
   },
 });
 
