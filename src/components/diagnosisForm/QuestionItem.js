@@ -8,13 +8,14 @@ import formStyles from "../../constants/styles/formStyles";
 import { Colors, Typography } from "../../constants/styles";
 
 const DiagnosisQuestionItem = React.memo(
-  ({ name, question }) => {
+  ({ question, index }) => {
     const [answer, setLocalAnswer] = useState(undefined);
-    const { errors, touched, setFieldValue } = useFormikContext();
+    const { errors, touched, setFieldValue, values } = useFormikContext();
 
     const setNewAnswer = (newAnswer) => {
       setLocalAnswer(newAnswer);
-      setFieldValue(name, newAnswer);
+      values.answers.splice(index, 1, newAnswer);
+      setFieldValue("answers", values.answers);
     };
 
     return (
@@ -40,8 +41,8 @@ const DiagnosisQuestionItem = React.memo(
         </View>
         <FormError
           error={
-            !!errors.answers && !!errors.answers[question.id]
-              ? errors.answers[question.id]
+            !!errors.answers && !!errors.answers[index]
+              ? errors.answers[index]
               : null
           }
           visible={!!touched.answers}
@@ -49,9 +50,7 @@ const DiagnosisQuestionItem = React.memo(
       </View>
     );
   },
-  (prevProps, nextProps) =>
-    prevProps.name === nextProps.name ||
-    prevProps.question.id === nextProps.question.id
+  (prevProps, nextProps) => prevProps.index === nextProps.index
 );
 
 const styles = StyleSheet.create({
@@ -89,6 +88,6 @@ DiagnosisQuestionItem.propTypes = {
     id: PropTypes.number,
     content: PropTypes.string.isRequired,
   }).isRequired,
-  name: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
 };
 export default DiagnosisQuestionItem;

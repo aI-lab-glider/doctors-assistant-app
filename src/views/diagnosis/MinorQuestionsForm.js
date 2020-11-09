@@ -43,6 +43,7 @@ const MinorQuestionsForm = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   submitButtonStyle: {
     marginTop: 0,
+    marginRight: 0,
   },
 });
 

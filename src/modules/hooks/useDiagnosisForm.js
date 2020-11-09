@@ -7,7 +7,7 @@ const useDiagnosisForm = (module, minor) => {
   const [answers, setAnswers] = useState([]);
 
   const setDefaultAnswers = (moduleQuestions) => {
-    setAnswers(Array(moduleQuestions.length).fill(undefined));
+    setAnswers(Array(moduleQuestions.length).fill(-1));
   };
 
   useEffect(() => {

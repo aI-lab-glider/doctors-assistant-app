@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { FlatList, ViewPropTypes } from "react-native";
 import { Formik, FieldArray } from "formik";
 import DiagnosisQuestionItem from "./QuestionItem";
+import diagnosisValidationSchema from "../../constants/validationSchemas/diagnosisValidationSchema";
 
 const DiagnosisForm = ({
   questions,
@@ -10,28 +11,16 @@ const DiagnosisForm = ({
   footerComponent,
   footerComponentStyle,
 }) => {
-  const validate = (values) => {
-    const errors = { answers: [] };
-
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < questions.length; i++) {
-      if (values.answers[i] == null)
-        errors.answers[i] = "Wykryto brakującą odpowiedź";
-    }
-    return errors;
-  };
-
   return (
     <Formik
+      enableReinitialize
       initialValues={{ answers }}
-      validate={validate}
+      validationSchema={diagnosisValidationSchema}
       validateOnChange
       validateOnBlur={false}
-      onSubmit={(values) => {
-        validate(values);
-      }}
+      onSubmit={() => {}}
     >
-      {({ values, handleSubmit, errors }) => (
+      {({ values, handleSubmit, isValid }) => (
         <FieldArray name="answers">
           {() => {
             return (
@@ -39,12 +28,7 @@ const DiagnosisForm = ({
                 data={questions}
                 keyExtractor={(question) => question.content}
                 renderItem={({ item, index }) => (
-                  <>
-                    <DiagnosisQuestionItem
-                      name={`answers[${index}]`}
-                      question={item}
-                    />
-                  </>
+                  <DiagnosisQuestionItem question={item} index={index} />
                 )}
                 ListFooterComponentStyle={footerComponentStyle}
                 ListFooterComponent={() => {
@@ -52,8 +36,8 @@ const DiagnosisForm = ({
                   return cloneElement(footerComponent, {
                     ...footerComponent.props,
                     onPress: () => {
-                      handleSubmit(values);
-                      if (errors.answers.length === 0) {
+                      handleSubmit();
+                      if (isValid) {
                         onPress(values.answers);
                       }
                     },
