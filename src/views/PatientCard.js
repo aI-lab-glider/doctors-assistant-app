@@ -102,7 +102,10 @@ const PatientCard = ({ navigation, route }) => {
               </Text>
               {patient.diagnosis.map((diagnose) => (
                 <Text style={styles.listItemFieldText} key={diagnose.id}>
-                  {"> "} {diagnose.disease_name}
+                  {"> "} {diagnose.disease_name}{" "}
+                  <Text style={styles.diagnosisCode}>
+                    ({diagnose.disease_code})
+                  </Text>{" "}
                 </Text>
               ))}
               <SubtitleLabelWithButton
@@ -205,6 +208,9 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginLeft: 50,
     width: "75%",
+  },
+  diagnosisCode: {
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
   },
   bottomMenu: {
     flex: 1,
