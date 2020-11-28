@@ -100,14 +100,18 @@ const PatientCard = ({ navigation, route }) => {
               <Text style={styles.listItemFieldText}>
                 {patient.code ? ">" : ""} {patient.code}
               </Text>
-              {patient.diagnosis.map((diagnose) => (
-                <Text style={styles.listItemFieldText} key={diagnose.id}>
-                  {"> "} {diagnose.disease_name}{" "}
-                  <Text style={styles.diagnosisCode}>
-                    ({diagnose.disease_code})
-                  </Text>{" "}
-                </Text>
-              ))}
+              {patient.diagnosis ? (
+                patient.diagnosis.map((diagnose) => (
+                  <Text style={styles.listItemFieldText} key={diagnose.id}>
+                    {"> "} {diagnose.disease_name}{" "}
+                    <Text style={styles.diagnosisCode}>
+                      ({diagnose.disease_code})
+                    </Text>{" "}
+                  </Text>
+                ))
+              ) : (
+                <Text />
+              )}
               <SubtitleLabelWithButton
                 subtitle="Notatka"
                 iconName="pen"
