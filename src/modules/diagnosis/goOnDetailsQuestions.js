@@ -5,19 +5,14 @@
  * @return {Boolean} - True if flow should go on details questions
  */
 
-import * as modulesData from "../../assets/diagnosis_data/modules_data.json";
+const getThisModule = (thisModuleCode, modulesData) => {
+  return modulesData.find((module) => module.code === thisModuleCode);
+};
 
-function getThisModule(thisModuleCode) {
-  let thisModule;
-  modulesData.default.forEach((module) => {
-    if (module.module_code === thisModuleCode) {
-      thisModule = module;
-    }
-  });
-  return thisModule;
-}
-
-export default function goOnDetailsQuestions(thisModuleCode, majorAnswers) {
-  const minMajorTrueAnswers = getThisModule(thisModuleCode).min_major_true;
+const goOnDetailsQuestions = (thisModuleCode, modulesData, majorAnswers) => {
+  const minMajorTrueAnswers = getThisModule(thisModuleCode, modulesData)
+    .min_major_true;
   return majorAnswers.reduce((a, b) => a + b, 0) >= minMajorTrueAnswers;
-}
+};
+
+export default goOnDetailsQuestions;

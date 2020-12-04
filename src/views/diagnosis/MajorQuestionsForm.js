@@ -7,15 +7,17 @@ import DiagnosisContainer from "./DiagnosisContainer";
 import { modulePropTypes } from "../../constants/propTypes/diagnosis";
 import useDiagnosisForm from "../../modules/hooks/useDiagnosisForm";
 import TextButton from "../../components/common/TextButton";
+import useModules from "../../modules/hooks/useModules";
 
 const MajorQuestionsForm = ({ navigation, route }) => {
   const { module } = route.params;
   const { code: moduleCode } = module;
 
   const [questions, answers] = useDiagnosisForm(module, 0);
+  const [modulesData] = useModules();
 
   const onSubmit = (answersValues) => {
-    if (goOnDetailsQuestions(moduleCode, answersValues)) {
+    if (goOnDetailsQuestions(moduleCode, modulesData, answersValues)) {
       navigation.navigate("Minor", { module, majorAnswers: answersValues });
     } else {
       Alert.alert(
