@@ -6,6 +6,7 @@ import DiagnosisResults from "../../../views/diagnosis/DiagnosisResults";
 import ModulesListScreen from "../../../views/diagnosis/ModulesListScreen";
 import MajorQuestionsForm from "../../../views/diagnosis/MajorQuestionsForm";
 import MinorQuestionsForm from "../../../views/diagnosis/MinorQuestionsForm";
+import DiagnosisContextProvider from "../../context/DiagnosisContext";
 
 const Stack = createStackNavigator();
 
@@ -46,21 +47,23 @@ export const getDiagnosisHeaderTitle = (route) => {
 
 const DiagnosisNavigator = () => {
   return (
-    <Stack.Navigator
-      initialRouteName={initialRoute.name}
-      screenOptions={HeaderOptions}
-    >
-      {Routes.map(({ name, component, title }) => (
-        <Stack.Screen
-          name={name}
-          key={name}
-          component={component}
-          options={{
-            title,
-          }}
-        />
-      ))}
-    </Stack.Navigator>
+    <DiagnosisContextProvider>
+      <Stack.Navigator
+        initialRouteName={initialRoute.name}
+        screenOptions={HeaderOptions}
+      >
+        {Routes.map(({ name, component, title }) => (
+          <Stack.Screen
+            name={name}
+            key={name}
+            component={component}
+            options={{
+              title,
+            }}
+          />
+        ))}
+      </Stack.Navigator>
+    </DiagnosisContextProvider>
   );
 };
 

@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { StyleSheet } from "react-native";
 import DiagnosisForm from "../../components/diagnosisForm/DiagnosisForm";
 import calculateDiseasesProbability from "../../modules/diagnosis/calculateDiseasesProbability";
 import DiagnosisContainer from "./DiagnosisContainer";
-import { modulePropTypes } from "../../constants/propTypes/diagnosis";
 import useDiagnosisForm from "../../modules/hooks/useDiagnosisForm";
 import useDiagnosisConditions from "../../modules/hooks/useDiagnosisConditions";
 import AppButton from "../../components/common/AppButton";
+import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
 const MinorQuestionsForm = ({ navigation, route }) => {
-  const { module, majorAnswers } = route.params;
-  const { code: moduleCode } = module;
-  const [questions, answers] = useDiagnosisForm(module, 1);
+  const { addAnswers } = useContext(DiagnosisContext);
+  const { moduleCode, majorAnswers } = route.params;
+  const isMinor = 1;
+  const [questions, answers] = useDiagnosisForm(moduleCode, isMinor);
   const [diagnosisData] = useDiagnosisConditions(moduleCode);
 
   const onSubmit = (answersValues) => {
@@ -22,11 +23,12 @@ const MinorQuestionsForm = ({ navigation, route }) => {
       moduleCode,
       diagnosisData
     );
-    navigation.navigate("Results", { diseasesProbability, module });
+    addAnswers(moduleCode, answersValues, isMinor);
+    navigation.navigate("Results", { diseasesProbability, moduleCode });
   };
 
   return (
-    <DiagnosisContainer module={module}>
+    <DiagnosisContainer moduleCode={moduleCode}>
       <DiagnosisForm
         onSubmit={onSubmit}
         questions={questions}
@@ -57,7 +59,7 @@ MinorQuestionsForm.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      module: modulePropTypes.isRequired,
+      moduleCode: PropTypes.string.isRequired,
       majorAnswers: PropTypes.arrayOf(PropTypes.number).isRequired,
     }).isRequired,
   }).isRequired,
