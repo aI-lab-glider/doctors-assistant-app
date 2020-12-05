@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Icon } from "react-native-elements";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -6,21 +6,11 @@ import { Colors, Typography } from "../../constants/styles";
 import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
 const ModuleItem = ({ moduleCode, onPress }) => {
-  const { modules, deleteDiagnosis } = useContext(DiagnosisContext);
+  const { modules } = useContext(DiagnosisContext);
   const module = modules[moduleCode];
-  const [moduleDiagnosis, setLocalDiagnosis] = useState(module.diagnosis);
-
   const iconColor = module.wasVisited
     ? Colors.GRAY_LIGHT
     : Colors.GRAY_VERY_LIGHT;
-
-  const deleteResult = (result) => {
-    const localDiagnosis = moduleDiagnosis.filter((diag) => {
-      return diag.disease_icd10 === result.disease_icd10;
-    });
-    setLocalDiagnosis(localDiagnosis);
-    deleteDiagnosis(moduleCode, result.disease_icd10);
-  };
 
   return (
     <View style={[styles.container, { backgroundColor: iconColor }]}>
@@ -40,7 +30,7 @@ const ModuleItem = ({ moduleCode, onPress }) => {
                 style={styles.icon}
                 size={24}
                 color={Colors.RED}
-                onPress={() => deleteResult(result)}
+                onPress={() => console.log("Usuwa rozpoznanie")}
               />
             </View>
           );

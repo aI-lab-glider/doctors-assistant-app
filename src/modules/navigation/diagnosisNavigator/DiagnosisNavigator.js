@@ -1,4 +1,5 @@
 import * as React from "react";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HeaderOptions from "../HeaderOptions";
 import DiagnosisResults from "../../../views/diagnosis/DiagnosisResults";
@@ -6,7 +7,6 @@ import ModulesListScreen from "../../../views/diagnosis/ModulesListScreen";
 import MajorQuestionsForm from "../../../views/diagnosis/MajorQuestionsForm";
 import MinorQuestionsForm from "../../../views/diagnosis/MinorQuestionsForm";
 import DiagnosisContextProvider from "../../context/DiagnosisContext";
-import { backAction } from "../Listeners";
 
 const Stack = createStackNavigator();
 
@@ -15,32 +15,35 @@ export const Routes = [
     name: "ModulesList",
     component: ModulesListScreen,
     title: "Lista modułów",
-    listeners: ({ navigation }) =>
-      backAction({
-        navigation,
-        navigationRouteName: "PatientCard",
-        message:
-          "Czy na pewno chcesz przerwać diagnozę? Rozpoznania nie zostaną dodane do pacjenta.",
-      }),
   },
   {
     name: "Results",
     component: DiagnosisResults,
-    title: "Wyniki diagnozy",
+    title: "Lista modułów",
   },
   {
     name: "Major",
     component: MajorQuestionsForm,
-    title: "Pytania podstawowe",
   },
   {
     name: "Minor",
     component: MinorQuestionsForm,
-    title: "Pytania uszczegóławiające",
   },
 ];
 
 const initialRoute = Routes[0];
+
+const routeWithCustomTitle = Routes[0];
+const defaultTitle = "Diagnoza";
+
+export const getDiagnosisHeaderTitle = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+
+  if (routeName === routeWithCustomTitle.name) {
+    return routeWithCustomTitle.title;
+  }
+  return defaultTitle;
+};
 
 const DiagnosisNavigator = () => {
   return (
@@ -49,7 +52,7 @@ const DiagnosisNavigator = () => {
         initialRouteName={initialRoute.name}
         screenOptions={HeaderOptions}
       >
-        {Routes.map(({ name, component, title, listeners }) => (
+        {Routes.map(({ name, component, title }) => (
           <Stack.Screen
             name={name}
             key={name}
@@ -57,7 +60,6 @@ const DiagnosisNavigator = () => {
             options={{
               title,
             }}
-            listeners={listeners}
           />
         ))}
       </Stack.Navigator>
