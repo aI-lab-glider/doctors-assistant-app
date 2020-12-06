@@ -10,10 +10,12 @@ import AppButton from "../../components/common/AppButton";
 import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
 const MinorQuestionsForm = ({ navigation, route }) => {
-  const { addAnswers } = useContext(DiagnosisContext);
+  const { addAnswers, modules } = useContext(DiagnosisContext);
   const { moduleCode, majorAnswers } = route.params;
+  const moduleAnswers = modules[moduleCode].minorAnswers;
   const isMinor = 1;
-  const [questions, answers] = useDiagnosisForm(moduleCode, isMinor);
+  const [questions, defaultAnswers] = useDiagnosisForm(moduleCode, isMinor);
+  const answers = moduleAnswers || defaultAnswers;
   const [diagnosisData] = useDiagnosisConditions(moduleCode);
 
   const onSubmit = (answersValues) => {
