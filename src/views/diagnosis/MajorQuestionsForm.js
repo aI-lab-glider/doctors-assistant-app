@@ -8,13 +8,17 @@ import TextButton from "../../components/common/TextButton";
 import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
 const MajorQuestionsForm = ({ navigation, route }) => {
-  const { addAnswers } = useContext(DiagnosisContext);
+  const { addAnswers, modules } = useContext(DiagnosisContext);
   const { moduleCode } = route.params;
+  const moduleAnswers = modules[moduleCode].majorAnswers;
+  const { minMajorTrue } = modules[moduleCode];
+
   const isMinor = 0;
-  const [questions, answers] = useDiagnosisForm(moduleCode, isMinor);
+  const [questions, defaultAnswers] = useDiagnosisForm(moduleCode, isMinor);
+  const answers = moduleAnswers || defaultAnswers;
 
   const goOnDetailsQuestions = (answersValues) => {
-    return answersValues.reduce((a, b) => a + b, 0) >= module.min_major_true;
+    return answersValues.reduce((a, b) => a + b, 0) >= minMajorTrue;
   };
 
   const onSubmit = (answersValues) => {

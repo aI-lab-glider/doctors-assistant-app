@@ -16,6 +16,7 @@ const reducer = (state, action) => {
         newState.modules[module.code].name = module.name;
         newState.modules[module.code].wasVisited = false;
         newState.modules[module.code].diagnosis = [];
+        newState.modules[module.code].minMajorTrue = module.min_major_true;
       });
       return newState;
     }

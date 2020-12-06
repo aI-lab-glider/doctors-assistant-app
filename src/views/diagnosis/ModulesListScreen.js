@@ -7,7 +7,6 @@ import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
 const ModulesListScreen = ({ navigation }) => {
   const { setModuleVisited, modules } = useContext(DiagnosisContext);
-  console.log(modules);
   const onItemPress = (moduleCode) => {
     setModuleVisited(moduleCode);
     navigation.navigate("Major", { moduleCode });
