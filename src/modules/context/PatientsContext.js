@@ -21,10 +21,10 @@ function PatientsContextProvider({ children }) {
         const builder = Builder()
           .table(TABLES.patients_diagnosis)
           .join(
-            TABLES.diagnosis,
-            `${TABLES.patients_diagnosis}.diagnosis_id`,
+            TABLES.diseases,
+            `${TABLES.patients_diagnosis}.disease_id`,
             "=",
-            `${TABLES.diagnosis}.id`
+            `${TABLES.diseases}.id`
           );
         const allDiagnosis = await builder.get();
         const diagnosisByPatientId = {};

@@ -12,9 +12,9 @@ const useDiagnosisConditions = (moduleCode) => {
         .where("module_code", moduleCode)
         .join(
           TABLES.diagnosis_conditions,
-          `${TABLES.diseases}.disease_icd10`,
+          `${TABLES.diseases}.id`,
           "=",
-          `${TABLES.diagnosis_conditions}.disease_icd10`
+          `${TABLES.diagnosis_conditions}.disease_id`
         )
         .get();
       setDiagnosisData(diagnosisConditions);

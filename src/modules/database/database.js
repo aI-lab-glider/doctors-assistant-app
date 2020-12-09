@@ -46,7 +46,6 @@ async function initDB() {
 }
 
 export const TABLES = {
-  diagnosis: "diagnosis",
   diagnosis_answers: "diagnosis_answers",
   diagnosis_conditions: "diagnosis_conditions",
   diseases: "diseases",
