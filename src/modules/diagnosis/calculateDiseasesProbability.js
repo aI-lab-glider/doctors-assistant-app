@@ -5,8 +5,6 @@
  * @return {Object} - Json with diseases probabilities
  */
 
-import * as diagnosisData from "../../assets/diagnosis_data/diagnosis_data.json";
-
 function compareWithAnswers(
   questions,
   comparisonSign,
@@ -76,7 +74,7 @@ function calculateSingleDiseaseSideProbability(
   Object.keys(diagnosisConditions).forEach((cond) => {
     if (
       (cond.slice(0, 4) === "side" || cond.slice(0, 6) === "detail") &&
-      diagnosisConditions[cond] !== "null"
+      diagnosisConditions[cond] !== null
     ) {
       sideCondsNumbers += 1;
       if (getCondValue(diagnosisConditions[cond], allAnswers)) {
@@ -84,17 +82,9 @@ function calculateSingleDiseaseSideProbability(
       }
     }
   });
-  return Number((trueSideCondsNumbers / sideCondsNumbers).toFixed(2));
-}
-
-function getThisModuleData(thisModuleCode) {
-  let thisModuleData;
-  diagnosisData.default.forEach((module) => {
-    if (module.module_code === thisModuleCode) {
-      thisModuleData = module;
-    }
-  });
-  return thisModuleData;
+  return sideCondsNumbers > 0
+    ? Number((trueSideCondsNumbers / sideCondsNumbers).toFixed(2))
+    : 1;
 }
 
 function conditionsAccomplishment(allAnswers, diagnosisConditions) {
@@ -112,7 +102,7 @@ function conditionsAccomplishment(allAnswers, diagnosisConditions) {
   conditionsAcc.detail.allAnswers = 0;
 
   Object.keys(diagnosisConditions).forEach((cond) => {
-    if (diagnosisConditions[cond] !== "null") {
+    if (diagnosisConditions[cond] !== null) {
       const answer = getCondValue(diagnosisConditions[cond], allAnswers);
       switch (cond.slice(0, 4)) {
         case "main":
@@ -139,7 +129,10 @@ function calculateSingleDiseaseProbability(allAnswers, singleDiagnosisData) {
   const newRecord = {};
   newRecord.disease_icd10 = singleDiagnosisData.disease_icd10;
   newRecord.disease_name = singleDiagnosisData.disease_name;
-  const diagnosisConditions = singleDiagnosisData.diagnosis_conditions;
+  const diagnosisConditions = Object.keys(singleDiagnosisData)
+    .filter((column) => column.includes("cond"))
+    .reduce((obj, key) => ({ ...obj, [key]: singleDiagnosisData[key] }), {});
+
   newRecord.conditionsAcc = conditionsAccomplishment(
     allAnswers,
     diagnosisConditions
@@ -159,12 +152,13 @@ function calculateSingleDiseaseProbability(allAnswers, singleDiagnosisData) {
 export default function calculateDiseasesProbability(
   majorAnswers,
   minorAnswers,
-  moduleCode
+  moduleCode,
+  diagnosisData
 ) {
   const allAnswers = majorAnswers.concat(minorAnswers);
   const probabilityData = [];
 
-  getThisModuleData(moduleCode).module_data.forEach((disease) => {
+  diagnosisData.forEach((disease) => {
     const diseaseProbability = calculateSingleDiseaseProbability(
       allAnswers,
       disease

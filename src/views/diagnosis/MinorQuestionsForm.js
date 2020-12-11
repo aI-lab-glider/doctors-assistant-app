@@ -6,18 +6,21 @@ import calculateDiseasesProbability from "../../modules/diagnosis/calculateDisea
 import DiagnosisContainer from "./DiagnosisContainer";
 import { modulePropTypes } from "../../constants/propTypes/diagnosis";
 import useDiagnosisForm from "../../modules/hooks/useDiagnosisForm";
+import useDiagnosisConditions from "../../modules/hooks/useDiagnosisConditions";
 import AppButton from "../../components/common/AppButton";
 
 const MinorQuestionsForm = ({ navigation, route }) => {
   const { module, majorAnswers } = route.params;
   const { code: moduleCode } = module;
   const [questions, answers] = useDiagnosisForm(module, 1);
+  const [diagnosisData] = useDiagnosisConditions(moduleCode);
 
   const onSubmit = (answersValues) => {
     const diseasesProbability = calculateDiseasesProbability(
       majorAnswers,
       answersValues,
-      moduleCode
+      moduleCode,
+      diagnosisData
     );
     navigation.navigate("Results", { diseasesProbability, module });
   };

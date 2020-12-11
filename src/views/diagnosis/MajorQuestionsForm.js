@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Alert, StyleSheet } from "react-native";
-import goOnDetailsQuestions from "../../modules/diagnosis/goOnDetailsQuestions";
 import DiagnosisForm from "../../components/diagnosisForm/DiagnosisForm";
 import DiagnosisContainer from "./DiagnosisContainer";
 import { modulePropTypes } from "../../constants/propTypes/diagnosis";
@@ -10,12 +9,15 @@ import TextButton from "../../components/common/TextButton";
 
 const MajorQuestionsForm = ({ navigation, route }) => {
   const { module } = route.params;
-  const { code: moduleCode } = module;
 
   const [questions, answers] = useDiagnosisForm(module, 0);
 
+  const goOnDetailsQuestions = (answersValues) => {
+    return answersValues.reduce((a, b) => a + b, 0) >= module.min_major_true;
+  };
+
   const onSubmit = (answersValues) => {
-    if (goOnDetailsQuestions(moduleCode, answersValues)) {
+    if (goOnDetailsQuestions(answersValues)) {
       navigation.navigate("Minor", { module, majorAnswers: answersValues });
     } else {
       Alert.alert(
