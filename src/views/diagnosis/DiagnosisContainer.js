@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
 import { Colors, Typography } from "../../constants/styles";
-import { modulePropTypes } from "../../constants/propTypes/diagnosis";
+import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
-const DiagnosisContainer = ({ children, module, subTitle }) => {
+const DiagnosisContainer = ({ children, moduleCode, subTitle }) => {
+  const { modules } = useContext(DiagnosisContext);
+  const module = modules ? modules[moduleCode] : null;
+
   return (
     <View style={styles.backgroundContainer}>
       <View style={styles.container}>
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
 });
 
 DiagnosisContainer.defaultProps = {
-  module: null,
+  moduleCode: "",
   subTitle: "",
 };
 
@@ -65,7 +68,7 @@ DiagnosisContainer.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  module: modulePropTypes,
+  moduleCode: PropTypes.string,
   subTitle: PropTypes.string,
 };
 

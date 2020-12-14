@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, FlatList, StyleSheet, Text } from "react-native";
 import Result from "../../components/diagnosis/Result";
 import DiagnosisContainer from "./DiagnosisContainer";
-import {
-  diseasesProbabilityPropTypes,
-  modulePropTypes,
-} from "../../constants/propTypes/diagnosis";
+import { diseasesProbabilityPropTypes } from "../../constants/propTypes/diagnosis";
 import { Colors, Typography } from "../../constants/styles";
 import TextButton from "../../components/common/TextButton";
+import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
 const DiagnosisResults = ({ navigation, route }) => {
   const threshold = 0.33;
-  const { diseasesProbability, module } = route.params;
+  const { diseasesProbability, moduleCode } = route.params;
   const filteredDiseasesProbability = diseasesProbability
     .filter((diseaseProbability) => {
       return diseaseProbability.probability > threshold;
@@ -20,6 +18,7 @@ const DiagnosisResults = ({ navigation, route }) => {
     .sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
 
   const [submitDiagnosis, setDiagnosis] = useState([]);
+  const { addDiagnose } = useContext(DiagnosisContext);
 
   const toggleDiagnosis = (diagnosis) => {
     const newSubmitDiagnosis = submitDiagnosis;
@@ -36,6 +35,7 @@ const DiagnosisResults = ({ navigation, route }) => {
 
   const onSubmit = () => {
     if (submitDiagnosis.length > 0) {
+      addDiagnose(moduleCode, submitDiagnosis);
       navigation.navigate("ModulesList");
     } else {
       Alert.alert(
@@ -60,7 +60,7 @@ const DiagnosisResults = ({ navigation, route }) => {
   };
 
   return (
-    <DiagnosisContainer module={module} subTitle="Podsumowanie">
+    <DiagnosisContainer moduleCode={moduleCode} subTitle="Podsumowanie">
       {filteredDiseasesProbability.length > 0 && (
         <FlatList
           data={filteredDiseasesProbability}
@@ -95,7 +95,7 @@ DiagnosisResults.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       diseasesProbability: diseasesProbabilityPropTypes.isRequired,
-      module: modulePropTypes.isRequired,
+      moduleCode: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };

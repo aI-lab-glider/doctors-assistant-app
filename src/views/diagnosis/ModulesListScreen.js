@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Builder from "crane-query-builder";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import ModulesList from "../../components/modulesList/List";
+import { ActivityIndicator } from "react-native";
 import DiagnosisContainer from "./DiagnosisContainer";
-import { TABLES } from "../../modules/database/database";
+import ModulesList from "../../components/modulesList/List";
+import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
 const ModulesListScreen = ({ navigation }) => {
-  const [modules, setModules] = useState([]);
-  useEffect(() => {
-    const fetchModulesFromDb = async () => {
-      const fetchedModules = await Builder().table(TABLES.modules).get();
-      setModules(fetchedModules);
-    };
-    fetchModulesFromDb();
-  }, []);
-
-  const onItemPress = (module) => {
-    navigation.navigate("Major", { module });
+  const { setModuleVisited, modules } = useContext(DiagnosisContext);
+  const onItemPress = (moduleCode) => {
+    setModuleVisited(moduleCode);
+    navigation.navigate("Major", { moduleCode });
   };
 
   const onFinishPress = () => {
@@ -25,11 +18,11 @@ const ModulesListScreen = ({ navigation }) => {
 
   return (
     <DiagnosisContainer>
-      <ModulesList
-        onItemPress={onItemPress}
-        modules={modules}
-        onFinishPress={onFinishPress}
-      />
+      {modules ? (
+        <ModulesList onItemPress={onItemPress} onFinishPress={onFinishPress} />
+      ) : (
+        <ActivityIndicator />
+      )}
     </DiagnosisContainer>
   );
 };

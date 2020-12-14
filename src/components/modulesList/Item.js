@@ -1,25 +1,40 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { Icon } from "react-native-elements";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import { Colors, Typography } from "../../constants/styles";
+import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
-const ModuleItem = ({ module, onPress, conditionMet }) => {
-  const iconName = conditionMet === 1 ? "check" : "close";
-  const iconColor = conditionMet === 1 ? Colors.GREEN : Colors.RED;
+const ModuleItem = ({ moduleCode, onPress }) => {
+  const { modules } = useContext(DiagnosisContext);
+  const module = modules[moduleCode];
+  const iconColor = module.wasVisited
+    ? Colors.GRAY_LIGHT
+    : Colors.GRAY_VERY_LIGHT;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: iconColor }]}>
       <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.text}>{module.name}</Text>
       </TouchableOpacity>
-      {conditionMet != null && (
-        <AntDesign
-          style={styles.icon}
-          name={iconName}
-          size={24}
-          color={iconColor}
-        />
-      )}
+      {module.diagnosis &&
+        module.diagnosis.map((result) => {
+          return (
+            <View style={styles.result} key={result.disease_icd10}>
+              <Text>
+                {`${result.disease_icd10}`}
+                <Text> {result.disease_name}</Text>
+              </Text>
+              <Icon
+                name="close"
+                style={styles.icon}
+                size={24}
+                color={Colors.RED}
+                onPress={() => console.log("Usuwa rozpoznanie")}
+              />
+            </View>
+          );
+        })}
     </View>
   );
 };
@@ -27,11 +42,8 @@ const ModuleItem = ({ module, onPress, conditionMet }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    justifyContent: "space-between",
-    alignItems: "center",
   },
   button: { flex: 0.9 },
   text: {
@@ -43,18 +55,16 @@ const styles = StyleSheet.create({
     flex: 0.1,
     paddingLeft: 10,
   },
+  result: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
 
-ModuleItem.defaultProps = {
-  conditionMet: null,
-};
-
 ModuleItem.propTypes = {
-  module: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
+  moduleCode: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
-  conditionMet: PropTypes.oneOf([0, 1]),
 };
 
 export default ModuleItem;

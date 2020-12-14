@@ -1,40 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { FlatList, StyleSheet, View } from "react-native";
 
 import { Colors } from "../../constants/styles";
 import ModuleItem from "./Item";
 import TextButton from "../common/TextButton";
-import { modulePropTypes } from "../../constants/propTypes/diagnosis";
+import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
-const ModulesList = ({ onItemPress, modules, onFinishPress }) => {
-  const conditionsMet = [
-    0,
-    1,
-    null,
-    null,
-    null,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    0,
-    null,
-    1,
-    null,
-  ];
+const ModulesList = ({ onItemPress, onFinishPress }) => {
+  const { modules } = useContext(DiagnosisContext);
+  const data = Object.keys(modules !== undefined ? modules : {});
   return (
     <FlatList
-      data={modules}
-      keyExtractor={(module) => module.name}
-      renderItem={({ item, index }) => (
-        <ModuleItem
-          module={item}
-          onPress={() => onItemPress(item)}
-          conditionMet={conditionsMet[index]}
-        />
+      data={data}
+      keyExtractor={(module) => module}
+      renderItem={({ item }) => (
+        <ModuleItem moduleCode={item} onPress={() => onItemPress(item)} />
       )}
       ItemSeparatorComponent={({ highlighted }) => (
         <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />
@@ -60,6 +41,5 @@ const styles = StyleSheet.create({
 ModulesList.propTypes = {
   onItemPress: PropTypes.func.isRequired,
   onFinishPress: PropTypes.func.isRequired,
-  modules: PropTypes.arrayOf(modulePropTypes).isRequired,
 };
 export default ModulesList;

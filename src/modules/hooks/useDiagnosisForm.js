@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Builder from "crane-query-builder";
 import { TABLES } from "../database/database";
 
-const useDiagnosisForm = (module, minor) => {
+const useDiagnosisForm = (moduleCode, minor) => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
 
@@ -14,7 +14,7 @@ const useDiagnosisForm = (module, minor) => {
     const fetchQuestionFromDb = async () => {
       const moduleQuestions = await Builder()
         .table(TABLES.questions)
-        .where("module_code", module.code)
+        .where("module_code", moduleCode)
         .where("minor", minor)
         .get();
       setQuestions(moduleQuestions);

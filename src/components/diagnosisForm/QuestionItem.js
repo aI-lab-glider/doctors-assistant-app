@@ -8,8 +8,9 @@ import formStyles from "../../constants/styles/formStyles";
 import { Colors, Typography } from "../../constants/styles";
 
 const DiagnosisQuestionItem = React.memo(
-  ({ question, index }) => {
-    const [answer, setLocalAnswer] = useState(undefined);
+  ({ question, index, defaultAnswer }) => {
+    const [answer, setLocalAnswer] = useState(defaultAnswer);
+
     const { errors, touched, setFieldValue, values } = useFormikContext();
 
     const setNewAnswer = (newAnswer) => {
@@ -89,5 +90,6 @@ DiagnosisQuestionItem.propTypes = {
     content: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
+  defaultAnswer: PropTypes.oneOf([-1, 0, 1]).isRequired,
 };
 export default DiagnosisQuestionItem;

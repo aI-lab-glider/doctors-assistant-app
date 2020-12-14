@@ -28,7 +28,11 @@ const DiagnosisForm = ({
                 data={questions}
                 keyExtractor={(question) => question.content}
                 renderItem={({ item, index }) => (
-                  <DiagnosisQuestionItem question={item} index={index} />
+                  <DiagnosisQuestionItem
+                    question={item}
+                    index={index}
+                    defaultAnswer={answers[index]}
+                  />
                 )}
                 ListFooterComponentStyle={footerComponentStyle}
                 ListFooterComponent={() => {
