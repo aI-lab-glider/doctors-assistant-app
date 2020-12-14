@@ -21,7 +21,7 @@
     "dateformat": "^3.0.3",
     "expo": "~38.0.8",
     "expo-asset": "~8.1.7",
-    "expo-cli": "^3.26.2",
+    "expo-cli": "^4.0.13",
     "expo-file-system": "~9.0.1",
     "expo-font": "^8.2.2",
     "expo-sqlite": "~8.2.1",

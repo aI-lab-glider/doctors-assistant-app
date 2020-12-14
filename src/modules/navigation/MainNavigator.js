@@ -17,7 +17,7 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="List"
+        initialRouteName="PatientsList"
         screenOptions={{ ...HeaderOptions }}
       >
         <Stack.Screen
