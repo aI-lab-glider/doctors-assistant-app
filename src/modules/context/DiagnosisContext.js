@@ -49,6 +49,13 @@ function DiagnosisContextProvider({ children }) {
     });
   };
 
+  const resetModuleDiagnosis = (moduleCode) => {
+    dispatch({
+      type: DIAGNOSIS_ACTIONS.RESET_MODULE_DIAGNOSIS,
+      payload: { moduleCode },
+    });
+  };
+
   const saveInDB = () => {};
 
   const value = {
@@ -58,6 +65,7 @@ function DiagnosisContextProvider({ children }) {
     addAnswers,
     saveInDB,
     deleteDiagnosis,
+    resetModuleDiagnosis,
   };
 
   return (
