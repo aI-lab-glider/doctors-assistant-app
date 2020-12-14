@@ -1,5 +1,4 @@
 import * as React from "react";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HeaderOptions from "../HeaderOptions";
 import DiagnosisResults from "../../../views/diagnosis/DiagnosisResults";
@@ -24,26 +23,16 @@ export const Routes = [
   {
     name: "Major",
     component: MajorQuestionsForm,
+    title: "Pytania podstawowe",
   },
   {
     name: "Minor",
     component: MinorQuestionsForm,
+    title: "Pytania uszczegóławiające",
   },
 ];
 
 const initialRoute = Routes[0];
-
-const routeWithCustomTitle = Routes[0];
-const defaultTitle = "Diagnoza";
-
-export const getDiagnosisHeaderTitle = (route) => {
-  const routeName = getFocusedRouteNameFromRoute(route);
-
-  if (routeName === routeWithCustomTitle.name) {
-    return routeWithCustomTitle.title;
-  }
-  return defaultTitle;
-};
 
 const DiagnosisNavigator = () => {
   return (
