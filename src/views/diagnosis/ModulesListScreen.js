@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Alert } from "react-native";
 import DiagnosisContainer from "./DiagnosisContainer";
 import ModulesList from "../../components/modulesList/List";
 import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
@@ -32,8 +32,29 @@ const ModulesListScreen = ({ navigation }) => {
     });
     const flattenedDiagnosis = diagnosisArrays.flat(1);
 
-    addNewDiagnosisResults(flattenedDiagnosis, patientId);
-    navigation.navigate("PatientCard");
+    if (flattenedDiagnosis !== undefined && flattenedDiagnosis.length > 0) {
+      addNewDiagnosisResults(flattenedDiagnosis, patientId);
+      navigation.navigate("PatientCard");
+    } else {
+      Alert.alert(
+        "",
+        "Brak rozpoznania. Czy na pewno chcesz zakończyć diagnozę?",
+        [
+          {
+            text: "Kontynuuj",
+            style: "cancel",
+            onPress: () => {},
+          },
+          {
+            text: "Zakończ",
+            style: "destructive",
+            onPress: () => {
+              navigation.navigate("PatientCard");
+            },
+          },
+        ]
+      );
+    }
   };
 
   return (
