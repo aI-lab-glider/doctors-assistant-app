@@ -1,12 +1,11 @@
 import * as React from "react";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AddPatient from "../../../views/registration/AddPatient";
 import BasicData from "../../../views/registration/BasicData";
 import PhysicalExamination from "../../../views/registration/PhysicalExamination";
 import PsychiatricAssessment from "../../../views/registration/PsychiatricAssessment";
 import HeaderOptions from "../HeaderOptions";
-import listeners from "./Listeners";
+import { backAction } from "../Listeners";
 
 const Stack = createStackNavigator();
 
@@ -36,18 +35,6 @@ export const Routes = [
 
 const initialRoute = Routes[0];
 
-export const getHeaderTitle = (route) => {
-  const routeName = getFocusedRouteNameFromRoute(route);
-
-  const routeObj = Routes.find(({ name }) => {
-    return routeName === name;
-  });
-  if (routeObj) {
-    return routeObj.title;
-  }
-  return initialRoute.title;
-};
-
 const RegistrationNavigator = () => {
   return (
     <Stack.Navigator
@@ -62,7 +49,14 @@ const RegistrationNavigator = () => {
           options={{
             title,
           }}
-          listeners={listeners}
+          listeners={({ navigation }) =>
+            backAction({
+              navigation,
+              navigationRouteName: "PatientsList",
+              message:
+                "Czy na pewno chcesz przerwać wywiad i powrócić do listy pacjentów? Nowy pacjent nie zostanie dodany.",
+            })
+          }
         />
       ))}
     </Stack.Navigator>
