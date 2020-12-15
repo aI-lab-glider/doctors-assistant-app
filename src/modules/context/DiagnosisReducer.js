@@ -7,6 +7,7 @@ export const DIAGNOSIS_ACTIONS = {
   DELETE_DIAGNOSIS: "DELETE_DIAGNOSIS",
   RESET_MODULE_DIAGNOSIS: "RESET_MODULE_DIAGNOSIS",
   ADD_MODULE_QUESTIONS: "ADD_MODULE_QUESTIONS",
+  UPDATE_DIAGNOSIS_DATA: "UPDATE_DIAGNOSIS_DATA",
 };
 
 const reducer = (state, action) => {
@@ -81,6 +82,21 @@ const reducer = (state, action) => {
       const { moduleCode } = action.payload;
       const newState = state;
       newState.modules[moduleCode].diagnosis = [];
+
+      return newState;
+    }
+    case DIAGNOSIS_ACTIONS.UPDATE_DIAGNOSIS_DATA: {
+      const {
+        diagnosisId,
+        diagnosisIdx,
+        timestamp,
+        moduleCode,
+      } = action.payload;
+      const newState = state;
+      newState.modules[moduleCode].diagnosis[diagnosisIdx].id = diagnosisId;
+      newState.modules[moduleCode].diagnosis[
+        diagnosisIdx
+      ].timestamp = timestamp;
 
       return newState;
     }

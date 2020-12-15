@@ -69,53 +69,66 @@ function DiagnosisContextProvider({ children, patientId }) {
     const id = await state.patientId;
 
     const diseases = await database.getAllFromTable(TABLES.diseases);
-    for (let i = 0; i < Object.values(modules).length; i += 1) {
-      const module = Object.values(modules)[i];
-      if (module.diagnosis) {
-        for (let j = 0; j < module.diagnosis.length; j += 1) {
-          const { id: diseaseId } = diseases.filter((disease) => {
-            return disease.disease_icd10 === module.diagnosis[j].disease_icd10;
-          })[0];
-          const patientDiagnosis = {
-            patient_id: id,
-            disease_id: diseaseId,
-            timestamp: new Date().getTime() / 1000,
-          };
-          try {
-            // eslint-disable-next-line no-await-in-loop
-            const diagnosisId = await database.insertObjectToTable(
-              patientDiagnosis,
-              TABLES.patients_diagnosis
-            );
+    for (let i = 0; i < Object.keys(modules).length; i += 1) {
+      const [moduleCode, module] = Object.entries(modules)[i];
+      for (
+        let diagnosisIdx = 0;
+        diagnosisIdx < module.diagnosis.length;
+        diagnosisIdx += 1
+      ) {
+        const { id: diseaseId } = diseases.filter((disease) => {
+          return (
+            disease.disease_icd10 ===
+            module.diagnosis[diagnosisIdx].disease_icd10
+          );
+        })[0];
+        const timestamp = new Date().getTime() / 1000;
+        const patientDiagnosis = {
+          patient_id: id,
+          disease_id: diseaseId,
+          timestamp,
+        };
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          const diagnosisId = await database.insertObjectToTable(
+            patientDiagnosis,
+            TABLES.patients_diagnosis
+          );
 
-            const majorAnswers = module.majorAnswers.map((answer, idx) => {
-              return {
-                diagnosis_id: diagnosisId,
-                answer,
-                question_id: module.majorQuestions[idx].id,
-              };
-            });
+          const majorAnswers = module.majorAnswers.map((answer, idx) => {
+            return {
+              diagnosis_id: diagnosisId,
+              answer,
+              question_id: module.majorQuestions[idx].id,
+            };
+          });
 
-            const minorAnswers = module.minorAnswers.map((answer, idx) => {
-              return {
-                diagnosis_id: diseaseId,
-                answer,
-                question_id: module.minorQuestions[idx].id,
-              };
-            });
+          const minorAnswers = module.minorAnswers.map((answer, idx) => {
+            return {
+              diagnosis_id: diagnosisId,
+              answer,
+              question_id: module.minorQuestions[idx].id,
+            };
+          });
 
-            // eslint-disable-next-line no-await-in-loop
-            await database.insertMultipleObjectsToTable(
-              majorAnswers.concat(minorAnswers),
-              TABLES.diagnosis_answers
-            );
-          } catch (e) {
-            return;
-          }
+          const allAnswers = majorAnswers.concat(minorAnswers);
+          // eslint-disable-next-line no-await-in-loop
+          await database.insertMultipleObjectsToTable(
+            allAnswers,
+            TABLES.diagnosis_answers
+          );
+
+          dispatch({
+            type: DIAGNOSIS_ACTIONS.UPDATE_DIAGNOSIS_DATA,
+            payload: { diagnosisId, diagnosisIdx, timestamp, moduleCode },
+          });
+        } catch (e) {
+          return;
         }
       }
     }
   };
+
   const value = {
     ...state,
     setModuleVisited,

@@ -67,9 +67,24 @@ function PatientsContextProvider({ children }) {
     return id;
   };
 
+  const addNewDiagnosisResults = (diagnosisResults, patientId) => {
+    dispatch({
+      type: PATIENT_ACTIONS.ADD_NEW_DIAGNOSIS_RESULTS,
+      payload: { diagnosisResults, patientId },
+    });
+  };
+
+  const getPatientById = (patientId) => {
+    return state.patients.find((patient) => {
+      return patient.id === patientId;
+    });
+  };
+
   const value = {
     ...state,
     addPatient,
+    addNewDiagnosisResults,
+    getPatientById,
   };
 
   return (

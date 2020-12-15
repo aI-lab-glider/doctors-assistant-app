@@ -57,11 +57,17 @@ function BasicDataContextProvider({ children }) {
     }
     return result;
   };
+  const getBasicDataById = (id) => {
+    return state.patientsBasicData.find((basicData) => {
+      return basicData.id === id;
+    });
+  };
 
   const value = {
     ...state,
     setBasicData,
     updateBasicData,
+    getBasicDataById,
   };
 
   return (

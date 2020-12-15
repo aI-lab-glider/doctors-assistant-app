@@ -17,7 +17,7 @@ export const CodeProp = (props, propName, componentName) => {
 };
 export const DiagnosisProptypes = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  disease_code: CodeProp.isRequired,
+  disease_icd10: CodeProp.isRequired,
   disease_name: PropTypes.string.isRequired,
   module_code: PropTypes.string.isRequired,
   module_name: PropTypes.string.isRequired,
