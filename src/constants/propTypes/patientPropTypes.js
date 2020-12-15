@@ -21,7 +21,7 @@ export const DiagnosisProptypes = PropTypes.shape({
   disease_name: PropTypes.string.isRequired,
   module_code: PropTypes.string.isRequired,
   module_name: PropTypes.string.isRequired,
-  timestamp: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
 });
 
 // TODO: Add guardianship to patient table

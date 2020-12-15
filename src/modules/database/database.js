@@ -2,6 +2,7 @@ import * as SQLite from "expo-sqlite";
 import * as FileSystem from "expo-file-system";
 import { Asset } from "expo-asset";
 import Builder, { DB } from "crane-query-builder";
+import { Alert } from "react-native";
 
 const databaseName = "doctors_assistant.db";
 const databaseFile = require(`../../assets/db/doctors_assistant.db`);
@@ -61,14 +62,31 @@ export const TABLES = {
   users_patients: "users_patients",
 };
 
+const showDatabaseError = (
+  e,
+  message = "Nie można połączyć się z bazą danych. Skontaktuj się ze wsparciem technicznym."
+) => {
+  const alertMessage =
+    process.env.NODE_ENV === "development"
+      ? `${message}\n ${e.message}`
+      : message;
+  Alert.alert("Błąd", alertMessage, [
+    {
+      text: "Ok",
+      style: "cancel",
+      onPress: () => {},
+    },
+  ]);
+};
+
 const getAllFromTable = async (table) => {
   try {
     const records = await Builder().table(table).get();
     console.log(`Successfully get ${records.length} from ${table} `);
     return records;
   } catch (e) {
-    console.log(`db error load objects from ${table} ${e.message}`);
-    return null;
+    showDatabaseError(e);
+    throw e;
   }
 };
 
@@ -80,8 +98,8 @@ const insertObjectToTable = async (object, table) => {
     console.log(`Successfully insert object to ${table} with id ${id}`);
     return id;
   } catch (e) {
-    console.log(`DB error insert object to ${table} ${e.message}`);
-    return null;
+    showDatabaseError(e);
+    throw e;
   }
 };
 
@@ -96,8 +114,19 @@ const updateObjectFromTable = async (object, table) => {
     );
     return result;
   } catch (e) {
-    console.log(`DB error update object from ${table} ${e.message}`);
-    return null;
+    showDatabaseError(e);
+    throw e;
+  }
+};
+
+const insertMultipleObjectsToTable = async (objectsArray, table) => {
+  try {
+    await Builder().table(table).insert(objectsArray);
+    console.log(`Successfully add ${objectsArray.length} objects to ${table}`);
+    return true;
+  } catch (e) {
+    showDatabaseError(e);
+    throw e;
   }
 };
 
@@ -107,4 +136,5 @@ export const database = {
   getAllFromTable,
   insertObjectToTable,
   updateObjectFromTable,
+  insertMultipleObjectsToTable,
 };

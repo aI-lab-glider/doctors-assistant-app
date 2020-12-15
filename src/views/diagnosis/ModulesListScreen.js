@@ -12,8 +12,9 @@ const ModulesListScreen = ({ navigation }) => {
     navigation.navigate("Major", { moduleCode });
   };
 
-  const onFinishPress = () => {
-    saveInDB();
+  const onFinishPress = async () => {
+    await saveInDB();
+    navigation.navigate("PatientCard");
   };
 
   return (

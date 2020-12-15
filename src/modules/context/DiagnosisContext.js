@@ -81,40 +81,36 @@ function DiagnosisContextProvider({ children, patientId }) {
             disease_id: diseaseId,
             timestamp: new Date().getTime() / 1000,
           };
-
-          // eslint-disable-next-line no-await-in-loop
-          const diagnosisId = await database.insertObjectToTable(
-            patientDiagnosis,
-            TABLES.patients_diagnosis
-          );
-
-          const majorAnswers = module.majorAnswers.map((answer, idx) => {
-            return {
-              diagnosis_id: diagnosisId,
-              answer,
-              question_id: module.majorQuestions[idx].id,
-            };
-          });
-
-          const minorAnswers = module.minorAnswers.map((answer, idx) => {
-            return {
-              diagnosis_id: diseaseId,
-              answer,
-              question_id: module.minorQuestions[idx].id,
-            };
-          });
           try {
             // eslint-disable-next-line no-await-in-loop
-            const diagnosisAnswerId = await Builder()
-              .table(TABLES.diagnosis_answers)
-              .insert(majorAnswers.concat(minorAnswers));
-            console.log(
-              `Successfully insert object to ${TABLES.diagnosis_answers} with id ${diagnosisAnswerId}`
+            const diagnosisId = await database.insertObjectToTable(
+              patientDiagnosis,
+              TABLES.patients_diagnosis
+            );
+
+            const majorAnswers = module.majorAnswers.map((answer, idx) => {
+              return {
+                diagnosis_id: diagnosisId,
+                answer,
+                question_id: module.majorQuestions[idx].id,
+              };
+            });
+
+            const minorAnswers = module.minorAnswers.map((answer, idx) => {
+              return {
+                diagnosis_id: diseaseId,
+                answer,
+                question_id: module.minorQuestions[idx].id,
+              };
+            });
+
+            // eslint-disable-next-line no-await-in-loop
+            await database.insertMultipleObjectsToTable(
+              majorAnswers.concat(minorAnswers),
+              TABLES.diagnosis_answers
             );
           } catch (e) {
-            console.log(
-              `DB error insert object to ${TABLES.diagnosis_answers} ${e.message}`
-            );
+            return;
           }
         }
       }
