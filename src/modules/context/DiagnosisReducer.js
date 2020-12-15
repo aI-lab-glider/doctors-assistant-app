@@ -6,12 +6,13 @@ export const DIAGNOSIS_ACTIONS = {
   SET_VISITED: "SET_VISITED",
   DELETE_DIAGNOSIS: "DELETE_DIAGNOSIS",
   RESET_MODULE_DIAGNOSIS: "RESET_MODULE_DIAGNOSIS",
+  ADD_MODULE_QUESTIONS: "ADD_MODULE_QUESTIONS",
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case DIAGNOSIS_ACTIONS.SET_MODULES: {
-      const newState = { modules: {} };
+      const newState = { ...state, modules: {} };
       const { modules } = action.payload;
       modules.forEach((module) => {
         newState.modules[module.code] = {};
@@ -39,6 +40,19 @@ const reducer = (state, action) => {
         newState.modules[moduleCode].minorAnswers = answers;
       } else {
         newState.modules[moduleCode].majorAnswers = answers;
+      }
+
+      return newState;
+    }
+
+    case DIAGNOSIS_ACTIONS.ADD_MODULE_QUESTIONS: {
+      const { moduleCode, questions, isMinor } = action.payload;
+      const newState = state;
+
+      if (isMinor) {
+        newState.modules[moduleCode].minorQuestions = questions;
+      } else {
+        newState.modules[moduleCode].majorQuestions = questions;
       }
 
       return newState;

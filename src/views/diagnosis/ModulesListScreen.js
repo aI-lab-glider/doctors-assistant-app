@@ -6,14 +6,14 @@ import ModulesList from "../../components/modulesList/List";
 import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
 const ModulesListScreen = ({ navigation }) => {
-  const { setModuleVisited, modules } = useContext(DiagnosisContext);
+  const { setModuleVisited, modules, saveInDB } = useContext(DiagnosisContext);
   const onItemPress = (moduleCode) => {
     setModuleVisited(moduleCode);
     navigation.navigate("Major", { moduleCode });
   };
 
   const onFinishPress = () => {
-    navigation.goBack();
+    saveInDB();
   };
 
   return (

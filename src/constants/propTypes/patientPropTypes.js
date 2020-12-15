@@ -26,6 +26,7 @@ export const DiagnosisProptypes = PropTypes.shape({
 
 // TODO: Add guardianship to patient table
 const Patient = PropTypes.shape({
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   surname: PropTypes.string.isRequired,
   sex: PropTypes.string.isRequired,

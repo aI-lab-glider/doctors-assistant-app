@@ -34,8 +34,7 @@ const PatientCard = ({ navigation, route }) => {
 
   const onAdd = () => {};
   const onDiagnosisAdd = () => {
-    // TODO: Change to navigation to diagnosis form
-    navigation.navigate("Diagnosis");
+    navigation.navigate("Diagnosis", { patientId: patient.id });
   };
 
   return (
