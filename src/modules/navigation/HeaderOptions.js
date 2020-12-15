@@ -20,6 +20,7 @@ export default {
     fontFamily: Typography.FONT_FAMILY_BOLD,
     paddingBottom: 7,
   },
+  animationEnabled: false,
   headerRight: () => <ProfileIcon style={styles.profile} />,
   headerBackImage: () => <BackIcon style={styles.backIcon} />,
 };

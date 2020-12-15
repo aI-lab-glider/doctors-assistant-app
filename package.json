@@ -14,8 +14,8 @@
   "dependencies": {
     "@expo/vector-icons": "^10.2.0",
     "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/native": "^5.7.3",
-    "@react-navigation/stack": "^5.9.0",
+    "@react-navigation/native": "^5.8.10",
+    "@react-navigation/stack": "^5.12.8",
     "babel-plugin-inline-dotenv": "^1.6.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "crane-query-builder": "^0.2.5",
