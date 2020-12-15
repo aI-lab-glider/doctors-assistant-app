@@ -4,6 +4,8 @@ export const DIAGNOSIS_ACTIONS = {
   REMOVE_DIAGNOSIS: "REMOVE_DIAGNOSIS",
   SET_MODULES: "SET_MODULES",
   SET_VISITED: "SET_VISITED",
+  DELETE_DIAGNOSIS: "DELETE_DIAGNOSIS",
+  RESET_MODULE_DIAGNOSIS: "RESET_MODULE_DIAGNOSIS",
 };
 
 const reducer = (state, action) => {
@@ -46,6 +48,25 @@ const reducer = (state, action) => {
       const { moduleCode, diagnosis } = action.payload;
       const newState = state;
       newState.modules[moduleCode].diagnosis = diagnosis;
+
+      return newState;
+    }
+
+    case DIAGNOSIS_ACTIONS.DELETE_DIAGNOSIS: {
+      const { moduleCode, diseaseICD10 } = action.payload;
+      const newState = state;
+      newState.modules[moduleCode].diagnosis = state.modules[
+        moduleCode
+      ].diagnosis.filter((diag) => {
+        return diag.disease_icd10 !== diseaseICD10;
+      });
+
+      return newState;
+    }
+    case DIAGNOSIS_ACTIONS.RESET_MODULE_DIAGNOSIS: {
+      const { moduleCode } = action.payload;
+      const newState = state;
+      newState.modules[moduleCode].diagnosis = [];
 
       return newState;
     }

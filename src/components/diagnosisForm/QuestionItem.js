@@ -84,12 +84,16 @@ const styles = StyleSheet.create({
   },
 });
 
+DiagnosisQuestionItem.defaultProps = {
+  defaultAnswer: -1,
+};
+
 DiagnosisQuestionItem.propTypes = {
   question: PropTypes.shape({
     id: PropTypes.number,
     content: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
-  defaultAnswer: PropTypes.oneOf([-1, 0, 1]).isRequired,
+  defaultAnswer: PropTypes.oneOf([-1, 0, 1]),
 };
 export default DiagnosisQuestionItem;

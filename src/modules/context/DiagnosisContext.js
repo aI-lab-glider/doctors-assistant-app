@@ -42,6 +42,20 @@ function DiagnosisContextProvider({ children }) {
     });
   };
 
+  const deleteDiagnosis = (moduleCode, diseaseICD10) => {
+    dispatch({
+      type: DIAGNOSIS_ACTIONS.DELETE_DIAGNOSIS,
+      payload: { moduleCode, diseaseICD10 },
+    });
+  };
+
+  const resetModuleDiagnosis = (moduleCode) => {
+    dispatch({
+      type: DIAGNOSIS_ACTIONS.RESET_MODULE_DIAGNOSIS,
+      payload: { moduleCode },
+    });
+  };
+
   const saveInDB = () => {};
 
   const value = {
@@ -50,6 +64,8 @@ function DiagnosisContextProvider({ children }) {
     addDiagnose,
     addAnswers,
     saveInDB,
+    deleteDiagnosis,
+    resetModuleDiagnosis,
   };
 
   return (
