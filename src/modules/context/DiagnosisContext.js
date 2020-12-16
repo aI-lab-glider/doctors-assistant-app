@@ -50,10 +50,10 @@ function DiagnosisContextProvider({ children, patientId }) {
     });
   };
 
-  const deleteDiagnosis = (moduleCode, diseaseICD10) => {
+  const deleteDiagnosis = (moduleCode, diseaseIcd10) => {
     dispatch({
       type: DIAGNOSIS_ACTIONS.DELETE_DIAGNOSIS,
-      payload: { moduleCode, diseaseICD10 },
+      payload: { moduleCode, diseaseIcd10 },
     });
   };
 

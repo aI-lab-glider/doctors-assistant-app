@@ -68,12 +68,12 @@ const reducer = (state, action) => {
     }
 
     case DIAGNOSIS_ACTIONS.DELETE_DIAGNOSIS: {
-      const { moduleCode, diseaseICD10 } = action.payload;
+      const { moduleCode, diseaseIcd10 } = action.payload;
       const newState = state;
       newState.modules[moduleCode].diagnosis = state.modules[
         moduleCode
       ].diagnosis.filter((diag) => {
-        return diag.disease_icd10 !== diseaseICD10;
+        return diag.disease_icd10 !== diseaseIcd10;
       });
 
       return newState;
