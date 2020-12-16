@@ -9,13 +9,16 @@ import { DiagnosisContext } from "../../modules/context/DiagnosisContext";
 
 const ModulesList = ({ onItemPress, onFinishPress }) => {
   const { modules } = useContext(DiagnosisContext);
-  const data = Object.keys(modules !== undefined ? modules : {});
+  const moduleCodes = Object.keys(modules !== undefined ? modules : {});
   return (
     <FlatList
-      data={data}
+      data={moduleCodes}
       keyExtractor={(module) => module}
-      renderItem={({ item }) => (
-        <ModuleItem moduleCode={item} onPress={() => onItemPress(item)} />
+      renderItem={({ item: moduleCodeItem }) => (
+        <ModuleItem
+          moduleCode={moduleCodeItem}
+          onPress={() => onItemPress(moduleCodeItem)}
+        />
       )}
       ItemSeparatorComponent={({ highlighted }) => (
         <View style={[styles.separator, highlighted && { marginLeft: 0 }]} />

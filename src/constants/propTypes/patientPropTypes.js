@@ -17,15 +17,16 @@ export const CodeProp = (props, propName, componentName) => {
 };
 export const DiagnosisProptypes = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  disease_code: CodeProp.isRequired,
+  disease_icd10: CodeProp.isRequired,
   disease_name: PropTypes.string.isRequired,
   module_code: PropTypes.string.isRequired,
   module_name: PropTypes.string.isRequired,
-  timestamp: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
 });
 
 // TODO: Add guardianship to patient table
 const Patient = PropTypes.shape({
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   surname: PropTypes.string.isRequired,
   sex: PropTypes.string.isRequired,

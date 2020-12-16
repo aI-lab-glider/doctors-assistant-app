@@ -12,7 +12,10 @@ const List = ({ navigation, patients, patientsBasicData }) => {
     );
   };
   const onItemPressed = ({ patient, patientBasicData }) => {
-    navigation.navigate("PatientCard", { patient, patientBasicData });
+    navigation.navigate("PatientCard", {
+      patientId: patient.id,
+      patientBasicDataId: patientBasicData.id,
+    });
   };
 
   return (

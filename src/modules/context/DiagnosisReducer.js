@@ -6,12 +6,14 @@ export const DIAGNOSIS_ACTIONS = {
   SET_VISITED: "SET_VISITED",
   DELETE_DIAGNOSIS: "DELETE_DIAGNOSIS",
   RESET_MODULE_DIAGNOSIS: "RESET_MODULE_DIAGNOSIS",
+  ADD_MODULE_QUESTIONS: "ADD_MODULE_QUESTIONS",
+  UPDATE_DIAGNOSIS_DATA: "UPDATE_DIAGNOSIS_DATA",
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case DIAGNOSIS_ACTIONS.SET_MODULES: {
-      const newState = { modules: {} };
+      const newState = { ...state, modules: {} };
       const { modules } = action.payload;
       modules.forEach((module) => {
         newState.modules[module.code] = {};
@@ -44,6 +46,19 @@ const reducer = (state, action) => {
       return newState;
     }
 
+    case DIAGNOSIS_ACTIONS.ADD_MODULE_QUESTIONS: {
+      const { moduleCode, questions, isMinor } = action.payload;
+      const newState = state;
+
+      if (isMinor) {
+        newState.modules[moduleCode].minorQuestions = questions;
+      } else {
+        newState.modules[moduleCode].majorQuestions = questions;
+      }
+
+      return newState;
+    }
+
     case DIAGNOSIS_ACTIONS.ADD_DIAGNOSIS: {
       const { moduleCode, diagnosis } = action.payload;
       const newState = state;
@@ -53,12 +68,12 @@ const reducer = (state, action) => {
     }
 
     case DIAGNOSIS_ACTIONS.DELETE_DIAGNOSIS: {
-      const { moduleCode, diseaseICD10 } = action.payload;
+      const { moduleCode, diseaseIcd10 } = action.payload;
       const newState = state;
       newState.modules[moduleCode].diagnosis = state.modules[
         moduleCode
       ].diagnosis.filter((diag) => {
-        return diag.disease_icd10 !== diseaseICD10;
+        return diag.disease_icd10 !== diseaseIcd10;
       });
 
       return newState;
@@ -67,6 +82,21 @@ const reducer = (state, action) => {
       const { moduleCode } = action.payload;
       const newState = state;
       newState.modules[moduleCode].diagnosis = [];
+
+      return newState;
+    }
+    case DIAGNOSIS_ACTIONS.UPDATE_DIAGNOSIS_DATA: {
+      const {
+        diagnosisId,
+        diagnosisIdx,
+        timestamp,
+        moduleCode,
+      } = action.payload;
+      const newState = state;
+      newState.modules[moduleCode].diagnosis[diagnosisIdx].id = diagnosisId;
+      newState.modules[moduleCode].diagnosis[
+        diagnosisIdx
+      ].timestamp = timestamp;
 
       return newState;
     }

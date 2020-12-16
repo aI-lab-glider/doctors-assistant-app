@@ -1,17 +1,22 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import React, { useContext, useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { Colors, Typography } from "../constants/styles";
 import FontForgeIcon from "../components/common/FontForgeIcon";
 import SubtitleLabelWithButton from "../components/patientCard/SubtitleLabelWithButton";
 import SubtitleLabel from "../components/patientCard/SubtitleLabel";
 import BottomMenu from "../components/patientCard/bottomMenu";
-import Patient from "../constants/propTypes/patientPropTypes";
-import PatientBasicData from "../constants/propTypes/basicDataPropTypes";
 import { calculateAge } from "../modules/utils/Calculators";
+import { PatientsContext } from "../modules/context/PatientsContext";
+import { BasicDataContext } from "../modules/context/BasicDataContext";
 
 const PatientCard = ({ navigation, route }) => {
-  const { patient, patientBasicData } = route.params;
+  const { patientId, patientBasicDataId } = route.params;
+  const { getPatientById } = useContext(PatientsContext);
+  const { getBasicDataById } = useContext(BasicDataContext);
+  const patient = getPatientById(patientId);
+  const patientBasicData = getBasicDataById(patientBasicDataId);
+
   const patientNote = patient.note ? patient.note : "";
 
   const [textNote, setTextNote] = useState(
@@ -34,8 +39,7 @@ const PatientCard = ({ navigation, route }) => {
 
   const onAdd = () => {};
   const onDiagnosisAdd = () => {
-    // TODO: Change to navigation to diagnosis form
-    navigation.navigate("Diagnosis");
+    navigation.navigate("Diagnosis", { patientId: patient.id });
   };
 
   return (
@@ -105,7 +109,7 @@ const PatientCard = ({ navigation, route }) => {
                   <Text style={styles.listItemFieldText} key={diagnose.id}>
                     {"> "} {diagnose.disease_name}{" "}
                     <Text style={styles.diagnosisCode}>
-                      ({diagnose.disease_code})
+                      ({diagnose.disease_icd10})
                     </Text>{" "}
                   </Text>
                 ))
@@ -229,8 +233,8 @@ PatientCard.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      patient: Patient.isRequired,
-      patientBasicData: PatientBasicData.isRequired,
+      patientId: PropTypes.number.isRequired,
+      patientBasicDataId: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
 };

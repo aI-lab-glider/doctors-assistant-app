@@ -1,5 +1,6 @@
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import PropTypes from "prop-types";
 import HeaderOptions from "../HeaderOptions";
 import DiagnosisResults from "../../../views/diagnosis/DiagnosisResults";
 import ModulesListScreen from "../../../views/diagnosis/ModulesListScreen";
@@ -42,9 +43,10 @@ export const Routes = [
 
 const initialRoute = Routes[0];
 
-const DiagnosisNavigator = () => {
+const DiagnosisNavigator = ({ route }) => {
+  const { patientId } = route.params;
   return (
-    <DiagnosisContextProvider>
+    <DiagnosisContextProvider patientId={patientId}>
       <Stack.Navigator
         initialRouteName={initialRoute.name}
         screenOptions={HeaderOptions}
@@ -63,6 +65,14 @@ const DiagnosisNavigator = () => {
       </Stack.Navigator>
     </DiagnosisContextProvider>
   );
+};
+
+DiagnosisNavigator.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      patientId: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default DiagnosisNavigator;

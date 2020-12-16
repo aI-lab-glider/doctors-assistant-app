@@ -1,6 +1,7 @@
 export const PATIENT_ACTIONS = {
   INSERT_OR_UPDATE: "INSERT_OR_UPDATE",
   REFRESH: "REFRESH",
+  ADD_NEW_DIAGNOSIS_RESULTS: "ADD_NEW_DIAGNOSIS_RESULTS",
 };
 
 const reducer = (state, action) => {
@@ -29,6 +30,26 @@ const reducer = (state, action) => {
         ...state,
         patients,
       };
+    }
+    case PATIENT_ACTIONS.ADD_NEW_DIAGNOSIS_RESULTS: {
+      const { diagnosisResults, patientId } = action.payload;
+      const { patients } = state;
+      const idx = state.patients.findIndex(
+        (patient) => patient.id === patientId
+      );
+      if (idx !== -1) {
+        const patient = patients[idx];
+        patient.diagnosis = patient.diagnosis
+          ? patient.diagnosis.concat(diagnosisResults)
+          : diagnosisResults;
+        patients[idx] = patient;
+        return {
+          ...state,
+          patients,
+        };
+      }
+
+      return state;
     }
     default:
       return state;
