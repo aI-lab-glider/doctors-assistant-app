@@ -20,15 +20,20 @@ function compareWithAnswers(
 
   switch (comparisonSign) {
     case "==":
-      return sumOfTrueAnswers === comparisonValue;
+      return sumOfTrueAnswers === Number(comparisonValue);
     case ">":
-      return sumOfTrueAnswers > comparisonValue;
+      return sumOfTrueAnswers > Number(comparisonValue);
     case ">=":
-      return sumOfTrueAnswers >= comparisonValue;
+      return sumOfTrueAnswers >= Number(comparisonValue);
     case "<":
-      return sumOfTrueAnswers < comparisonValue;
+      return sumOfTrueAnswers < Number(comparisonValue);
     case "<=":
-      return sumOfTrueAnswers <= comparisonValue;
+      return sumOfTrueAnswers <= Number(comparisonValue);
+    case "IN":
+      return comparisonValue
+        .match(/\d+/g)
+        .map(Number)
+        .includes(sumOfTrueAnswers);
     default:
       throw Error(`Wrong diagnosis data comparison sign: ${comparisonSign}`);
   }
@@ -36,11 +41,10 @@ function compareWithAnswers(
 
 function getCondValue(condition, allAnswers) {
   const condElements = condition.split(" ");
-
   const method = condElements[0].slice(0, 3);
   const questions = condElements[0].slice(4, -1).split(",");
   const comparisonSign = condElements[1];
-  const comparisonValue = Number(condElements[2]);
+  const comparisonValue = condElements[2];
 
   switch (method) {
     case "PYT":
