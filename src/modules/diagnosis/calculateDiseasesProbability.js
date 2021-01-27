@@ -20,20 +20,15 @@ function compareWithAnswers(
 
   switch (comparisonSign) {
     case "==":
-      return sumOfTrueAnswers === Number(comparisonValue);
+      return sumOfTrueAnswers === comparisonValue;
     case ">":
-      return sumOfTrueAnswers > Number(comparisonValue);
+      return sumOfTrueAnswers > comparisonValue;
     case ">=":
-      return sumOfTrueAnswers >= Number(comparisonValue);
+      return sumOfTrueAnswers >= comparisonValue;
     case "<":
-      return sumOfTrueAnswers < Number(comparisonValue);
+      return sumOfTrueAnswers < comparisonValue;
     case "<=":
-      return sumOfTrueAnswers <= Number(comparisonValue);
-    case "IN":
-      return comparisonValue
-        .match(/\d+/g)
-        .map(Number)
-        .includes(sumOfTrueAnswers);
+      return sumOfTrueAnswers <= comparisonValue;
     default:
       throw Error(`Wrong diagnosis data comparison sign: ${comparisonSign}`);
   }
@@ -44,7 +39,7 @@ function getCondValue(condition, allAnswers) {
   const method = condElements[0].slice(0, 3);
   const questions = condElements[0].slice(4, -1).split(",");
   const comparisonSign = condElements[1];
-  const comparisonValue = condElements[2];
+  const comparisonValue = Number(condElements[2]);
 
   switch (method) {
     case "PYT":
@@ -62,7 +57,7 @@ function getCondValue(condition, allAnswers) {
 function goOnSideConds(allAnswers, diagnosisConditions) {
   let goOn = true;
   Object.keys(diagnosisConditions).forEach((cond) => {
-    if (cond.slice(0, 4) === "main") {
+    if (cond.slice(0, 4) === "main" && diagnosisConditions[cond] !== null) {
       goOn = goOn && getCondValue(diagnosisConditions[cond], allAnswers);
     }
   });
