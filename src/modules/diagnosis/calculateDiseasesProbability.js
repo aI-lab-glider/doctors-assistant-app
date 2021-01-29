@@ -36,7 +36,6 @@ function compareWithAnswers(
 
 function getCondValue(condition, allAnswers) {
   const condElements = condition.split(" ");
-
   const method = condElements[0].slice(0, 3);
   const questions = condElements[0].slice(4, -1).split(",");
   const comparisonSign = condElements[1];
@@ -58,7 +57,7 @@ function getCondValue(condition, allAnswers) {
 function goOnSideConds(allAnswers, diagnosisConditions) {
   let goOn = true;
   Object.keys(diagnosisConditions).forEach((cond) => {
-    if (cond.slice(0, 4) === "main") {
+    if (cond.slice(0, 4) === "main" && diagnosisConditions[cond] !== null) {
       goOn = goOn && getCondValue(diagnosisConditions[cond], allAnswers);
     }
   });
